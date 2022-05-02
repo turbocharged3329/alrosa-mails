@@ -24,3 +24,33 @@ body {
 p {
     color: $blue;
 }
+
+.mail {
+    &-block {
+        min-height: 100px;
+        background: white;
+        transition: .1s linear;
+        padding-top: 2.3rem;
+        &:hover {
+            box-shadow: 0px 3px 8px rgba(23, 24, 27, 0.12), 0px 3px 1px rgba(23, 24, 27, 0.04);
+            transform: scale(1.01);
+        }
+    }
+    &-nav {
+        flex-basis: 20%;
+        height: 100%;
+        min-height: 100px;
+        display: flex;
+        &__direction {
+            display: flex;
+            flex-flow: column nowrap;
+            justify-content: space-between;
+            align-items: center;
+            flex-basis: 33%;
+        }
+    }
+    &-content {
+        flex-basis: 80%;
+        height: 100%;
+    }
+}

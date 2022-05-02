@@ -1,10 +1,15 @@
 <template>
-  <div class="mail-button">
-    <div class="nav">
-      <button @click="$emit('up')">up</button>
-      <button @click="$emit('down')">down</button>
+  <div class="mail-button mail-block">
+    <div class="mail-nav">
+      <div class="mail-nav__direction">
+        <arrow-btn direction="up" @up="$emit('up')"></arrow-btn>
+        <arrow-btn direction="down" @down="$emit('down')"></arrow-btn>
+      </div>
+      <div class="mail-nav__edit">
+        
+      </div>
     </div>
-    <div class="content">
+    <div class="mail-content">
       <badge>Кнопка</badge>
       123
     </div>
@@ -13,9 +18,11 @@
 
 <script>
 import Badge from "@/components/Badge.vue";
+import ArrowBtn from "@/components/ArrowBtn.vue";
 export default {
   name: "MailButton",
-  components: { Badge },
+  components: { Badge, ArrowBtn },
+  emits: ["up", "down"],
   props: {},
   data() {
     return {};
@@ -25,11 +32,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.mail-button  {
+.mail-button {
   display: flex;
   flex-flow: row nowrap;
   justify-content: center;
-  align-items: center;  
+  align-items: center;
 }
 .nav {
   flex-basis: 30%;
