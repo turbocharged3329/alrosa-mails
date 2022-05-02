@@ -29,6 +29,7 @@ export default {
   background: #f0f2f5;
   border-radius: 11px;
   width: fit-content;
+  margin-bottom: 1rem;
   &__title {
     color: #121212;
     opacity: 0.5;

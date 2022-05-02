@@ -17,6 +17,7 @@
                 @enter="saveData($event, item.id)"
                 @up="moveElement($event, {direction: 'up', id:item.id})"
                 @down="moveElement($event, {direction: 'down', id:item.id})"
+                @delete="removeElement($event, {id:item.id})"
               ></component>
             </drag>
           </template>
@@ -83,7 +84,7 @@ export default {
     MailTextHighlighted,
     MailPictureWide,
     MailButton,
-    MailFooter
+    MailFooter,
   },
   props: {},
   data() {
@@ -182,6 +183,10 @@ export default {
       Vue.set(this.elements, indexToMove, elementToReplace)
       Vue.set(this.elements, indexToReplace, elementToMove)
     },
+    removeElement(event, data) {
+      console.log(123);
+      this.elements.splice(this.elements.findIndex(elem => elem.id == data.id), 1)
+    }
   },
 };
 </script>

@@ -30,10 +30,16 @@ p {
         min-height: 100px;
         background: white;
         transition: .1s linear;
-        padding-top: 2.3rem;
+        padding: 2.3rem 0;
+        & .mail-nav {
+            visibility: hidden;
+        }
         &:hover {
             box-shadow: 0px 3px 8px rgba(23, 24, 27, 0.12), 0px 3px 1px rgba(23, 24, 27, 0.04);
             transform: scale(1.01);
+            & .mail-nav {
+                visibility: visible;
+            }
         }
     }
     &-nav {
@@ -41,7 +47,18 @@ p {
         height: 100%;
         min-height: 100px;
         display: flex;
-        &__direction {
+        &__btn {
+            background-color: white;
+            background-repeat: no-repeat;
+            background-position: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            box-shadow: 0px 3px 8px rgba(23, 24, 27, 0.12), 0px 3px 1px rgba(23, 24, 27, 0.04);
+            cursor: pointer;
+            border: none;
+        }
+        &__section {
             display: flex;
             flex-flow: column nowrap;
             justify-content: space-between;
@@ -52,5 +69,27 @@ p {
     &-content {
         flex-basis: 80%;
         height: 100%;
+    }
+    &__input {
+        font-style: normal;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 21px;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;        
+        color: $black;
+        outline: none;
+        margin: 0;
+        caret-color: $blue;
+        &:focus {
+            border: none;
+            // border-bottom: 1px solid $black;
+            outline: none;
+            cursor: pointer;
+          }
+    }
+    &__textarea {
+        max-width: 50%;
+        word-break: break-word;
     }
 }
