@@ -1,23 +1,20 @@
 <template>
   <div class="archive">
+    <div class="back-link">
+      <span class="back-link-text">Назад</span>
+    </div>
+    <div class="archive__body">
       <h1 class="archive__title">Архив рассылок</h1>
-      <div class="archive__body">
-        <div class="archive__list">
-          <template v-for="item in archive">
-            <div class="archive__list-item" :key="item.id">
-              <img
-                class="archive__list-item-img"
-                :style="{
-                  backgroundImage: 'url(' + require(`@/assets/bg.png`) + ')',
-                }"
-              />
-              <p class="archive__list-item-title">{{ item.title }}</p>
+      <div class="archive__list">
+        <template v-for="item in archive">
+          <div class="archive__list-item" :key="item.id">
+            <div class="archive__list-item-status">
+              <span class="status-value">{{ item.status }}</span>
             </div>
-          </template>
-          <div class="archive__list-item archive-item">
-            <div class="archive-item__bg">Архив рассылок</div>
+            <p class="archive__list-item-title">{{ item.title }}</p>
+            <div class="archive__list-item-date">132</div>
           </div>
-        </div>
+        </template>
       </div>
       <div class="archive__footer">
         <button class="archive__create-btn btn-custom">
@@ -25,6 +22,7 @@
         </button>
       </div>
     </div>
+  </div>
 </template>
 
 <script>
@@ -35,8 +33,16 @@ export default {
   data() {
     return {
       archive: [
-        {id: 1, title: '123'},
-      ]
+        { id: 1, title: "Просто title", status: "Готово" },
+        { id: 2, title: "Просто title", status: "Готово" },
+        { id: 3, title: "Просто title", status: "Готово" },
+        { id: 4, title: "Просто title", status: "Готово" },
+        { id: 5, title: "Просто title", status: "Готово" },
+        { id: 6, title: "Просто title", status: "Готово" },
+        { id: 7, title: "Просто title", status: "Черновик" },
+        { id: 8, title: "Просто title", status: "Готово" },
+        { id: 9, title: "Просто title", status: "Готово" },
+      ],
     };
   },
   methods: {},
@@ -46,58 +52,89 @@ export default {
 <style lang="scss" scoped>
 .archive {
   display: flex;
-  flex-flow: column nowrap;
+  flex-flow: row nowrap;
   justify-content: center;
   align-items: center;
   width: 100%;
   height: calc(100vh - 72px);
   box-sizing: border-box;
-  padding: 5.5rem 0;
+  padding: 72px 0;
+  position: relative;
   &__body {
     width: 80%;
-    height: 75%;
-    min-height: 75%;
-    max-height: 75%;
-    margin-bottom: 3.5rem;
+    height: 100%;
+    max-height: 100%;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    box-sizing: border-box;
   }
   &__list {
     display: flex;
     flex-flow: row wrap;
+    justify-content: flex-start;
     align-items: center;
-    width: 100%;
-    height: 100%;
+    width: 75%;
     overflow-y: auto;
+    height: 75%;
+    box-sizing: border-box;
+    margin-bottom: 5%;
+
     &-item {
-      flex-basis: 30%;
-      height: 164px;
-      margin-bottom: 2.5rem;
+      flex-basis: 100%;
+      height: 50px;
       cursor: pointer;
-      &:nth-of-type(3n + 1) {
-        margin-right: 1.66%;
-      }
-      &:nth-of-type(3n + 2) {
-        margin-left: 1.66%;
-        margin-right: 1.66%;
-      }
-      &:nth-of-type(3n + 3) {
-        margin-left: 1.66%;
-      }
-      &-img {
-        width: 100%;
-        height: 120px;
-        background-size: cover;
-        background-repeat: no-repeat;
-        margin-bottom: 1rem;
+      box-sizing: border-box;
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: flex-start;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      &-status {
+        flex-basis: 15%;
+        height: 100%;
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: center;
+        align-items: flex-start;
+        .status-value {
+          background: red;
+          padding: 3px auto;
+          border-radius: 11px;
+          height: 1.5rem;
+          width: 85%;
+          font-style: normal;
+          font-weight: 500;
+          font-size: 12px;
+          line-height: 135%;
+          color: white;
+          display: flex;
+          flex-flow: row nowrap;
+          justify-content: center;
+          align-items: center;
+          margin-top: 5px;
+        }
       }
       &-title {
+        font-style: normal;
         font-weight: 500;
-        font-size: 14px;
+        font-size: 20px;
         line-height: 28px;
-        letter-spacing: 0.02em;
         color: $black;
         text-align: center;
-        width: 100%;
+        flex-basis: 60%;
         margin: 0;
+        border-bottom: 1px solid $gray;
+        height: 100%;
+      }
+      &-date {
+        flex-basis: 25%;
+        height: 100%;
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: center;
+        align-items: center;
       }
     }
   }
@@ -111,9 +148,10 @@ export default {
     color: $black;
     width: 100%;
     margin: 0;
-    margin-bottom: 3.2rem;
+    margin-bottom: 5%;
     text-align: left;
-    padding-left: 60%;
+    padding-left: 15%;
+    height: 5%;
   }
   &__footer {
     width: 100%;
@@ -121,7 +159,8 @@ export default {
     flex-flow: row nowrap;
     justify-content: flex-start;
     align-items: center;
-    padding-left: 60%;
+    padding-left: 15%;
+    height: 10%;
   }
   &__create-btn {
     border: 2px solid $blue;

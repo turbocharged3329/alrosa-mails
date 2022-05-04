@@ -1,10 +1,10 @@
 <template>
   <div class="editor">
+    <div class="back-link">
+      <span class="back-link-text">Назад</span>
+    </div>
     <div class="editor__navbar"></div>
     <div class="editor__body">
-      <div class="editor__back-link">
-        <span class="editor__back-link-text">Назад</span>
-        </div>
       <div class="editor__mail-constructor">
         <drop-list
           :items="elements"
@@ -224,45 +224,29 @@ export default {
   flex-flow: column nowrap;
   justify-content: flex-start;
   align-items: center;
+  height: calc(100vh - 72px);
+  overflow-y: auto;
   &__navbar {
     width: 100%;
-    height: 72px;
+    height: 62px;
     background-color: $gray;
   }
   &__body {
     width: 80%;
-    height: auto;
+    min-height: 500px;
+    height: 20%;
     display: flex;
     flex-flow: row nowrap;
     justify-content: center;
   }
-  &__back-link {
-    flex-basis: 5%;
-    cursor: pointer;
-    padding-top: 1.5rem;
-    padding-right: 1.5rem;
-    &-text {
-    position: relative;
-      &::before {
-      content: '';
-      width: 20px;
-      height: 20px;
-      display: block;
-      position: absolute;
-      top: 0px;
-      left: -20px;
-      background: url('~@/assets/angle.svg') no-repeat;
-      background-size: cover;
-    }
-    }
-  }
   &__mail {
     &-constructor {
-      flex-basis: 70%;
+      flex-basis: 65%;
+      padding-left: 5%;
       &-list {
         width: 100%;
         height: 100%;
-        background: yellowgreen;
+        background: transparent;
       }
     }
     &-blocks {

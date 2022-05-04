@@ -1,7 +1,7 @@
 <template>
   <div class="layouts">
-    <h1 class="layouts__title">Выберите тему письма</h1>
     <div class="layouts__body">
+      <h1 class="layouts__title">Выберите тему письма</h1>
       <div class="layouts__list">
         <template v-for="item in layouts">
           <div class="layouts__list-item" :key="item.id">
@@ -18,9 +18,11 @@
           <div class="archive-item__bg">Архив рассылок</div>
         </div>
       </div>
-    </div>
-    <div class="layouts__footer">
-      <button class="layouts__create-btn btn-custom">Создать новую тему</button>
+      <div class="layouts__footer">
+        <button class="layouts__create-btn btn-custom">
+          Создать новую тему
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -60,21 +62,25 @@ export default {
   width: 100%;
   height: calc(100vh - 72px);
   box-sizing: border-box;
-  padding: 5.5rem 0;
+  padding: 72px 0;
   &__body {
     width: 80%;
-    height: 75%;
-    min-height: 75%;
-    max-height: 75%;
-    margin-bottom: 3.5rem;
+    height: 100%;
+    min-height: 100%;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    box-sizing: border-box;
   }
   &__list {
     display: flex;
     flex-flow: row wrap;
     align-items: center;
     width: 100%;
-    height: 100%;
+    height: 75%;
     overflow-y: auto;
+    margin-bottom: 5%;
     &-item {
       flex-basis: 30%;
       height: 164px;
@@ -120,8 +126,10 @@ export default {
     width: 100%;
     margin: 0;
     margin-bottom: 3.2rem;
-    padding-left: 60%;
+    padding-left: 15%;
     text-align: left;
+    height: 5%;
+    margin-bottom: 5%;
   }
   &__footer {
     width: 100%;
@@ -129,7 +137,8 @@ export default {
     flex-flow: row nowrap;
     justify-content: flex-start;
     align-items: center;
-    padding-left: 60%;
+    padding-left: 15%;
+    height: 10%;
   }
   &__create-btn {
     border: 2px solid $blue;
