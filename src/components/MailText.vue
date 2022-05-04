@@ -8,7 +8,7 @@
     ></mail-nav>
     <div class="mail-content">
       <badge>Обычный текст</badge>
-      <div contenteditable="true" class="mail__input mail__textarea">123</div>
+      <div contenteditable="true" class="mail__input">123</div>
     </div>
   </div>
 </template>
@@ -31,10 +31,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.mail-text {
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: center;
-  align-items: center;
+.mail__input {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 27px;
+  letter-spacing: 0.01em;
+  color: $black;
 }
 </style>

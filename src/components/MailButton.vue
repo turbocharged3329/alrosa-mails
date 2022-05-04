@@ -24,19 +24,15 @@ export default {
   components: { Badge, MailNav },
   emits: ["up", "down"],
   props: {},
-  data() {
-    return {};
+  computed: {
   },
-  methods: {},
+  methods: {
+  },
 };
 </script>
 
 <style lang="scss" scoped>
 .mail-button {
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: center;
-  align-items: center;
   &__form {
     border: 2px solid $blue;
     border-radius: 42px;

@@ -1,13 +1,29 @@
 <template>
-  <div class="mail-divider">
-    <hr>
+  <div class="mail-divider mail-block">
+    
+    <mail-nav
+      @delete="$emit('delete')"
+      @edit="$emit('edit')"
+      @up="$emit('up')"
+      @down="$emit('down')"
+    ></mail-nav>
+    <div class="mail-content">
+      <badge>Разделитель</badge>
+      <hr>
+    </div>
   </div>
 </template>
 
 <script>
+import MailNav from "@/components/MailNav.vue";
+import Badge from "@/components/Badge.vue";
+
 export default {
   name: 'MailDivider',
-  components: {},
+  components: {
+    MailNav,
+    Badge
+  },
   props: {},
   data() {
     return {}
@@ -16,4 +32,8 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.mail-divider {
+  padding: 1rem 1rem !important;
+}
+</style>

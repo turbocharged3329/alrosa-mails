@@ -1,23 +1,34 @@
 <template>
-  <div class="mail-name">
-    <badge>Название письма</badge>
-    <textarea />
+  <div class="mail-name mail-block">
+    <mail-nav
+      @delete="$emit('delete')"
+      @edit="$emit('edit')"
+      @up="$emit('up')"
+      @down="$emit('down')"
+    ></mail-nav>
+    <div class="mail-content">
+      <badge>Название письма</badge>
+       <p class="mail__input" contenteditable="true">123</p>
+    </div>
   </div>
 </template>
 
 <script>
-import Badge from '@/components/Badge.vue' 
+import Badge from "@/components/Badge.vue";
+import MailNav from "@/components/MailNav.vue";
+
 export default {
-  name: 'MailName',
+  name: "MailName",
   components: {
-    Badge
+    Badge,
+    MailNav
   },
   props: {},
   data() {
-    return {}
+    return {};
   },
-  methods: {}
-}
+  methods: {},
+};
 </script>
 
 <style lang="scss" scoped></style>

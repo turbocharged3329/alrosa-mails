@@ -168,7 +168,8 @@ export default {
   },
   methods: {
     onInsert(event) {
-      this.elements.splice(event.index, 0, event.data);
+      this.elements.splice(event.index, 0, {...event.data, id: this.generateId()});
+      this.elements.push()
     },
     saveData(event, id) {
       const targetElem = this.elements.find((elem) => elem.id == id);
@@ -184,8 +185,10 @@ export default {
       Vue.set(this.elements, indexToReplace, elementToMove)
     },
     removeElement(event, data) {
-      console.log(123);
       this.elements.splice(this.elements.findIndex(elem => elem.id == data.id), 1)
+    },
+    generateId() {
+      return Math.random().toString(36).substr(3, 10);
     }
   },
 };
@@ -245,6 +248,7 @@ export default {
     }
     &-blocks {
       flex-basis: 25%;
+      padding-left: 10%;
       &-title {
         font-size: 22px;
         line-height: 27px;
@@ -260,6 +264,7 @@ export default {
         font-size: 14px;
         line-height: 17px;
         letter-spacing: 0.01em;
+        text-align: left;
       }
       &-stack {
         display: flex;
