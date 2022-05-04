@@ -2,7 +2,9 @@
   <div class="editor">
     <div class="editor__navbar"></div>
     <div class="editor__body">
-      <div class="editor__back-link">Назад</div>
+      <div class="editor__back-link">
+        <span class="editor__back-link-text">Назад</span>
+        </div>
       <div class="editor__mail-constructor">
         <drop-list
           :items="elements"
@@ -236,6 +238,23 @@ export default {
   }
   &__back-link {
     flex-basis: 5%;
+    cursor: pointer;
+    padding-top: 1.5rem;
+    padding-right: 1.5rem;
+    &-text {
+    position: relative;
+      &::before {
+      content: '';
+      width: 20px;
+      height: 20px;
+      display: block;
+      position: absolute;
+      top: 0px;
+      left: -20px;
+      background: url('~@/assets/angle.svg') no-repeat;
+      background-size: cover;
+    }
+    }
   }
   &__mail {
     &-constructor {

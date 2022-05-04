@@ -10,6 +10,8 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
+    width: 100vw;
+    height: 100vh;
 }
 html {
     width: 100vw;
@@ -123,4 +125,17 @@ p {
     &__textarea {
         max-width: 50%;
     }
+}
+
+.btn-custom {
+    border-radius: 42px;
+    padding: .7rem 2.6rem;
+    box-sizing: border-box;
+    height: 2.9rem;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 21px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;        
+    color: $black;
 }

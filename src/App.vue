@@ -1,9 +1,9 @@
 <template>
   <div id="app">
-    <div class="header">
+    <div class="header" v-if="!hideHeader">
       <img class="logo" alt="Алроса" src="@/assets/logo.svg" />
     </div>
-    <router-view></router-view>
+    <router-view @hide="hideHeader = true"></router-view>
   </div>
 </template>
 
@@ -11,7 +11,11 @@
 
 export default {
   name: 'App',
-  components: {}
+  data() {
+    return {
+      hideHeader: false,
+    }
+  }
 }
 </script>
 

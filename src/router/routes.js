@@ -1,8 +1,8 @@
 const routes = [
 	{
 		path: '/',
-		component: () => import('@/views/MailEditor.vue'),
-		name: 'Mainpage',
+		component: () => import('@/views/Authorization.vue'),
+		name: 'Authoriztion',
 	},
 ]
 
