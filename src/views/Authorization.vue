@@ -1,33 +1,36 @@
 <template>
   <div class="auth">
     <div class="auth__login">
-      <img
-        src="@/assets/logo.svg"
-        alt="Алроса"
-        class="auth__login-logo"
-      />
-      <form
-        action="login"
-        autocomplete
-        name="login"
-        class="auth__login-form"
-      >
+      <img src="@/assets/logo.svg" alt="Алроса" class="auth__login-logo" />
+      <form action="login" autocomplete name="login" class="auth__login-form">
         <input
           class="auth__login-email auth-input"
           id="email"
           placeholder="Почта"
           type="email"
+          v-model="email"
         />
         <div class="auth__login-wrapper">
-          <img src="@/assets/closed-eye.svg" alt="" class="auth__login-eye" @click.prevent.stop="togglePassword">
+          <img
+            src="@/assets/closed-eye.svg"
+            alt=""
+            class="auth__login-eye"
+            @click.prevent.stop="togglePassword"
+          />
           <input
             class="auth__login-password auth-input"
             id="password"
             placeholder="Пароль"
             :type="showPass ? 'text' : 'password'"
+            v-model="password"
           />
         </div>
-        <button class="auth__login-btn btn-primary btn-custom" :class="'disabled'">
+        <button
+          class="auth__login-btn btn-primary btn-custom"
+          :class="{ disabled: !email.length || !password.length }"
+          :disabled="!email.length || !password.length"
+          @click="auth"
+        >
           Войти
         </button>
       </form>
@@ -41,6 +44,7 @@
 </template>
 
 <script>
+import {mapActions} from 'vuex';
 export default {
   name: "Authorization",
   components: {},
@@ -48,15 +52,24 @@ export default {
   data() {
     return {
       showPass: false,
+      email: "",
+      password: "",
     };
   },
   methods: {
+    ...mapActions([
+      'setHeaderVisibility'
+    ]),
     togglePassword() {
       this.showPass = !this.showPass;
+    },
+    auth() {
+      this.$router.push({name: 'Layouts'})
     }
   },
   mounted() {
     this.$emit("hide");
+    this.setHeaderVisibility(false)
   },
 };
 </script>

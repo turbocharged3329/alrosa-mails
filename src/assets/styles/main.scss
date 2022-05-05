@@ -12,6 +12,7 @@
     text-align: center;
     width: 100vw;
     height: 100vh;
+    display: block;
 }
 html {
     width: 100vw;
@@ -99,6 +100,16 @@ body {
         flex-basis: 80%;
         height: 100%;
         padding: 0 .5rem;
+        position: relative;
+        &::after {
+            content: '';
+            width: 100%;
+            height: 1px;
+            background: #eeeeee;
+            position: absolute;
+            left: 0px;
+            bottom: -2rem;
+        }
     }
     &__input {
         font-style: normal;
@@ -112,6 +123,7 @@ body {
         margin: 0;
         caret-color: $blue;
         word-break: break-word;
+        text-align: left;
         &:focus {
             border: none;
             // border-bottom: 1px solid $black;
@@ -148,6 +160,10 @@ body {
         color: #818c99;
         background: $gray;
     }
+}
+&-secondary {
+    border: 2px solid $blue;
+    background: transparent;
 }
 }
 

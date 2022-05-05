@@ -1,6 +1,6 @@
 <template>
   <div class="archive">
-    <div class="back-link">
+    <div class="back-link" @click="$router.go(-1)">
       <span class="back-link-text">Назад</span>
     </div>
     <div class="archive__body">
@@ -17,7 +17,7 @@
         </template>
       </div>
       <div class="archive__footer">
-        <button class="archive__create-btn btn-custom">
+        <button class="archive__create-btn btn-custom" @click="$router.push({name: 'AddNew'})">
           Создать новую тему
         </button>
       </div>
@@ -186,6 +186,6 @@ export default {
   }
 }
 .back-link {
-  top: 84px !important;
+  top: 90px !important;
 }
 </style>

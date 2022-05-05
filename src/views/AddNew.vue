@@ -1,6 +1,6 @@
 <template>
   <div class="add-new">
-    <div class="back-link">
+    <div class="back-link" @click="$router.go(-1)">
       <span class="back-link-text">Назад</span>
     </div>
     <div class="add-new__content">
@@ -58,7 +58,7 @@ export default {
   &__content {
     width: 50%;
     height: 50%;
-    margin-top: 83px;
+    margin-top: 9.5rem;
     display: flex;
     flex-flow: column nowrap;
     justify-content: flex-start;

@@ -1,11 +1,11 @@
 const routes = [
-	// {
-	// 	path: '/',
-	// 	component: () => import('@/views/Authorization.vue'),
-	// 	name: 'Authoriztion',
-	// },
 	{
 		path: '/',
+		component: () => import('@/views/Authorization.vue'),
+		name: 'Authoriztion',
+	},
+	{
+		path: '/add-new',
 		component: () => import('@/views/AddNew.vue'),
 		name: 'AddNew',
 	},
@@ -22,7 +22,7 @@ const routes = [
 	{
 		path: '/auth',
 		component: () => import('@/views/Authorization.vue'),
-		name: 'Authoriztion',
+		name: 'Authoriztaion',
 	},
 	{
 		path: '/constructor',

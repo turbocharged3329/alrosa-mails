@@ -35,5 +35,6 @@ export default {
 .mail__input {
   background-color: $light-blue;
   padding: 1rem;
+  caret-color: $black;
 }
 </style>

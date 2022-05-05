@@ -4,7 +4,7 @@
       <h1 class="layouts__title">Выберите тему письма</h1>
       <div class="layouts__list">
         <template v-for="item in layouts">
-          <div class="layouts__list-item" :key="item.id">
+          <div class="layouts__list-item" :key="item.id" @click="$router.push({name: 'Constructor'})">
             <img
               class="layouts__list-item-img"
               :style="{
@@ -14,12 +14,12 @@
             <p class="layouts__list-item-title">{{ item.title }}</p>
           </div>
         </template>
-        <div class="layouts__list-item archive-item">
+        <div class="layouts__list-item archive-item" @click="$router.push({name: 'Archive'})">
           <div class="archive-item__bg">Архив рассылок</div>
         </div>
       </div>
       <div class="layouts__footer">
-        <button class="layouts__create-btn btn-custom">
+        <button class="layouts__create-btn btn-custom" @click="$router.push({name: 'AddNew'})">
           Создать новую тему
         </button>
       </div>
@@ -28,6 +28,7 @@
 </template>
 
 <script>
+import {mapActions} from 'vuex';
 export default {
   name: "Layouts",
   components: {},
@@ -49,7 +50,14 @@ export default {
       ],
     };
   },
-  methods: {},
+  methods: {
+    ...mapActions([
+      'setHeaderVisibility'
+    ]),
+  },
+  mounted() {
+    this.setHeaderVisibility(true)
+  }
 };
 </script>
 

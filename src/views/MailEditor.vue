@@ -1,6 +1,6 @@
 <template>
   <div class="editor">
-    <div class="back-link">
+    <div class="back-link" @click="$router.go(-1)">
       <span class="back-link-text">Назад</span>
     </div>
     <div class="editor__navbar">
@@ -205,6 +205,12 @@ export default {
       return Math.random().toString(36).substr(3, 10);
     }
   },
+  created() {
+    this.$emit('show', true)
+  },
+  beforeDestroy() {
+    this.$emit('show', false)
+  }
 };
 </script>
 
