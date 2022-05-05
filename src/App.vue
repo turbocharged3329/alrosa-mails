@@ -28,7 +28,7 @@ export default {
   // justify-content: center;
   align-items: center;
   width: 100%;
-  height: 72px;
+  height: $header-height;
   padding: 0 10%;
   border-bottom: 1px solid #E3E9F2;
 }

@@ -3,7 +3,19 @@
     <div class="back-link">
       <span class="back-link-text">Назад</span>
     </div>
-    <div class="editor__navbar"></div>
+    <div class="editor__navbar">
+      <div class="editor__navbar-style">
+        <button class="editor__navbar-btn bold"></button>
+        <button class="editor__navbar-btn italic"></button>
+        <button class="editor__navbar-btn underline"></button>
+      </div>
+      <div class="editor__navbar-align">
+        <button class="editor__navbar-btn left"></button>
+        <button class="editor__navbar-btn center"></button>
+        <button class="editor__navbar-btn right"></button>
+        <button class="editor__navbar-btn justify"></button>
+      </div>
+    </div>
     <div class="editor__body">
       <div class="editor__mail-constructor">
         <drop-list
@@ -224,20 +236,70 @@ export default {
   flex-flow: column nowrap;
   justify-content: flex-start;
   align-items: center;
-  height: calc(100vh - 72px);
-  overflow-y: auto;
+  height: calc(100vh - $header-height);
+  // overflow-y: auto;
   &__navbar {
     width: 100%;
     height: 62px;
     background-color: $gray;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    left: 0px;
+    z-index: 10;
+    &-style {
+      display: inline-flex;
+      padding-right: 1rem;
+      border-right: 1px solid #E3E9F2;
+      margin-left: 15vw;
+    }
+    &-align {
+      display: inline-flex;
+      padding-left: 1rem;
+    }
+    &-btn {
+      width: 24px;
+      height: 24px;
+      background-size: 100%;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-color: transparent;
+      border: none;
+      padding: 0;
+      margin: 0 .5rem;
+      cursor: pointer;
+      &.bold {
+        background-image: url('~@/assets/format-bold.svg');
+      }
+      &.italic {
+        background-image: url('~@/assets/format-italic.svg');
+      }
+      &.underline {
+        background-image: url('~@/assets/format-underline.svg');
+      }
+      &.left {
+        background-image: url('~@/assets/align-left.svg');
+      }
+      &.center {
+        background-image: url('~@/assets/align-center.svg');
+      }
+      &.right {
+        background-image: url('~@/assets/align-right.svg');
+      }
+      &.justify {
+        background-image: url('~@/assets/align-justify.svg');
+      }
+    }
   }
   &__body {
     width: 80%;
     min-height: 500px;
-    height: 20%;
+    height: 80%;
     display: flex;
     flex-flow: row nowrap;
     justify-content: center;
+    overflow-y: auto;
   }
   &__mail {
     &-constructor {
@@ -252,6 +314,9 @@ export default {
     &-blocks {
       flex-basis: 25%;
       padding-left: 10%;
+      width: 230px;
+      position: sticky;
+      top: 0px;
       &-title {
         font-size: 22px;
         line-height: 27px;

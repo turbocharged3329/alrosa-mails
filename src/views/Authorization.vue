@@ -27,7 +27,7 @@
             :type="showPass ? 'text' : 'password'"
           />
         </div>
-        <button class="auth__login-btn btn-custom" :class="'disabled'">
+        <button class="auth__login-btn btn-primary btn-custom" :class="'disabled'">
           Войти
         </button>
       </form>
@@ -121,17 +121,6 @@ export default {
     }
     &-email {
       margin-bottom: 2.85rem;
-    }
-    &-btn {
-      border: none;
-      background: $blue;
-      color: white;
-      cursor: pointer;
-      &.disabled {
-        cursor: default;
-        color: #818c99;
-        background: $gray;
-      }
     }
   }
   &__picture {

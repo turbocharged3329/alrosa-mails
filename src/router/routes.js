@@ -6,6 +6,11 @@ const routes = [
 	// },
 	{
 		path: '/',
+		component: () => import('@/views/AddNew.vue'),
+		name: 'AddNew',
+	},
+	{
+		path: '/archive',
 		component: () => import('@/views/Archive.vue'),
 		name: 'Archive',
 	},

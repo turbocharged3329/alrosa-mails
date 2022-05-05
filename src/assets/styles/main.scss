@@ -23,9 +23,6 @@ body {
     width: 100%;
     height: 100%;
 }
-p {
-    color: $blue;
-}
 
 ::v-deep .mail-fileinput {
     height: 135px !important;
@@ -127,7 +124,8 @@ p {
     }
 }
 
-.btn-custom {
+.btn {
+&-custom {
     border-radius: 42px;
     padding: .7rem 2.6rem;
     box-sizing: border-box;
@@ -139,6 +137,18 @@ p {
     text-transform: uppercase;        
     color: $black;
     cursor: pointer;
+}
+&-primary {
+    border: none;
+    background: $blue;
+    color: white;
+    cursor: pointer;
+    &.disabled {
+        cursor: default;
+        color: #818c99;
+        background: $gray;
+    }
+}
 }
 
 .back-link {

@@ -56,7 +56,7 @@ export default {
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: calc(100vh - 72px);
+  height: calc(100vh - $header-height);
   box-sizing: border-box;
   padding: 72px 0;
   position: relative;
@@ -150,7 +150,7 @@ export default {
     margin: 0;
     margin-bottom: 5%;
     text-align: left;
-    padding-left: 15%;
+    padding-left: 50%;
     height: 5%;
   }
   &__footer {
@@ -159,7 +159,7 @@ export default {
     flex-flow: row nowrap;
     justify-content: flex-start;
     align-items: center;
-    padding-left: 15%;
+    padding-left: 50%;
     height: 10%;
   }
   &__create-btn {
@@ -184,5 +184,8 @@ export default {
       align-items: center;
     }
   }
+}
+.back-link {
+  top: 84px !important;
 }
 </style>

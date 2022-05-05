@@ -60,7 +60,7 @@ export default {
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: calc(100vh - 72px);
+  height: calc(100vh - $header-height);
   box-sizing: border-box;
   padding: 72px 0;
   &__body {
@@ -126,7 +126,7 @@ export default {
     width: 100%;
     margin: 0;
     margin-bottom: 3.2rem;
-    padding-left: 15%;
+    padding-left: 50%;
     text-align: left;
     height: 5%;
     margin-bottom: 5%;
@@ -137,7 +137,7 @@ export default {
     flex-flow: row nowrap;
     justify-content: flex-start;
     align-items: center;
-    padding-left: 15%;
+    padding-left: 50%;
     height: 10%;
   }
   &__create-btn {
