@@ -4,7 +4,7 @@
       <button class="mail-nav__btn delete" @click="$emit('delete')"></button>
     </div>
     <div class="mail-nav__section">
-      <button class="mail-nav__btn edit" @click="$emit('edit')" :style="{visibility: noEdit ? 'hidden' : 'visible'}"></button>
+      <button class="mail-nav__btn edit" @click="$emit('edit')" :class="{'hidden': noEdit}"></button>
     </div>
     <div class="mail-nav__section">
       <action-btn action="up" @up="$emit('up')"></action-btn>
@@ -43,5 +43,8 @@ export default {
   background-size: 24px 24px;
   background-position: center;
   margin: auto;
+}
+.hidden {
+  visibility: hidden;
 }
 </style>
