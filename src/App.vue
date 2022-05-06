@@ -46,7 +46,7 @@ export default {
   padding: 0 10%;
   border-bottom: 1px solid #e3e9f2;
   &__actions {
-    width: 40%;
+    width: 50%;
     display: flex;
     flex-flow: row nowrap;
     justify-content: flex-start;
@@ -56,8 +56,11 @@ export default {
       flex-basis: 80%;
       display: flex;
       flex-flow: row nowrap;
-      justify-content: space-between;
+      justify-content: flex-end;
       align-items: center;
+      .btn-custom:first-of-type {
+        margin-right: 1.5rem;
+      }
     }
     &-logout {
       cursor: pointer;

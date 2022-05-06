@@ -2,32 +2,41 @@
   <div class="mail-h1 mail-block">
     <mail-nav
       @delete="$emit('delete')"
-      @edit="$emit('edit')"
+      @edit="editContent"
       @up="$emit('up')"
       @down="$emit('down')"
     ></mail-nav>
     <div class="mail-content">
       <badge>Заголовок H1</badge>
-      <div class="mail__input" contenteditable="true">123</div>
+      <p class="mail__input" v-html="content" v-if="!showEditor"></p>
+      <vue-editor
+        v-model="content"
+        :editorToolbar="customToolbar"
+        v-else
+        class="wsywig"
+      ></vue-editor>
+      <button
+        @click="saveContent"
+        class="btn-custom btn-primary"
+        v-if="showEditor"
+      >
+        Сохранить
+      </button>
     </div>
   </div>
 </template>
 
 <script>
-import Badge from "@/components/Badge.vue";
-import MailNav from "./MailNav.vue";
+import { block } from "@/mixins/block.js";
 
 export default {
   name: "MailH1",
-  components: {
-    Badge,
-    MailNav,
-  },
-  props: {},
+  mixins: [block],
   data() {
-    return {};
+    return {
+      content: "<h1></h1>",
+    };
   },
-  methods: {},
 };
 </script>
 
@@ -39,7 +48,7 @@ export default {
   line-height: 42px;
   letter-spacing: 0.03em;
   color: $black;
-  max-width: 80%;
+  max-width: 100%;
   word-break: break-word;
 }
 </style>
