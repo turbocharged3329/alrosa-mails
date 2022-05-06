@@ -1,5 +1,6 @@
 <template>
   <div class="mail-h1 mail-block">
+    <div class="dragger"></div>
     <mail-nav
       @delete="$emit('delete')"
       @edit="editContent"
@@ -8,6 +9,7 @@
     ></mail-nav>
     <div class="mail-content">
       <badge>Заголовок H1</badge>
+      <p class="mail__input placeholder">Введите текст заголовка H1</p>
       <p class="mail__input" v-html="content" v-if="!showEditor"></p>
       <vue-editor
         v-model="content"
@@ -50,5 +52,8 @@ export default {
   color: $black;
   max-width: 100%;
   word-break: break-word;
+}
+.placeholder {
+  color: $gray;
 }
 </style>

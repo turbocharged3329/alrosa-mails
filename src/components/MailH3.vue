@@ -1,5 +1,6 @@
 <template>
   <div class="mail-h3 mail-block">
+    <div class="dragger"></div>
     <mail-nav
       @delete="$emit('delete')"
       @edit="editContent"
@@ -48,7 +49,7 @@ export default {
   line-height: 42px;
   letter-spacing: 0.03em;
   color: $black;
-  max-width: 80%;
+  max-width: 100%;
   word-break: break-word;
 }
 </style>

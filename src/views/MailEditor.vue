@@ -4,7 +4,7 @@
       <span class="back-link-text">Назад</span>
     </div>
     <div class="editor__navbar">
-      <div class="editor__navbar-style">
+      <!-- <div class="editor__navbar-style">
         <button class="editor__navbar-btn bold"></button>
         <button class="editor__navbar-btn italic"></button>
         <button class="editor__navbar-btn underline"></button>
@@ -14,7 +14,7 @@
         <button class="editor__navbar-btn center"></button>
         <button class="editor__navbar-btn right"></button>
         <button class="editor__navbar-btn justify"></button>
-      </div>
+      </div> -->
     </div>
     <div class="editor__body">
       <div class="editor__mail-constructor">
@@ -25,7 +25,7 @@
           @reorder="$event.apply(elements)"
         >
           <template v-slot:item="{ item }">
-            <drag class="item" :key="item.id">
+            <drag class="item" :key="item.id" :handle="'.dragger'">
               <component
                 :is="item.component"
                 @enter="saveData($event, item.id)"

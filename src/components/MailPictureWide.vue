@@ -1,10 +1,12 @@
 <template>
   <div class="mail-picture mail-block">
+    <div class="dragger"></div>
    <mail-nav
       @delete="$emit('delete')"
       @edit="$emit('edit')"
       @up="$emit('up')"
       @down="$emit('down')"
+      no-edit
     ></mail-nav>
     <div class="mail-content">
     <badge>Картинка широкая</badge>

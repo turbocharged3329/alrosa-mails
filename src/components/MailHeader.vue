@@ -1,10 +1,12 @@
 <template>
   <div class="mail-header mail-block">
+    <div class="dragger"></div>
     <mail-nav
       @delete="$emit('delete')"
       @edit="$emit('edit')"
       @up="$emit('up')"
       @down="$emit('down')"
+      no-edit
     ></mail-nav>
     <div class="mail-content">
     <badge>Шапка</badge>

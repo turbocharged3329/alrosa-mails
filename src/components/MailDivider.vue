@@ -1,5 +1,6 @@
 <template>
   <div class="mail-divider mail-block">
+    <div class="dragger"></div>
     <mail-nav
       @delete="$emit('delete')"
       @edit="$emit('edit')"

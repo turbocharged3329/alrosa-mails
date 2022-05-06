@@ -4,7 +4,7 @@
       <button class="mail-nav__btn delete" @click="$emit('delete')"></button>
     </div>
     <div class="mail-nav__section">
-      <button class="mail-nav__btn edit" @click="$emit('edit')"></button>
+      <button class="mail-nav__btn edit" @click="$emit('edit')" :style="{visibility: noEdit ? 'hidden' : 'visible'}"></button>
     </div>
     <div class="mail-nav__section">
       <action-btn action="up" @up="$emit('up')"></action-btn>
@@ -18,7 +18,12 @@ import ActionBtn from "@/components/ActionBtn.vue";
 export default {
   name: "MailNav",
   components: { ActionBtn },
-  props: {},
+  props: {
+    noEdit: {
+      type: Boolean,
+      default: false,
+    }
+  },
   data() {
     return {};
   },

@@ -60,13 +60,35 @@ body {
         flex-flow: row nowrap;
         justify-content: center;
         align-items: center;
+        position: relative;
+        & .dragger {
+            display: block;
+            width: 30px;
+            height: 30px;
+            opacity: .5;
+            position: absolute;
+            background-image: url("~@/assets/drag.png");
+            background-size: contain;
+            top: 1%;
+            cursor: grabbing;
+        }
         & .mail-nav {
+            visibility: hidden;
+        }
+        & .dragger {
             visibility: hidden;
         }
         &:hover {
             box-shadow: 0px 3px 8px rgba(23, 24, 27, 0.12), 0px 3px 1px rgba(23, 24, 27, 0.04);
             transform: scale(1.01);
+            z-index: 999;
             & .mail-nav {
+                visibility: visible;
+            }
+            & .mail-content::after {
+                visibility: hidden;
+            }
+            & .dragger {
                 visibility: visible;
             }
         }
@@ -131,9 +153,6 @@ body {
             cursor: pointer;
           }
     }
-    &__textarea {
-        max-width: 50%;
-    }
 }
 
 .btn {
@@ -192,4 +211,20 @@ body {
 
   .wsywig {
       margin-bottom: 1rem;
+      word-break: break-word;
+      max-width: 100%;
+  }
+  .ql {
+      &-align {
+          &-center {
+              text-align: center;
+          }
+          &-right {
+              text-align: right;
+          }
+          &-center {
+              text-align: justify;
+          }
+          
+      }
   }

@@ -1,8 +1,9 @@
 <template>
   <div class="mail-footer mail-block">
+    <div class="dragger"></div>
     <mail-nav
       @delete="$emit('delete')"
-      @edit="$emit('edit')"
+      @edit="editContent"
       @up="$emit('up')"
       @down="$emit('down')"
     ></mail-nav>
@@ -29,25 +30,37 @@
         v-model="fileRecords"
       >
       </VueFileAgent>
-      <div contenteditable="true" class="mail__input">123</div>
+      <p class="mail__input" v-html="content" v-if="!showEditor"></p>
+      <vue-editor
+        v-model="content"
+        :editorToolbar="customToolbar"
+        v-else
+        class="wsywig"
+      ></vue-editor>
+      <button
+        @click="saveContent"
+        class="btn-custom btn-primary"
+        v-if="showEditor"
+      >
+        Сохранить
+      </button>
     </div>
   </div>
 </template>
 
 <script>
-import MailNav from "@/components/MailNav.vue";
-import Badge from "@/components/Badge.vue";
+import { block } from "@/mixins/block.js";
 
 export default {
   name: "MailFooter",
-  components: { MailNav, Badge },
-  props: {},
+  mixins: [block],
   data() {
     return {
       fileRecords: [],
       uploadUrl: "https://www.mocky.io/v2/5d4fb20b3000005c111099e3",
       uploadHeaders: { "X-Test-Header": "vue-file-agent" },
       fileRecordsForUpload: [], // maintain an upload queue
+      content: "<p></p>",
     };
   },
   methods: {
