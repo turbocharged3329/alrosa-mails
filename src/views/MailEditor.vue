@@ -291,7 +291,7 @@ export default {
             text: "",
           };
 
-          if (elem.type == "h1" || elem.type == "h2") {
+          if (elem.type == "h1" || elem.type == "h2" || elem.type == "h3") {
             data.text = elem.content.replace(/<\/?[a-z][a-z0-9]*>/gi, "");
           }
 
