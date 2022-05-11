@@ -104,10 +104,10 @@ export default {
     MailFooter,
   },
   props: {
-    elementsList: {
-      type: Array,
+    postData: {
+      type: Object,
       default() {
-        return [];
+        return {};
       },
     },
   },
@@ -210,6 +210,7 @@ export default {
       this.elements.splice(event.index, 0, {
         ...event.data,
         id: this.generateId(),
+        content: "",
       });
       this.elements.push();
     },
@@ -244,22 +245,40 @@ export default {
       return Math.random().toString(36).substr(3, 10);
     },
     /**
-     * сохранение созданного письма
+     * сохранение изменений письма
      */
     savePost() {
-      axios({
-        method: "POST",
-        url: `${process.env.VUE_APP_API}/email-templates/`,
-        data: {
-          name: this.postName,
-          status: "ready",
-          template_blocks: this.makeJSON(),
-        },
-        headers: {
-          Authorization: `Token ${this.token}`,
-          "Content-Type": "application/json",
-        },
-      });
+      const headers = {
+        Authorization: `Token ${this.token}`,
+        "Content-Type": "application/json",
+      };
+      const url = `${process.env.VUE_APP_API}/email-templates/${
+        this.postData.id || ""
+      }`;
+
+      if (!this.postData.id) {
+        axios({
+          method: "POST",
+          url,
+          data: {
+            name: this.postName,
+            status: "ready",
+            template_blocks: this.makeJSON(),
+          },
+          headers,
+        });
+      } else {
+        axios({
+          method: "PATCH",
+          url,
+          data: {
+            name: this.postData.name,
+            status: "ready",
+            template_blocks: this.makeJSON(),
+          },
+          headers,
+        });
+      }
     },
     /**
      * подготовка шаблона для сохранения письма
@@ -286,13 +305,13 @@ export default {
      * добавление блоков в редактор при их наличии (есл загружают созданное письмо)
      */
     addTemplateBlocks() {
-      if (this.elementsList.length) {
-        this.elementsList.forEach((elem) => {
+      if (this.postData?.template_blocks?.length) {
+        this.postData.template_blocks.forEach((elem) => {
           const index = this.blocks.findIndex((item) => item.type == elem.type);
           this.elements.splice(index, 0, {
             ...this.blocks[index],
-            id: this.generateId(), 
-            content: elem.text
+            id: this.generateId(),
+            content: elem.text || "",
           });
           this.elements.push();
         });

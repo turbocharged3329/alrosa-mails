@@ -69,7 +69,10 @@ export default {
   methods: {
     ...mapActions(["getPosts"]),
     goToTemplate(data) {
-      this.$router.push({name: 'Constructor', params: {elementsList: JSON.parse(data.template_blocks)}})
+      this.$router.push({name: 'Constructor', params: {postData: {
+        ...data,
+        template_blocks: JSON.parse(data.template_blocks)
+      }}})
     }
   },
   async mounted() {
