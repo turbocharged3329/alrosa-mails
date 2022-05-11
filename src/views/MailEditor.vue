@@ -28,7 +28,6 @@
             <drag class="item" :key="item.id" :handle="'.dragger'">
               <component
                 :is="item.component"
-                @enter="saveData($event, item.id)"
                 @up="moveElement($event, { direction: 'up', id: item.id })"
                 @down="moveElement($event, { direction: 'down', id: item.id })"
                 @delete="removeElement($event, { id: item.id })"
@@ -114,6 +113,7 @@ export default {
   },
   data() {
     return {
+      //массив блоков с параметрами для перетаскивания в редактор
       blocks: [
         {
           id: 1,
@@ -195,6 +195,7 @@ export default {
           content: null,
         },
       ],
+      //массив блоков в редакторе
       elements: [],
     };
   },
@@ -202,6 +203,9 @@ export default {
     ...mapGetters(["token", "postName"]),
   },
   methods: {
+    /**
+     * обработчик перетаскивания блока в редактор
+     */
     onInsert(event) {
       this.elements.splice(event.index, 0, {
         ...event.data,
@@ -209,10 +213,9 @@ export default {
       });
       this.elements.push();
     },
-    saveData(event, id) {
-      const targetElem = this.elements.find((elem) => elem.id == id);
-      targetElem.data = event;
-    },
+    /**
+     * обработчик перемещения элемента в редакторе
+     */
     moveElement(event, data) {
       const elementToMove = this.elements.find((elem) => elem.id == data.id);
       const indexToMove = this.elements.findIndex(
@@ -225,15 +228,24 @@ export default {
       Vue.set(this.elements, indexToMove, elementToReplace);
       Vue.set(this.elements, indexToReplace, elementToMove);
     },
+    /**
+     * удаление элемента из редактора
+     */
     removeElement(event, data) {
       this.elements.splice(
         this.elements.findIndex((elem) => elem.id == data.id),
         1
       );
     },
+    /**
+     * генерация идентификатора
+     */
     generateId() {
       return Math.random().toString(36).substr(3, 10);
     },
+    /**
+     * сохранение созданного письма
+     */
     savePost() {
       axios({
         method: "POST",
@@ -249,6 +261,9 @@ export default {
         },
       });
     },
+    /**
+     * подготовка шаблона для сохранения письма
+     */
     makeJSON() {
       const dataToSend = JSON.stringify(
         this.elements.map((elem) => {
@@ -267,6 +282,9 @@ export default {
 
       return dataToSend;
     },
+    /**
+     * добавление блоков в редактор при их наличии (есл загружают созданное письмо)
+     */
     addTemplateBlocks() {
       if (this.elementsList.length) {
         this.elementsList.forEach((elem) => {
@@ -280,6 +298,9 @@ export default {
         });
       }
     },
+    /**
+     * нажатие на ссылку "Назад"
+     */
     backToTemplates() {
       this.$router.push({ name: "Layouts" });
     },
