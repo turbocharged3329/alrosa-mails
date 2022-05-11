@@ -6,18 +6,34 @@
     <div class="archive__body">
       <h1 class="archive__title">Архив рассылок</h1>
       <div class="archive__list">
-        <template v-for="item in archive">
-          <div class="archive__list-item" :key="item.id">
+        <template v-for="item in posts">
+          <div class="archive__list-item" :key="item.id" @click.prevent.stop="goToTemplate(item)">
             <div class="archive__list-item-status">
-              <span class="status-value">{{ item.status }}</span>
+              <span
+                class="status-value"
+                :class="{
+                  draft: item.status == 'draft',
+                  ready: item.status != 'draft',
+                }"
+                >{{ item.status == "draft" ? "Черновик" : "Готово" }}</span
+              >
             </div>
-            <p class="archive__list-item-title">{{ item.title }}</p>
-            <div class="archive__list-item-date">132</div>
+            <p class="archive__list-item-title">{{ item.name }}</p>
+            <div class="archive__list-item-date">
+              {{
+                moment(
+                  item.status == "draft" ? item.created_at : item.updated_at
+                ).format("DD.MM.YYYY HH:MM")
+              }}
+            </div>
           </div>
         </template>
       </div>
       <div class="archive__footer">
-        <button class="archive__create-btn btn-custom" @click="$router.push({name: 'AddNew'})">
+        <button
+          class="archive__create-btn btn-custom"
+          @click="$router.push({ name: 'AddNew' })"
+        >
           Создать новую тему
         </button>
       </div>
@@ -26,6 +42,8 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from "vuex";
+
 export default {
   name: "Archive",
   components: {},
@@ -45,7 +63,18 @@ export default {
       ],
     };
   },
-  methods: {},
+  computed: {
+    ...mapGetters(["posts"]),
+  },
+  methods: {
+    ...mapActions(["getPosts"]),
+    goToTemplate(data) {
+      this.$router.push({name: 'Constructor', params: {elementsList: JSON.parse(data.template_blocks)}})
+    }
+  },
+  async mounted() {
+    await this.getPosts();
+  },
 };
 </script>
 
@@ -99,7 +128,6 @@ export default {
         justify-content: center;
         align-items: flex-start;
         .status-value {
-          background: red;
           padding: 3px auto;
           border-radius: 11px;
           height: 1.5rem;
@@ -114,6 +142,12 @@ export default {
           justify-content: center;
           align-items: center;
           margin-top: 5px;
+          &.draft {
+            background-color: #c7ced9;
+          }
+          &.ready {
+            background-color: #54b76b;
+          }
         }
       }
       &-title {

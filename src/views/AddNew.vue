@@ -13,7 +13,7 @@
       />
       <button
         class="add-new__btn btn-primary btn-custom"
-        @click="saveName"
+        @click="savePost"
         :class="{ disabled: !name.length }"
         :disabled="!name.length"
       >
@@ -24,6 +24,8 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
 export default {
   name: "AddNew",
   components: {},
@@ -34,15 +36,17 @@ export default {
     };
   },
   methods: {
+    ...mapActions(["setPostName"]),
     enterName(event) {
       this.name = event.target.innerHTML;
     },
-    saveName() {
-      console.log(this.name);
+    savePost() {
+      this.setPostName(this.name)
+      this.$router.push({name: 'Constructor'})
     },
-  },
-  mounted() {
-    this.$refs.input.focus();
+    mounted() {
+      this.$refs.input.focus();
+    },
   },
 };
 </script>

@@ -25,11 +25,12 @@
             v-model="password"
           />
         </div>
+        <span v-if="loginError" class="auth__error">Неверный логин или пароль</span>
         <button
           class="auth__login-btn btn-primary btn-custom"
           :class="{ disabled: !email.length || !password.length }"
           :disabled="!email.length || !password.length"
-          @click="auth"
+          @click.prevent.stop="auth"
         >
           Войти
         </button>
@@ -54,17 +55,26 @@ export default {
       showPass: false,
       email: "",
       password: "",
+      loginError: false
     };
   },
   methods: {
     ...mapActions([
-      'setHeaderVisibility'
+      'setHeaderVisibility',
+      'getToken'
     ]),
     togglePassword() {
       this.showPass = !this.showPass;
     },
     auth() {
-      this.$router.push({name: 'Layouts'})
+      this.getToken({email: this.email, password: this.password})
+      .then((response) => {
+        this.loginError = !response
+        
+        if (!this.loginError) {
+          this.$router.push({name: 'Layouts'})
+        }
+      })
     }
   },
   mounted() {
@@ -131,6 +141,7 @@ export default {
     }
     &-form {
       width: 50%;
+      position: relative;
     }
     &-email {
       margin-bottom: 2.85rem;
@@ -156,6 +167,15 @@ export default {
       text-transform: uppercase;
       color: #ffffff;
     }
+  }
+  &__error {
+    color: red;
+    position: absolute;
+    bottom: 25%;
+    width: 100%;
+    text-align: center;
+    left: 50%;
+    transform: translate(-50%);
   }
 }
 </style>

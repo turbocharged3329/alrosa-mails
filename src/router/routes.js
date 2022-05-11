@@ -28,6 +28,7 @@ const routes = [
 		path: '/constructor',
 		component: () => import('@/views/MailEditor.vue'),
 		name: 'Constructor',
+		props: true
 	},
 ]
 

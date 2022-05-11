@@ -4,10 +4,10 @@
       <img class="logo" alt="Алроса" src="@/assets/logo.svg" />
       <div class="header__actions">
         <div class="header__actions-btns" v-if="showHeaderButtons">
-          <button class="btn-custom btn-secondary">Сохранить</button>
+          <button class="btn-custom btn-secondary" @click.prevent.stop="emitSave">Сохранить</button>
           <button class="btn-custom btn-secondary">Предпросмотр</button>
         </div>
-        <a class="header__actions-logout" @click="$router.push({path: '/'})">Выйти</a>
+        <a class="header__actions-logout" @click.prevent.stop="logoutUser">Выйти</a>
       </div>
     </div>
     <router-view @show="showHeaderButtons = $event"></router-view>
@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import {mapGetters} from 'vuex';
+import {mapActions, mapGetters} from 'vuex';
 export default {
   name: "App",
   data() {
@@ -23,12 +23,21 @@ export default {
       showHeaderButtons: false,
     };
   },
-  method: {
-    
+  methods: {
+    ...mapActions([
+      'logout'
+    ]),
+    logoutUser() {
+      this.logout()
+      this.$router.push({path: '/'})
+    },
+    emitSave() {
+      this.$emit('save-post', null)
+    }
   },
   computed: {
     ...mapGetters([
-      'headerVisibility'
+      'headerVisibility',
     ])
   }
 };

@@ -1,6 +1,6 @@
 <template>
   <div class="editor">
-    <div class="back-link" @click="$router.go(-1)">
+    <div class="back-link" @click="backToTemplates">
       <span class="back-link-text">Назад</span>
     </div>
     <div class="editor__navbar">
@@ -29,9 +29,11 @@
               <component
                 :is="item.component"
                 @enter="saveData($event, item.id)"
-                @up="moveElement($event, {direction: 'up', id:item.id})"
-                @down="moveElement($event, {direction: 'down', id:item.id})"
-                @delete="removeElement($event, {id:item.id})"
+                @up="moveElement($event, { direction: 'up', id: item.id })"
+                @down="moveElement($event, { direction: 'down', id: item.id })"
+                @delete="removeElement($event, { id: item.id })"
+                @save="item.content = $event"
+                :text="item.content"
               ></component>
             </drag>
           </template>
@@ -80,7 +82,9 @@ import MailPicture from "@/components/MailPicture.vue";
 import MailPictureWide from "@/components/MailPictureWide.vue";
 import MailButton from "@/components/MailButton.vue";
 import MailFooter from "@/components/MailFooter.vue";
-import Vue from 'vue'
+import axios from "axios";
+import Vue from "vue";
+import { mapGetters } from "vuex";
 
 export default {
   name: "MailEditor",
@@ -100,7 +104,14 @@ export default {
     MailButton,
     MailFooter,
   },
-  props: {},
+  props: {
+    elementsList: {
+      type: Array,
+      default() {
+        return [];
+      },
+    },
+  },
   data() {
     return {
       blocks: [
@@ -108,109 +119,182 @@ export default {
           id: 1,
           title: "Шапка",
           component: "MailHeader",
-          data: {},
+          type: "image",
+          content: null,
         },
         {
           id: 2,
           title: "Заголовок H1",
           component: "MailH1",
-          data: {},
+          type: "h1",
+          content: null,
         },
         {
           id: 3,
           title: "Заголовок H2",
           component: "MailH2",
-          data: {},
+          type: "h2",
+          content: null,
         },
         {
           id: 4,
           title: "Заголовок H3",
           component: "MailH3",
-          data: {},
+          type: "h3",
+          content: null,
         },
         {
           id: 5,
           title: "Обычный текст",
           component: "MailText",
-          data: {},
+          type: "text",
+          content: null,
         },
         {
           id: 6,
           title: "Название письма",
           component: "MailName",
-          data: {},
+          type: "title",
+          content: null,
         },
         {
           id: 7,
           title: "Разделитель",
           component: "MailDivider",
-          data: {},
+          type: "divider",
+          content: null,
         },
         {
           id: 8,
           title: "Картинка",
           component: "MailPicture",
-          data: {},
+          content: null,
         },
         {
           id: 9,
           title: "Акцентированный текст",
           component: "MailTextHighlighted",
-          data: {},
+          content: null,
         },
         {
           id: 10,
           title: "Картинка широкая",
           component: "MailPictureWide",
-          data: {},
+          content: null,
         },
         {
           id: 11,
           title: "Кнопка",
           component: "MailButton",
-          data: {},
+          content: null,
         },
         {
           id: 12,
           title: "Футер/дно",
           component: "MailFooter",
-          data: {},
+          content: null,
         },
       ],
       elements: [],
     };
   },
+  computed: {
+    ...mapGetters(["token", "postName"]),
+  },
   methods: {
     onInsert(event) {
-      this.elements.splice(event.index, 0, {...event.data, id: this.generateId()});
-      this.elements.push()
+      this.elements.splice(event.index, 0, {
+        ...event.data,
+        id: this.generateId(),
+      });
+      this.elements.push();
     },
     saveData(event, id) {
       const targetElem = this.elements.find((elem) => elem.id == id);
       targetElem.data = event;
     },
     moveElement(event, data) {
-      const elementToMove = this.elements.find(elem => elem.id == data.id);
-      const indexToMove = this.elements.findIndex(elem => elem == elementToMove)
-      const indexToReplace = data.direction == 'up' ? indexToMove - 1 : indexToMove + 1;
+      const elementToMove = this.elements.find((elem) => elem.id == data.id);
+      const indexToMove = this.elements.findIndex(
+        (elem) => elem == elementToMove
+      );
+      const indexToReplace =
+        data.direction == "up" ? indexToMove - 1 : indexToMove + 1;
       const elementToReplace = this.elements[indexToReplace];
-      
-      Vue.set(this.elements, indexToMove, elementToReplace)
-      Vue.set(this.elements, indexToReplace, elementToMove)
+
+      Vue.set(this.elements, indexToMove, elementToReplace);
+      Vue.set(this.elements, indexToReplace, elementToMove);
     },
     removeElement(event, data) {
-      this.elements.splice(this.elements.findIndex(elem => elem.id == data.id), 1)
+      this.elements.splice(
+        this.elements.findIndex((elem) => elem.id == data.id),
+        1
+      );
     },
     generateId() {
       return Math.random().toString(36).substr(3, 10);
-    }
+    },
+    savePost() {
+      axios({
+        method: "POST",
+        url: `${process.env.VUE_APP_API}/email-templates/`,
+        data: {
+          name: this.postName,
+          status: "ready",
+          template_blocks: this.makeJSON(),
+        },
+        headers: {
+          Authorization: `Token ${this.token}`,
+          "Content-Type": "application/json",
+        },
+      });
+    },
+    makeJSON() {
+      const dataToSend = JSON.stringify(
+        this.elements.map((elem) => {
+          const data = {
+            type: elem.type,
+            text: "",
+          };
+
+          if (elem.type == "h1" || elem.type == "h2") {
+            data.text = elem.content.replace(/<\/?[a-z][a-z0-9]*>/gi, "");
+          }
+
+          return data;
+        })
+      );
+
+      return dataToSend;
+    },
+    addTemplateBlocks() {
+      if (this.elementsList.length) {
+        this.elementsList.forEach((elem) => {
+          const index = this.blocks.findIndex((item) => item.type == elem.type);
+          this.elements.splice(index, 0, {
+            ...this.blocks[index],
+            id: this.generateId(), 
+            content: elem.text
+          });
+          this.elements.push();
+        });
+      }
+    },
+    backToTemplates() {
+      this.$router.push({ name: "Layouts" });
+    },
   },
   created() {
-    this.$emit('show', true)
+    this.$emit("show", true);
+    this.$parent.$on("save-post", this.savePost);
+  },
+  mounted() {
+    this.addTemplateBlocks();
   },
   beforeDestroy() {
-    this.$emit('show', false)
-  }
+    this.$emit("show", false);
+    this.$parent.$off("save-post", this.savePost);
+  },
 };
 </script>
 
@@ -257,7 +341,7 @@ export default {
     &-style {
       display: inline-flex;
       padding-right: 1rem;
-      border-right: 1px solid #E3E9F2;
+      border-right: 1px solid #e3e9f2;
       margin-left: 15vw;
     }
     &-align {
@@ -273,28 +357,28 @@ export default {
       background-color: transparent;
       border: none;
       padding: 0;
-      margin: 0 .5rem;
+      margin: 0 0.5rem;
       cursor: pointer;
       &.bold {
-        background-image: url('~@/assets/format-bold.svg');
+        background-image: url("~@/assets/format-bold.svg");
       }
       &.italic {
-        background-image: url('~@/assets/format-italic.svg');
+        background-image: url("~@/assets/format-italic.svg");
       }
       &.underline {
-        background-image: url('~@/assets/format-underline.svg');
+        background-image: url("~@/assets/format-underline.svg");
       }
       &.left {
-        background-image: url('~@/assets/align-left.svg');
+        background-image: url("~@/assets/align-left.svg");
       }
       &.center {
-        background-image: url('~@/assets/align-center.svg');
+        background-image: url("~@/assets/align-center.svg");
       }
       &.right {
-        background-image: url('~@/assets/align-right.svg');
+        background-image: url("~@/assets/align-right.svg");
       }
       &.justify {
-        background-image: url('~@/assets/align-justify.svg');
+        background-image: url("~@/assets/align-justify.svg");
       }
     }
   }

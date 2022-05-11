@@ -9,7 +9,7 @@
     ></mail-nav>
     <div class="mail-content">
       <badge>Заголовок H1</badge>
-      <p class="mail__input placeholder">Введите текст заголовка H1</p>
+      <!-- <p class="mail__input placeholder">Введите текст заголовка H1</p> -->
       <p class="mail__input" v-html="content" v-if="!showEditor"></p>
       <vue-editor
         v-model="content"
@@ -34,11 +34,15 @@ import { block } from "@/mixins/block.js";
 export default {
   name: "MailH1",
   mixins: [block],
+  props: ['text'],
   data() {
     return {
       content: "<h1></h1>",
     };
   },
+  created() {
+    this.content = `<h1>${this.text}</h1>`
+  }
 };
 </script>
 
