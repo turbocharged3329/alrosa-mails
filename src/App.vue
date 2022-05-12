@@ -5,7 +5,7 @@
       <div class="header__actions">
         <div class="header__actions-btns" v-if="showHeaderButtons">
           <button class="btn-custom btn-secondary" @click.prevent.stop="emitSave">Сохранить</button>
-          <button class="btn-custom btn-secondary">Предпросмотр</button>
+          <button class="btn-custom btn-secondary" @click.prevent.stop="emitDraft">Предпросмотр</button>
         </div>
         <a class="header__actions-logout" @click.prevent.stop="logoutUser">Выйти</a>
       </div>
@@ -33,6 +33,9 @@ export default {
     },
     emitSave() {
       this.$emit('save-post', null)
+    },
+    emitDraft() {
+      this.$emit('save-post', true)
     }
   },
   computed: {

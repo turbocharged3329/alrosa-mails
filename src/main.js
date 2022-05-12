@@ -10,7 +10,6 @@ import moment from 'moment';
 Vue.prototype.moment = moment
 
 Vue.use(VueFileAgent);
-
 Vue.config.productionTip = false
 
 new Vue({

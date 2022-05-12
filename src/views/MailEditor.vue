@@ -68,6 +68,11 @@
         </div>
       </div>
     </div>
+    <sweet-modal ref="modal">
+      <iframe ref="frame">
+        {{ generatedHtml }}
+      </iframe>
+    </sweet-modal>
   </div>
 </template>
 
@@ -88,6 +93,7 @@ import MailFooter from "@/components/MailFooter.vue";
 import axios from "axios";
 import Vue from "vue";
 import { mapGetters } from "vuex";
+import { SweetModal } from "sweet-modal-vue";
 
 export default {
   name: "MailEditor",
@@ -106,6 +112,7 @@ export default {
     MailPictureWide,
     MailButton,
     MailFooter,
+    SweetModal,
   },
   props: {
     postData: {
@@ -125,7 +132,7 @@ export default {
           component: "MailHeader",
           type: "header",
           content: null,
-          file: '',
+          file: "",
         },
         {
           id: 2,
@@ -173,44 +180,45 @@ export default {
           id: 8,
           title: "Картинка",
           component: "MailPicture",
-          type: 'image',
+          type: "image",
           content: null,
-          file: ''
+          file: "",
         },
         {
           id: 9,
           title: "Акцентированный текст",
           component: "MailTextHighlighted",
-          type: 'highlighted_text',
+          type: "highlighted_text",
           content: null,
         },
         {
           id: 10,
           title: "Картинка широкая",
           component: "MailPictureWide",
-          type: 'wide_image',
+          type: "wide_image",
           content: null,
-          file: ''
+          file: "",
         },
         {
           id: 11,
           title: "Кнопка",
           component: "MailButton",
-          type: 'button',
+          type: "button",
           content: null,
-          link: null
+          link: null,
         },
         {
           id: 12,
           title: "Футер/дно",
           component: "MailFooter",
-          type: 'footer',
+          type: "footer",
           content: null,
-          file: '',
+          file: "",
         },
       ],
       //массив блоков в редакторе
       elements: [],
+      generatedHtml: "",
     };
   },
   computed: {
@@ -227,6 +235,7 @@ export default {
         content: "",
       });
       this.elements.push();
+      this.$refs.modal.open();
     },
     /**
      * обработчик перемещения элемента в редакторе
@@ -261,7 +270,7 @@ export default {
     /**
      * сохранение изменений письма
      */
-    savePost() {
+    savePost(toDrafts) {
       const headers = {
         Authorization: `Token ${this.token}`,
         "Content-Type": "application/json",
@@ -276,10 +285,13 @@ export default {
           url,
           data: {
             name: this.postName,
-            status: "ready",
+            status: toDrafts ? "draft" : "ready",
             template_blocks: this.makeJSON(),
           },
           headers,
+        }).then((response) => {
+          this.generatedHtml = response.data.generated_html;
+          this.$refs.modal.open();
         });
       } else {
         axios({
@@ -291,6 +303,11 @@ export default {
             template_blocks: this.makeJSON(),
           },
           headers,
+        }).then((response) => {
+          this.generatedHtml = response.data.generated_html;
+          this.$refs.modal.open();
+          this.$refs.frame.contentWindow.document.write('');
+          this.$refs.frame.contentWindow.document.write(this.generatedHtml);
         });
       }
     },
@@ -304,15 +321,21 @@ export default {
             type: elem.type,
           };
 
-          if (['h1', 'h2', 'h3', 'title', 'text', 'highlighted_text'].includes(elem.type)) {
+          if (
+            ["h1", "h2", "h3", "title", "text", "highlighted_text"].includes(
+              elem.type
+            )
+          ) {
             data.text = elem.content.replace(/<\/?[a-z][a-z0-9]*>/gi, "");
-          } else if (['header', 'footer', 'image', 'wide_image'].includes(elem.type)) {
+          } else if (
+            ["header", "footer", "image", "wide_image"].includes(elem.type)
+          ) {
             data.base64_image = elem.file;
-          } else if (elem.type == 'button'){
-            data.label = elem.content.replace(/<\/?[a-z][a-z0-9]*>/gi, "")
-            data.link = elem.link
-          } else if (elem.type == 'divider') {
-            data.text = []
+          } else if (elem.type == "button") {
+            data.label = elem.content.replace(/<\/?[a-z][a-z0-9]*>/gi, "");
+            data.link = elem.link;
+          } else if (elem.type == "divider") {
+            data.text = [];
           }
 
           return data;
@@ -333,7 +356,7 @@ export default {
             id: this.generateId(),
             content: elem.text || elem.label || "",
             link: elem.link || "",
-            image: elem.image || ""
+            image: elem.image || "",
           });
           this.elements.push();
         });
@@ -389,6 +412,7 @@ export default {
   justify-content: flex-start;
   align-items: center;
   height: calc(100vh - $header-height);
+  position: relative;
   // overflow-y: auto;
   &__navbar {
     width: 100%;
@@ -519,5 +543,8 @@ export default {
   background: $gray;
   width: 100%;
   height: 100px;
+}
+
+.modal {
 }
 </style>
