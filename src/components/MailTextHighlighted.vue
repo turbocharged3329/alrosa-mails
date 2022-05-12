@@ -32,12 +32,16 @@ import { block } from '@/mixins/block.js';
 
 export default {
   name: "MailTextHighlighted",
+  props: ['text'],
   mixins: [block],
   data() {
     return {
       content: '<p></p>'
     };
   },
+  created() {
+    this.content = `<p>${this.text}</p>`
+  }
 };
 </script>
 

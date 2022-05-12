@@ -32,7 +32,9 @@
                 @down="moveElement($event, { direction: 'down', id: item.id })"
                 @delete="removeElement($event, { id: item.id })"
                 @save="item.content = $event"
+                @link="item.link = $event"
                 :text="item.content"
+                :link="item.link"
               ></component>
             </drag>
           </template>
@@ -174,6 +176,7 @@ export default {
           id: 9,
           title: "Акцентированный текст",
           component: "MailTextHighlighted",
+          type: 'highlighted_text',
           content: null,
         },
         {
@@ -186,7 +189,9 @@ export default {
           id: 11,
           title: "Кнопка",
           component: "MailButton",
+          type: 'button',
           content: null,
+          link: null
         },
         {
           id: 12,
@@ -289,10 +294,22 @@ export default {
           const data = {
             type: elem.type,
             text: "",
+            link: ""
           };
 
-          if (elem.type == "h1" || elem.type == "h2" || elem.type == "h3") {
+          if (['h1', 'h2', 'h3', 'title', 'text', 'highlighted_text'].includes(elem.type)) {
             data.text = elem.content.replace(/<\/?[a-z][a-z0-9]*>/gi, "");
+            delete data.link
+          } else if (['header'].includes(elem.type)) {
+            console.log(123);
+            delete data.link
+          } else if (elem.type == 'button'){
+            data.label = elem.content.replace(/<\/?[a-z][a-z0-9]*>/gi, "")
+            data.link = elem.link
+            delete data.text;
+          } else if (elem.type == 'divider') {
+            data.text = []
+            delete data.link
           }
 
           return data;
@@ -311,7 +328,8 @@ export default {
           this.elements.splice(index, 0, {
             ...this.blocks[index],
             id: this.generateId(),
-            content: elem.text || "",
+            content: elem.text || elem.label || "",
+            link: elem.link || ""
           });
           this.elements.push();
         });
@@ -325,10 +343,10 @@ export default {
     },
   },
   created() {
-    this.$emit("show", true);
     this.$parent.$on("save-post", this.savePost);
   },
   mounted() {
+    this.$emit("show", true);
     this.addTemplateBlocks();
   },
   beforeDestroy() {

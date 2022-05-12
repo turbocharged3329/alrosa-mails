@@ -33,11 +33,15 @@ import { block } from "@/mixins/block.js";
 export default {
   name: "MailName",
   mixins: [block],
+  props: ['text'],
   data() {
     return {
       content: "<p></p>",
     };
   },
+  created() {
+    this.content = `<p>${this.text}</p>`
+  }
 };
 </script>
 
