@@ -9,6 +9,7 @@
     ></mail-nav>
     <div class="mail-content">
       <badge>Футер/дно</badge>
+      <img :src="imageLink" v-if="imageUrl"/>
       <VueFileAgent
         class="mail-fileinput"
         ref="vueFileAgent"
@@ -54,6 +55,7 @@ import { block } from "@/mixins/block.js";
 export default {
   name: "MailFooter",
   mixins: [block],
+  props: ['imageUrl'],
   data() {
     return {
       fileRecords: [],
@@ -61,10 +63,16 @@ export default {
       uploadHeaders: { "X-Test-Header": "vue-file-agent" },
       fileRecordsForUpload: [], // maintain an upload queue
       content: "<p></p>",
+      image: ''
     };
   },
+  computed: {
+    imageLink() {
+      return process.env.VUE_APP_API + this.imageUrl
+    }
+  },
   methods: {
-    uploadFiles: function () {
+    uploadFiles() {
       // Using the default uploader. You may use another uploader instead.
       this.$refs.vueFileAgent.upload(
         this.uploadUrl,
@@ -73,7 +81,7 @@ export default {
       );
       this.fileRecordsForUpload = [];
     },
-    deleteUploadedFile: function (fileRecord) {
+    deleteUploadedFile(fileRecord) {
       // Using the default uploader. You may use another uploader instead.
       this.$refs.vueFileAgent.deleteUpload(
         this.uploadUrl,
@@ -81,14 +89,20 @@ export default {
         fileRecord
       );
     },
-    filesSelected: function (fileRecordsNewlySelected) {
+    filesSelected(fileRecordsNewlySelected) {
       let validFileRecords = fileRecordsNewlySelected.filter(
         (fileRecord) => !fileRecord.error
       );
       this.fileRecordsForUpload =
         this.fileRecordsForUpload.concat(validFileRecords);
+
+      let reader = new FileReader();
+        reader.readAsDataURL(this.fileRecords[0].file);
+        reader.onload = () => {
+        this.$emit('image', reader.result)
+      };
     },
-    onBeforeDelete: function (fileRecord) {
+    onBeforeDelete(fileRecord) {
       let i = this.fileRecordsForUpload.indexOf(fileRecord);
       if (i !== -1) {
         // queued file, not yet uploaded. Just remove from the arrays
@@ -101,7 +115,7 @@ export default {
         }
       }
     },
-    fileDeleted: function (fileRecord) {
+    fileDeleted(fileRecord) {
       let i = this.fileRecordsForUpload.indexOf(fileRecord);
       if (i !== -1) {
         this.fileRecordsForUpload.splice(i, 1);
@@ -110,6 +124,9 @@ export default {
       }
     },
   },
+  created() {
+    this.image = this.imageUrl
+  }
 };
 </script>
 

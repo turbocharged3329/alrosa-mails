@@ -33,8 +33,10 @@
                 @delete="removeElement($event, { id: item.id })"
                 @save="item.content = $event"
                 @link="item.link = $event"
+                @image="item.file = $event"
                 :text="item.content"
                 :link="item.link"
+                :image-url="item.image"
               ></component>
             </drag>
           </template>
@@ -121,8 +123,9 @@ export default {
           id: 1,
           title: "Шапка",
           component: "MailHeader",
-          type: "image",
+          type: "header",
           content: null,
+          file: '',
         },
         {
           id: 2,
@@ -170,7 +173,9 @@ export default {
           id: 8,
           title: "Картинка",
           component: "MailPicture",
+          type: 'image',
           content: null,
+          file: ''
         },
         {
           id: 9,
@@ -183,7 +188,9 @@ export default {
           id: 10,
           title: "Картинка широкая",
           component: "MailPictureWide",
+          type: 'wide_image',
           content: null,
+          file: ''
         },
         {
           id: 11,
@@ -197,7 +204,9 @@ export default {
           id: 12,
           title: "Футер/дно",
           component: "MailFooter",
+          type: 'footer',
           content: null,
+          file: '',
         },
       ],
       //массив блоков в редакторе
@@ -293,23 +302,17 @@ export default {
         this.elements.map((elem) => {
           const data = {
             type: elem.type,
-            text: "",
-            link: ""
           };
 
           if (['h1', 'h2', 'h3', 'title', 'text', 'highlighted_text'].includes(elem.type)) {
             data.text = elem.content.replace(/<\/?[a-z][a-z0-9]*>/gi, "");
-            delete data.link
-          } else if (['header'].includes(elem.type)) {
-            console.log(123);
-            delete data.link
+          } else if (['header', 'footer', 'image', 'wide_image'].includes(elem.type)) {
+            data.base64_image = elem.file;
           } else if (elem.type == 'button'){
             data.label = elem.content.replace(/<\/?[a-z][a-z0-9]*>/gi, "")
             data.link = elem.link
-            delete data.text;
           } else if (elem.type == 'divider') {
             data.text = []
-            delete data.link
           }
 
           return data;
@@ -329,7 +332,8 @@ export default {
             ...this.blocks[index],
             id: this.generateId(),
             content: elem.text || elem.label || "",
-            link: elem.link || ""
+            link: elem.link || "",
+            image: elem.image || ""
           });
           this.elements.push();
         });
