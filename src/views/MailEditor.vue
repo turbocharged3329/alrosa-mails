@@ -235,7 +235,7 @@ export default {
         content: "",
       });
       this.elements.push();
-      this.$refs.modal.open();
+      // this.$refs.modal.open();
     },
     /**
      * обработчик перемещения элемента в редакторе
