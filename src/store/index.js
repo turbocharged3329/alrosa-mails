@@ -8,7 +8,7 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
   plugins: [
     createPersistedState({
-      paths: ["token", "postName", "headerVisibility"],
+      paths: ["token", "postName", "headerVisibility", "user"],
     }),
   ],
   state: () => ({
@@ -16,6 +16,7 @@ const store = new Vuex.Store({
     posts: [],
     token: null,
     postName: "",
+    user: null,
   }),
   mutations: {
     SET_HEADER_VISIBILITY(state, payload) {
@@ -29,6 +30,9 @@ const store = new Vuex.Store({
     },
     SET_POST_NAME(state, payload) {
       state.postName = payload;
+    },
+    SET_USER_DATA(state, payload) {
+      state.user = payload;
     },
   },
   actions: {
@@ -46,7 +50,7 @@ const store = new Vuex.Store({
         commit("SET_POSTS", response.data);
       });
     },
-    getToken({ commit }, payload) {
+    getToken({ commit, dispatch }, payload) {
       return axios({
         method: "POST",
         url: `${process.env.VUE_APP_API}/auth/get-token/`,
@@ -57,11 +61,23 @@ const store = new Vuex.Store({
       })
         .then((response) => {
           commit("SET_TOKEN", response.data);
+          dispatch("getUser")
           return response;
         })
         .catch((e) => {
           console.log("Неверный логин или пароль", e);
         });
+    },
+    getUser({ commit }) {
+      return axios({
+        method: "GET",
+        url: `${process.env.VUE_APP_API}/user/`,
+        headers: {
+          Authorization: "Token da2da7a36ef5fd7e39944f10c589e7ccddf29217",
+        },
+      }).then((response) => {
+        commit("SET_USER_DATA", response.data);
+      });
     },
     setPostName({ commit }, payload) {
       commit("SET_POST_NAME", payload);
@@ -75,6 +91,7 @@ const store = new Vuex.Store({
     posts: (state) => state.posts,
     token: (state) => state.token,
     postName: (state) => state.postName,
+    user: (state) => state.user,
   },
 });
 

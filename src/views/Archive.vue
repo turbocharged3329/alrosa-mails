@@ -36,6 +36,8 @@
                   </div>
                   <p class="archive__list-item-title">{{ item.name }}</p>
                   <div class="archive__list-item-date">
+                    <span class="archive__list-item-date-value">
+                    {{ user.email }}<br>
                     {{
                       moment(
                         item.status == "draft"
@@ -43,6 +45,7 @@
                           : item.updated_at
                       ).format("DD.MM.YYYY HH:MM")
                     }}
+                    </span>
                   </div>
                 </div>
               </template>
@@ -86,7 +89,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["posts"]),
+    ...mapGetters(["posts", "user"]),
   },
   methods: {
     ...mapActions(["getPosts"]),
@@ -209,7 +212,7 @@ export default {
         flex-basis: 26%;
         height: 100%;
         display: flex;
-        flex-flow: row nowrap;
+        flex-flow: row wrap;
         justify-content: flex-start;
         align-items: center;
         font-style: normal;
@@ -217,6 +220,14 @@ export default {
         font-size: 14px;
         line-height: 135%;
         padding-left: 20px;
+        &-date {
+          flex-basis: 100%;
+          text-align: left;
+        }
+        &-value {
+          flex-basis: 100%;
+          text-align: left;
+        }
       }
     }
   }
