@@ -1,24 +1,40 @@
 <template>
-  <div class="add-new">
-    <div class="back-link" @click="$router.go(-1)">
-      <span class="back-link-text">Назад</span>
-    </div>
-    <div class="add-new__content">
-      <h1 class="add-new__title">Создайте название<br />для рассылки</h1>
-      <input
-        ref="input"
-        class="add-new__input"
-        contenteditable="true"
-        v-model="name"
-      />
-      <button
-        class="add-new__btn btn-primary btn-custom"
-        @click="savePost"
-        :class="{ disabled: !name.length }"
-        :disabled="!name.length"
-      >
-        Создать
-      </button>
+  <div class="add-new container-fluid">
+    <div class="container h-100">
+      <div class="row">
+        <div
+          class="col-1 d-flex flex-row justify-content-end align-items-start"
+        >
+          <div class="back-link" @click="$router.go(-1)">
+            <span class="back-link-text">Назад</span>
+          </div>
+        </div>
+        <div class="col-4 offset-2">
+          <h1 class="add-new__title">Создайте название<br />для рассылки</h1>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-5 offset-3">
+          <input
+            ref="input"
+            class="add-new__input"
+            contenteditable="true"
+            v-model="name"
+          />
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-3 offset-3">
+          <button
+            class="add-new__btn btn-primary btn-custom"
+            @click="savePost"
+            :class="{ disabled: !name.length }"
+            :disabled="!name.length"
+          >
+            Создать
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -41,8 +57,8 @@ export default {
       this.name = event.target.innerHTML;
     },
     savePost() {
-      this.setPostName(this.name)
-      this.$router.push({name: 'Constructor'})
+      this.setPostName(this.name);
+      this.$router.push({ name: "Constructor" });
     },
     mounted() {
       this.$refs.input.focus();
@@ -59,10 +75,11 @@ export default {
   flex-flow: row nowrap;
   justify-content: center;
   align-items: flex-start;
+  padding: 5.5rem 0;
+  height: calc(100vh - 72px);
   &__content {
-    width: 50%;
-    height: 50%;
-    margin-top: 9.5rem;
+    width: 100%;
+    height: 100%;
     display: flex;
     flex-flow: column nowrap;
     justify-content: flex-start;
@@ -77,7 +94,7 @@ export default {
     line-height: 42px;
     color: $black;
     margin: 0;
-    margin-bottom: 12rem;
+    margin-bottom: 8rem;
   }
   &__input {
     @extend .mail__input;
@@ -88,7 +105,7 @@ export default {
     background: transparent;
     border-bottom: 1px solid #eeeeee;
     height: 32px;
-    margin-bottom: 6rem;
+    margin-bottom: 5.3rem;
     &:focus {
       border-bottom: 1px solid #eeeeee;
     }

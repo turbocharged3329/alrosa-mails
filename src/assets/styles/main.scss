@@ -178,6 +178,7 @@ body {
     flex-flow: row nowrap;
     justify-content: center;
     align-items: center;
+    width: 100%;
 }
 &-primary {
     border: none;
@@ -199,22 +200,25 @@ body {
 .back-link {
     flex-basis: 5%;
     cursor: pointer;
+    width: 100%;
     height: auto;
-    position: absolute;
-    left: 10%;
-    top: 163px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 14px;
     &-text {
     position: relative;
       &::before {
       content: '';
-      width: 20px;
-      height: 20px;
+      width: 15px;
+      height: 15px;
       display: block;
       position: absolute;
       top: 0px;
       left: -20px;
       background: url('~@/assets/angle.svg') no-repeat;
       background-size: cover;
+
     }
     }
   }
