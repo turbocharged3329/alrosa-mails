@@ -2,11 +2,17 @@
 
 @font-face {
     font-family: "Avenir Next";
-    src: url(~@/assets/fonts/AvenirNextCyr-Regular.otf);
+    src: url(~@/assets/fonts/AvenirNextCyr-Demi.otf);
+}
+
+@media (min-width: 1400px) {
+    .container{
+        max-width: 1200px !important;
+    }
 }
 
 #app {
-    font-family: Avenir Next, sans-serif;
+    font-family: Avenir Next, sans-serif !important;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
@@ -168,6 +174,10 @@ body {
     text-transform: uppercase;        
     color: $black;
     cursor: pointer;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
 }
 &-primary {
     border: none;
@@ -228,9 +238,3 @@ body {
           
       }
   }
-
-  @media (min-width: 1400px) {
-    .container{
-        max-width: 1200px;
-    }
-}

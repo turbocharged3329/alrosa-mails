@@ -1,13 +1,31 @@
 <template>
   <div id="app">
-    <div class="header" v-if="headerVisibility">
-      <img class="logo" alt="Алроса" src="@/assets/logo.svg" />
-      <div class="header__actions">
-        <div class="header__actions-btns" v-if="showHeaderButtons">
-          <button class="btn-custom btn-secondary" @click.prevent.stop="emitSave">Сохранить</button>
-          <button class="btn-custom btn-secondary" @click.prevent.stop="emitDraft">Предпросмотр</button>
+    <div class="header container-fluid" v-if="headerVisibility">
+      <div class="container">
+        <div class="row">
+          <div class="col-11 offset-1 d-flex flex-row justify-content-between">
+            <img class="logo" alt="Алроса" src="@/assets/logo.svg" />
+            <div class="header__actions">
+              <div class="header__actions-btns" v-if="showHeaderButtons">
+                <button
+                  class="btn-custom btn-secondary"
+                  @click.prevent.stop="emitSave"
+                >
+                  Сохранить
+                </button>
+                <button
+                  class="btn-custom btn-secondary"
+                  @click.prevent.stop="emitDraft"
+                >
+                  Предпросмотр
+                </button>
+              </div>
+              <a class="header__actions-logout" @click.prevent.stop="logoutUser"
+                >Выйти</a
+              >
+            </div>
+          </div>
         </div>
-        <a class="header__actions-logout" @click.prevent.stop="logoutUser">Выйти</a>
       </div>
     </div>
     <router-view @show="showHeaderButtons = $event"></router-view>
@@ -15,7 +33,7 @@
 </template>
 
 <script>
-import {mapActions, mapGetters} from 'vuex';
+import { mapActions, mapGetters } from "vuex";
 export default {
   name: "App",
   data() {
@@ -24,25 +42,21 @@ export default {
     };
   },
   methods: {
-    ...mapActions([
-      'logout'
-    ]),
+    ...mapActions(["logout"]),
     logoutUser() {
-      this.logout()
-      this.$router.push({path: '/'})
+      this.logout();
+      this.$router.push({ path: "/" });
     },
     emitSave() {
-      this.$emit('save-post', null)
+      this.$emit("save-post", null);
     },
     emitDraft() {
-      this.$emit('save-post', true)
-    }
+      this.$emit("save-post", true);
+    },
   },
   computed: {
-    ...mapGetters([
-      'headerVisibility',
-    ])
-  }
+    ...mapGetters(["headerVisibility"]),
+  },
 };
 </script>
 
@@ -80,6 +94,11 @@ export default {
       right: 0px;
       top: 50%;
       transform: translateY(-50%);
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 17px;
+      color: #000;
+      text-decoration: none;
     }
   }
 }

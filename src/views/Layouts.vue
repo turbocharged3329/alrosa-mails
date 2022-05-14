@@ -1,34 +1,52 @@
 <template>
-  <div class="layouts">
-    <div class="layouts__body">
-      <h1 class="layouts__title">Выберите тему письма</h1>
-      <div class="layouts__list">
-        <template v-for="item in layouts">
-          <div class="layouts__list-item" :key="item.id" @click="$router.push({name: 'Constructor'})">
-            <img
-              class="layouts__list-item-img"
-              :style="{
-                backgroundImage: 'url(' + require(`@/assets/bg.png`) + ')',
-              }"
-            />
-            <p class="layouts__list-item-title">{{ item.title }}</p>
-          </div>
-        </template>
-        <div class="layouts__list-item archive-item" @click="$router.push({name: 'Archive'})">
-          <div class="archive-item__bg">Архив рассылок</div>
+  <div class="layouts container-fluid">
+    <div class="layouts__body container">
+      <div class="row w-100">
+        <div class="col-9 offset-3">
+          <h1 class="layouts__title">Выберите тему письма</h1>
         </div>
       </div>
-      <div class="layouts__footer">
-        <button class="layouts__create-btn btn-custom" @click="$router.push({name: 'AddNew'})">
-          Создать новую тему
-        </button>
+      <div class="row w-100">
+        <div class="layouts__list col-9 offset-1 d-flex flex-row flex-wrap g-0">
+          <template v-for="item in layouts">
+            <div
+              class="layouts__list-item"
+              :key="item.id"
+              @click="$router.push({ name: 'Constructor' })"
+            >
+              <img
+                class="layouts__list-item-img"
+                :style="{
+                  backgroundImage: 'url(' + require(`@/assets/bg.png`) + ')',
+                }"
+              />
+              <p class="layouts__list-item-title">{{ item.title }}</p>
+            </div>
+          </template>
+          <div
+            class="layouts__list-item archive-item"
+            @click="$router.push({ name: 'Archive' })"
+          >
+            <div class="archive-item__bg">Архив рассылок</div>
+          </div>
+        </div>
+      </div>
+      <div class="layouts__footer row w-100">
+        <div class="col-9 offset-3 d-flex flex-row justify-content-start">
+          <button
+            class="layouts__create-btn btn-custom"
+            @click="$router.push({ name: 'AddNew' })"
+          >
+            Создать новую тему
+          </button>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import {mapActions} from 'vuex';
+import { mapActions } from "vuex";
 export default {
   name: "Layouts",
   components: {},
@@ -41,23 +59,15 @@ export default {
         { id: 3, title: "Обращение генерального директора" },
         { id: 4, title: "Поздравление" },
         { id: 5, title: "HR" },
-        { id: 6, title: "Поздравление" },
-        { id: 7, title: "HR" },
-        { id: 8, title: "Поздравление" },
-        { id: 9, title: "HR" },
-        { id: 10, title: "Поздравление" },
-        { id: 11, title: "HR" },
       ],
     };
   },
   methods: {
-    ...mapActions([
-      'setHeaderVisibility'
-    ]),
+    ...mapActions(["setHeaderVisibility"]),
   },
   mounted() {
-    this.setHeaderVisibility(true)
-  }
+    this.setHeaderVisibility(true);
+  },
 };
 </script>
 
@@ -70,7 +80,7 @@ export default {
   width: 100%;
   height: calc(100vh - $header-height);
   box-sizing: border-box;
-  padding: 72px 0;
+  padding: 5rem 0;
   &__body {
     width: 80%;
     height: 100%;
@@ -82,27 +92,25 @@ export default {
     box-sizing: border-box;
   }
   &__list {
-    display: flex;
-    flex-flow: row wrap;
-    align-items: center;
-    width: 100%;
+    // display: flex;
+    // flex-flow: row wrap;
+    // align-items: center;
+    // width: 100%;
     height: 75%;
-    overflow-y: auto;
-    margin-bottom: 5%;
     &-item {
-      flex-basis: 30%;
+      flex-basis: 31.6%;
       height: 164px;
       margin-bottom: 2.5rem;
       cursor: pointer;
       &:nth-of-type(3n + 1) {
-        margin-right: 1.66%;
+        margin-right: 1.3%;
       }
       &:nth-of-type(3n + 2) {
-        margin-left: 1.66%;
-        margin-right: 1.66%;
+        margin-left: 1.3%;
+        margin-right: 1.3%;
       }
       &:nth-of-type(3n + 3) {
-        margin-left: 1.66%;
+        margin-left: 1.3%;
       }
       &-img {
         width: 100%;
@@ -117,9 +125,10 @@ export default {
         line-height: 28px;
         letter-spacing: 0.02em;
         color: $black;
-        text-align: center;
+        text-align: left;
         width: 100%;
         margin: 0;
+        height: 100%;
       }
     }
   }
@@ -134,19 +143,9 @@ export default {
     width: 100%;
     margin: 0;
     margin-bottom: 3.2rem;
-    padding-left: 50%;
     text-align: left;
     height: 5%;
     margin-bottom: 5%;
-  }
-  &__footer {
-    width: 100%;
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: flex-start;
-    align-items: center;
-    padding-left: 50%;
-    height: 10%;
   }
   &__create-btn {
     border: 2px solid $blue;
