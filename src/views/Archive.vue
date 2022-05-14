@@ -1,6 +1,6 @@
 <template>
   <div class="archive container-fluid">
-    <div class="container h-100 archive__container">
+    <div class="container h-100 archive__container p-0">
       <div class="row archive__title-row">
         <div
           class="col-1 d-flex flex-row justify-content-end align-items-start"

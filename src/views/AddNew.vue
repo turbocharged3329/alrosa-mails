@@ -9,7 +9,7 @@
             <span class="back-link-text">Назад</span>
           </div>
         </div>
-        <div class="col-4 offset-2">
+        <div class="col-9 offset-2">
           <h1 class="add-new__title">Создайте название<br />для рассылки</h1>
         </div>
       </div>
