@@ -68,11 +68,14 @@
         </div>
       </div>
     </div>
-    <sweet-modal ref="modal">
-      <iframe ref="frame">
+    <!-- <sweet-modal ref="modal">
+      <iframe ref="frame" width="100%" height="100%">
         {{ generatedHtml }}
       </iframe>
-    </sweet-modal>
+    </sweet-modal> -->
+    <modal name="modal" :width="'50%'" :height="'90%'">
+      <vue-iframe :src="src" width="100" height="100"></vue-iframe>
+    </modal>
   </div>
 </template>
 
@@ -219,6 +222,17 @@ export default {
       //массив блоков в редакторе
       elements: [],
       generatedHtml: "",
+      src: `<html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+      </head>
+      <body>
+        <div>123</div>
+      </body>
+      </html>`
     };
   },
   computed: {
@@ -236,6 +250,7 @@ export default {
       });
       this.elements.push();
       // this.$refs.modal.open();
+      this.$modal.show('modal')
     },
     /**
      * обработчик перемещения элемента в редакторе
@@ -384,6 +399,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+iframe {
+  border: none;
+}
+
 .wrapper {
   .list {
     border: 1px solid black;

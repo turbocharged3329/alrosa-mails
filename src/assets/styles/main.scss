@@ -2,7 +2,7 @@
 
 @font-face {
     font-family: "Avenir Next";
-    src: url(~@/assets/fonts/AvenirNext.ttf);
+    src: url(~@/assets/fonts/AvenirNextCyr-Regular.otf);
 }
 
 #app {
@@ -160,7 +160,7 @@ body {
     border-radius: 42px;
     padding: .7rem 2.6rem;
     box-sizing: border-box;
-    height: 2.9rem;
+    height: 41px;
     font-weight: 500;
     font-size: 14px;
     line-height: 21px;
@@ -228,3 +228,9 @@ body {
           
       }
   }
+
+  @media (min-width: 1400px) {
+    .container{
+        max-width: 1200px;
+    }
+}

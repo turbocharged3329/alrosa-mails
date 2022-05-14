@@ -1,51 +1,62 @@
 <template>
-  <div class="auth">
-    <div class="auth__login">
-      <img src="@/assets/logo.svg" alt="Алроса" class="auth__login-logo" />
-      <form action="login" autocomplete name="login" class="auth__login-form">
-        <input
-          class="auth__login-email auth-input"
-          id="email"
-          placeholder="Почта"
-          type="email"
-          v-model="email"
-        />
-        <div class="auth__login-wrapper">
-          <img
-            src="@/assets/closed-eye.svg"
-            alt=""
-            class="auth__login-eye"
-            @click.prevent.stop="togglePassword"
-          />
-          <input
-            class="auth__login-password auth-input"
-            id="password"
-            placeholder="Пароль"
-            :type="showPass ? 'text' : 'password'"
-            v-model="password"
-          />
+  <div class="auth container-fluid">
+    <div class="container h-100">
+      <div class="row h-100">
+        <div class="auth__login col-3 offset-1">
+          <img src="@/assets/logo.svg" alt="Алроса" class="auth__login-logo" />
+          <form
+            action="login"
+            autocomplete
+            name="login"
+            class="auth__login-form"
+          >
+            <input
+              class="auth__login-email auth-input"
+              id="email"
+              placeholder="Почта"
+              type="email"
+              v-model="email"
+            />
+            <div class="auth__login-wrapper">
+              <img
+                src="@/assets/closed-eye.svg"
+                alt=""
+                class="auth__login-eye"
+                @click.prevent.stop="togglePassword"
+              />
+              <input
+                class="auth__login-password auth-input"
+                id="password"
+                placeholder="Пароль"
+                :type="showPass ? 'text' : 'password'"
+                v-model="password"
+              />
+            </div>
+            <span v-if="loginError" class="auth__error"
+              >Неверный логин или пароль</span
+            >
+            <button
+              class="auth__login-btn btn-primary btn-custom"
+              :class="{ disabled: !email.length || !password.length }"
+              :disabled="!email.length || !password.length"
+              @click.prevent.stop="auth"
+            >
+              Войти
+            </button>
+          </form>
         </div>
-        <span v-if="loginError" class="auth__error">Неверный логин или пароль</span>
-        <button
-          class="auth__login-btn btn-primary btn-custom"
-          :class="{ disabled: !email.length || !password.length }"
-          :disabled="!email.length || !password.length"
-          @click.prevent.stop="auth"
-        >
-          Войти
-        </button>
-      </form>
-    </div>
-    <div class="auth__picture">
-      <h3 class="auth__picture-text">
-        Конструктор<br />корпоративных<br />рассылок
-      </h3>
+        <div class="auth__picture col-6 offset-2">
+          <h3 class="auth__picture-text">
+            Конструктор<br />корпоративных<br />рассылок
+          </h3>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import {mapActions} from 'vuex';
+import { mapActions } from "vuex";
 export default {
   name: "Authorization",
   components: {},
@@ -55,31 +66,29 @@ export default {
       showPass: false,
       email: "",
       password: "",
-      loginError: false
+      loginError: false,
     };
   },
   methods: {
-    ...mapActions([
-      'setHeaderVisibility',
-      'getToken'
-    ]),
+    ...mapActions(["setHeaderVisibility", "getToken"]),
     togglePassword() {
       this.showPass = !this.showPass;
     },
     auth() {
-      this.getToken({email: this.email, password: this.password})
-      .then((response) => {
-        this.loginError = !response
-        
-        if (!this.loginError) {
-          this.$router.push({name: 'Layouts'})
+      this.getToken({ email: this.email, password: this.password }).then(
+        (response) => {
+          this.loginError = !response;
+
+          if (!this.loginError) {
+            this.$router.push({ name: "Layouts" });
+          }
         }
-      })
-    }
+      );
+    },
   },
   mounted() {
     this.$emit("hide");
-    this.setHeaderVisibility(false)
+    this.setHeaderVisibility(false);
   },
 };
 </script>
@@ -92,6 +101,9 @@ export default {
   align-items: center;
   width: 100%;
   height: 100%;
+  background: url("~@/assets/bg.png") no-repeat;
+  background-size: contain;
+  background-position-x: 100%;
   &-input {
     border: none;
     border-bottom: 1px solid #eeeeee;
@@ -113,16 +125,15 @@ export default {
     }
   }
   &__login {
-    flex-basis: 40%;
     height: 100%;
     display: flex;
-    flex-flow: row nowrap;
-    justify-content: center;
-    align-items: center;
+    flex-flow: column nowrap;
+    justify-content: flex-start;
+    align-items: flex-start;
     position: relative;
     &-wrapper {
       position: relative;
-      margin-bottom: 5.5rem;
+      margin-bottom: 5.1rem;
     }
     &-eye {
       position: absolute;
@@ -134,29 +145,26 @@ export default {
     &-logo {
       width: 139px;
       height: 20px;
-      position: absolute;
-      top: 10%;
-      left: 50%;
-      transform: translate(-50%);
+      margin-top: 7.4rem;
+      margin-bottom: 9.85rem;
     }
     &-form {
-      width: 50%;
+      width: 100%;
       position: relative;
     }
     &-email {
-      margin-bottom: 2.85rem;
+      margin-bottom: 2rem;
+    }
+    &-btn {
+      width: 100%;
     }
   }
   &__picture {
-    flex-basis: 60%;
-    background: url("~@/assets/bg.png") no-repeat;
-    background-size: 108%;
     height: 100%;
     display: flex;
     flex-flow: row nowrap;
     justify-content: flex-start;
     align-items: center;
-    padding: 9.3rem;
     box-sizing: border-box;
     &-text {
       text-align: left;
@@ -166,6 +174,7 @@ export default {
       line-height: 135%;
       text-transform: uppercase;
       color: #ffffff;
+      margin-top: -2.2rem;
     }
   }
   &__error {
