@@ -2,7 +2,7 @@
   <div class="layouts container-fluid">
     <div class="layouts__body container">
       <div class="row w-100">
-        <div class="col-9 offset-3">
+        <div class="col-9 offset-3 layouts__title-row">
           <h1 class="layouts__title">Выберите тему письма</h1>
         </div>
       </div>
@@ -32,7 +32,7 @@
         </div>
       </div>
       <div class="layouts__footer row w-100">
-        <div class="col-9 offset-3 d-flex flex-row justify-content-start">
+        <div class="col-4 offset-3 p-0">
           <button
             class="layouts__create-btn btn-custom"
             @click="$router.push({ name: 'AddNew' })"
@@ -80,7 +80,7 @@ export default {
   width: 100%;
   height: calc(100vh - $header-height);
   box-sizing: border-box;
-  padding: 5rem 0;
+  padding: 5.5rem 0;
   &__body {
     width: 80%;
     height: 100%;
@@ -146,10 +146,15 @@ export default {
     text-align: left;
     height: 5%;
     margin-bottom: 5%;
+    &-row {
+
+    }
   }
   &__create-btn {
     border: 2px solid $blue;
     background: transparent;
+    padding: 0;
+    max-width: 275px;
   }
   .archive-item {
     &__bg {

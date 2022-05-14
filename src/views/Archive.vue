@@ -1,41 +1,63 @@
 <template>
-  <div class="archive">
-    <div class="back-link" @click="$router.go(-1)">
-      <span class="back-link-text">Назад</span>
-    </div>
-    <div class="archive__body">
-      <h1 class="archive__title">Архив рассылок</h1>
-      <div class="archive__list">
-        <template v-for="item in posts">
-          <div class="archive__list-item" :key="item.id" @click.prevent.stop="goToTemplate(item)">
-            <div class="archive__list-item-status">
-              <span
-                class="status-value"
-                :class="{
-                  draft: item.status == 'draft',
-                  ready: item.status != 'draft',
-                }"
-                >{{ item.status == "draft" ? "Черновик" : "Готово" }}</span
-              >
-            </div>
-            <p class="archive__list-item-title">{{ item.name }}</p>
-            <div class="archive__list-item-date">
-              {{
-                moment(
-                  item.status == "draft" ? item.created_at : item.updated_at
-                ).format("DD.MM.YYYY HH:MM")
-              }}
-            </div>
-          </div>
-        </template>
-      </div>
-      <div class="archive__footer">
-        <button
-          class="archive__create-btn btn-custom"
-          @click="$router.push({ name: 'AddNew' })"
+  <div class="archive container-fluid">
+    <div class="container h-100 archive__container">
+      <div class="row archive__title-row">
+        <div
+          class="col-1 d-flex flex-row justify-content-end align-items-start"
         >
-          Создать новую тему
-        </button>
+          <div class="back-link" @click="$router.go(-1)">
+            <span class="back-link-text">Назад</span>
+          </div>
+        </div>
+        <div class="col-9 offset-2">
+          <h1 class="archive__title h-100">Архив рассылок</h1>
+        </div>
+      </div>
+      <div class="row archive__list-row">
+        <div class="col-8 offset-2 h-100">
+            <div class="archive__list">
+              <template v-for="item in posts">
+                <div
+                  class="archive__list-item"
+                  :key="item.id"
+                  @click.prevent.stop="goToTemplate(item)"
+                >
+                  <div class="archive__list-item-status">
+                    <span
+                      class="status-value"
+                      :class="{
+                        draft: item.status == 'draft',
+                        ready: item.status != 'draft',
+                      }"
+                      >{{
+                        item.status == "draft" ? "Черновик" : "Готово"
+                      }}</span
+                    >
+                  </div>
+                  <p class="archive__list-item-title">{{ item.name }}</p>
+                  <div class="archive__list-item-date">
+                    {{
+                      moment(
+                        item.status == "draft"
+                          ? item.created_at
+                          : item.updated_at
+                      ).format("DD.MM.YYYY HH:MM")
+                    }}
+                  </div>
+                </div>
+              </template>
+          </div>
+        </div>
+      </div>
+      <div class="row archive__footer-row">
+        <div class="col-4 offset-3">
+          <button
+            class="archive__create-btn btn-custom"
+            @click="$router.push({ name: 'AddNew' })"
+          >
+            Создать новую тему
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -69,11 +91,16 @@ export default {
   methods: {
     ...mapActions(["getPosts"]),
     goToTemplate(data) {
-      this.$router.push({name: 'Constructor', params: {postData: {
-        ...data,
-        template_blocks: JSON.parse(data.template_blocks)
-      }}})
-    }
+      this.$router.push({
+        name: "Constructor",
+        params: {
+          postData: {
+            ...data,
+            template_blocks: JSON.parse(data.template_blocks),
+          },
+        },
+      });
+    },
   },
   async mounted() {
     await this.getPosts();
@@ -90,10 +117,16 @@ export default {
   width: 100%;
   height: calc(100vh - $header-height);
   box-sizing: border-box;
-  padding: 72px 0;
+  padding: 5.5rem 0;
   position: relative;
+  &__container {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: flex-start;
+    justify-content: center;
+  }
   &__body {
-    width: 80%;
+    width: 100%;
     height: 100%;
     max-height: 100%;
     display: flex;
@@ -103,33 +136,34 @@ export default {
     box-sizing: border-box;
   }
   &__list {
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: flex-start;
-    align-items: center;
-    width: 75%;
+    display: block;
+    width: 100%;
     overflow-y: auto;
-    height: 75%;
+    height: 100%;
     box-sizing: border-box;
-    margin-bottom: 5%;
+    &-row {
+      // flex-basis: 80%;
+      height: 66%;
+      flex-basis: 100%;
+      margin-bottom: 5.6%;
+    }
 
     &-item {
       flex-basis: 100%;
-      height: 50px;
+      height: 70px;
       cursor: pointer;
       box-sizing: border-box;
       display: flex;
       flex-flow: row nowrap;
       justify-content: flex-start;
       align-items: center;
-      margin-bottom: 1.5rem;
       &-status {
-        flex-basis: 15%;
+        flex-basis: 11.5%;
         height: 100%;
         display: flex;
         flex-flow: row nowrap;
         justify-content: center;
-        align-items: flex-start;
+        align-items: center;
         .status-value {
           padding: 3px auto;
           border-radius: 11px;
@@ -154,24 +188,35 @@ export default {
         }
       }
       &-title {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: flex-start;
+        align-items: center;
         font-style: normal;
         font-weight: 500;
         font-size: 20px;
         line-height: 28px;
         color: $black;
-        text-align: center;
-        flex-basis: 60%;
+        text-align: left;
+        flex-basis: 62.5%;
         margin: 0;
         border-bottom: 1px solid $gray;
         height: 100%;
+        padding-left: 13px;
+        // padding-top: 9px;
       }
       &-date {
-        flex-basis: 25%;
+        flex-basis: 26%;
         height: 100%;
         display: flex;
         flex-flow: row nowrap;
-        justify-content: center;
+        justify-content: flex-start;
         align-items: center;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 135%;
+        padding-left: 20px;
       }
     }
   }
@@ -185,23 +230,24 @@ export default {
     color: $black;
     width: 100%;
     margin: 0;
-    margin-bottom: 5%;
+    // margin-bottom: 5%;
     text-align: left;
-    padding-left: 50%;
-    height: 5%;
+    &-row {
+          // flex-basis: 14%;
+          height: 14%;
+          flex-basis: 100%;
+    }
   }
-  &__footer {
-    width: 100%;
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: flex-start;
-    align-items: center;
-    padding-left: 50%;
-    height: 10%;
+  &__footer-row {
+    // flex-basis: 8%;
+    height: 14.4%;
+    flex-basis: 100%;
   }
   &__create-btn {
     border: 2px solid $blue;
     background: transparent;
+    padding: 0;
+    max-width: 275px;
   }
   .archive-item {
     &__bg {
