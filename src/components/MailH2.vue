@@ -36,11 +36,11 @@ export default {
   props: ['text'],
   data() {
     return {
-      content: "<h2></h2>",
+      content: "",
     };
   },
   created() {
-    this.content = `<h2>${this.text}</h2>`
+    this.content = `${this.text}`
   }
 };
 </script>
