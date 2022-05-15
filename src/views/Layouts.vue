@@ -1,12 +1,12 @@
 <template>
   <div class="layouts container-fluid">
-    <div class="layouts__body container">
-      <div class="row w-100">
-        <div class="col-9 offset-3 layouts__title-row">
+    <div class="layouts__body container p-0">
+      <div class="row w-100 layouts__title-row">
+        <div class="col-9 offset-3">
           <h1 class="layouts__title">Выберите тему письма</h1>
         </div>
       </div>
-      <div class="row w-100">
+      <div class="row w-100 layouts__list-row">
         <div class="layouts__list col-9 offset-1 d-flex flex-row flex-wrap g-0">
           <template v-for="item in layouts">
             <div
@@ -31,7 +31,7 @@
           </div>
         </div>
       </div>
-      <div class="layouts__footer row w-100">
+      <div class="layouts__footer row w-100 layouts__footer-row">
         <div class="col-4 offset-3 p-0">
           <button
             class="layouts__create-btn btn-custom"
@@ -82,13 +82,12 @@ export default {
   box-sizing: border-box;
   padding: 5.5rem 0;
   &__body {
-    width: 80%;
     height: 100%;
     min-height: 100%;
     display: flex;
-    flex-flow: column nowrap;
-    justify-content: flex-start;
-    align-items: center;
+    flex-flow: row wrap;
+    align-items: flex-start;
+    justify-content: center;
     box-sizing: border-box;
   }
   &__list {
@@ -97,6 +96,11 @@ export default {
     // align-items: center;
     // width: 100%;
     height: 75%;
+    &-row {
+      height: 66%;
+      flex-basis: 100%;
+      margin-bottom: 5.6%;
+    }
     &-item {
       flex-basis: 31.6%;
       height: 164px;
@@ -147,7 +151,8 @@ export default {
     height: 5%;
     margin-bottom: 5%;
     &-row {
-
+      height: 14%;
+      flex-basis: 100%;
     }
   }
   &__create-btn {
@@ -173,6 +178,10 @@ export default {
       justify-content: center;
       align-items: center;
     }
+  }
+  &__footer-row {
+    height: 14.4%;
+    flex-basis: 100%;
   }
 }
 </style>
