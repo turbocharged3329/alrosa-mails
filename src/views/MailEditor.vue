@@ -1,81 +1,78 @@
 <template>
-  <div class="editor">
-    <div class="back-link" @click="backToTemplates">
-      <span class="back-link-text">Назад</span>
-    </div>
-    <div class="editor__navbar">
-      <!-- <div class="editor__navbar-style">
-        <button class="editor__navbar-btn bold"></button>
-        <button class="editor__navbar-btn italic"></button>
-        <button class="editor__navbar-btn underline"></button>
-      </div>
-      <div class="editor__navbar-align">
-        <button class="editor__navbar-btn left"></button>
-        <button class="editor__navbar-btn center"></button>
-        <button class="editor__navbar-btn right"></button>
-        <button class="editor__navbar-btn justify"></button>
-      </div> -->
-    </div>
-    <div class="editor__body">
-      <div class="editor__mail-constructor">
-        <drop-list
-          :items="elements"
-          class="editor__mail-constructor-list"
-          @insert="onInsert"
-          @reorder="$event.apply(elements)"
+  <div class="editor container-fluid">
+    <div class="container">
+      <div class="row">
+        <div
+          class="col-1 d-flex flex-row justify-content-end align-items-start"
         >
-          <template v-slot:item="{ item }">
-            <drag class="item" :key="item.id" :handle="'.dragger'">
-              <component
-                :is="item.component"
-                @up="moveElement($event, { direction: 'up', id: item.id })"
-                @down="moveElement($event, { direction: 'down', id: item.id })"
-                @delete="removeElement($event, { id: item.id })"
-                @save="item.content = $event"
-                @link="item.link = $event"
-                @image="item.file = $event"
-                :text="item.content"
-                :link="item.link"
-                :image-url="item.image"
-              ></component>
-            </drag>
-          </template>
-          <template v-slot:feedback="{ data }">
-            <div class="item feedback" :key="data.id">{{ data.title }}</div>
-          </template>
-        </drop-list>
-      </div>
-      <div class="editor__mail-blocks">
-        <h3 class="editor__mail-blocks-title">Блоки</h3>
-        <p class="editor__mail-blocks-desc">
-          Выберите блоки и перетащите их в правую область
-        </p>
-        <div class="editor__mail-blocks-stack">
-          <drag v-for="item in blocks" :data="item" class="item" :key="item.id">
-            <template>
-              <div class="editor__mail-blocks-item" :key="item.id">
-                <img
-                  src="@/assets/dots.svg"
-                  alt=""
-                  class="editor__mail-blocks-item-dots"
-                />
-                <span class="editor__mail-blocks-item-title">
-                  {{ item.title }}
-                </span>
-              </div>
-            </template>
-          </drag>
+          <div class="back-link" @click="backToTemplates">
+            <span class="back-link-text">Назад</span>
+          </div>
         </div>
+        <div class="editor__body col-7">
+          <div class="editor__mail-constructor">
+            <drop-list
+              :items="elements"
+              class="editor__mail-constructor-list"
+              @insert="onInsert"
+              @reorder="$event.apply(elements)"
+            >
+              <template v-slot:item="{ item }">
+                <drag class="item" :key="item.id" :handle="'.dragger'">
+                  <component
+                    :is="item.component"
+                    @up="moveElement($event, { direction: 'up', id: item.id })"
+                    @down="
+                      moveElement($event, { direction: 'down', id: item.id })
+                    "
+                    @delete="removeElement($event, { id: item.id })"
+                    @save="item.content = $event"
+                    @link="item.link = $event"
+                    @image="item.file = $event"
+                    :text="item.content"
+                    :link="item.link"
+                    :image-url="item.image"
+                  ></component>
+                </drag>
+              </template>
+              <template v-slot:feedback="{ data }">
+                <div class="item feedback" :key="data.id">{{ data.title }}</div>
+              </template>
+            </drop-list>
+          </div>
+        </div>
+        <div class="col-3 offset-1 p-0">
+          <h3 class="editor__mail-blocks-title">Блоки</h3>
+          <p class="editor__mail-blocks-desc">
+            Выберите блоки и перетащите их в правую область
+          </p>
+          <div class="editor__mail-blocks-stack">
+            <drag
+              v-for="item in blocks"
+              :data="item"
+              class="item"
+              :key="item.id"
+            >
+              <template>
+                <div class="editor__mail-blocks-item" :key="item.id">
+                  <img
+                    src="@/assets/dots.svg"
+                    alt=""
+                    class="editor__mail-blocks-item-dots"
+                  />
+                  <span class="editor__mail-blocks-item-title">
+                    {{ item.title }}
+                  </span>
+                </div>
+              </template>
+            </drag>
+          </div>
+        </div>
+        <modal name="modal" :width="'50%'" :height="'90%'">
+          <vue-iframe :src="src" width="100" height="100"></vue-iframe>
+        </modal>
       </div>
     </div>
-    <!-- <sweet-modal ref="modal">
-      <iframe ref="frame" width="100%" height="100%">
-        {{ generatedHtml }}
-      </iframe>
-    </sweet-modal> -->
-    <modal name="modal" :width="'50%'" :height="'90%'">
-      <vue-iframe :src="src" width="100" height="100"></vue-iframe>
-    </modal>
   </div>
 </template>
 
@@ -232,7 +229,7 @@ export default {
       <body>
         <div>123</div>
       </body>
-      </html>`
+      </html>`,
     };
   },
   computed: {
@@ -250,7 +247,7 @@ export default {
       });
       this.elements.push();
       // this.$refs.modal.open();
-      this.$modal.show('modal')
+      // this.$modal.show("modal");
     },
     /**
      * обработчик перемещения элемента в редакторе
@@ -321,7 +318,7 @@ export default {
         }).then((response) => {
           this.generatedHtml = response.data.generated_html;
           this.$refs.modal.open();
-          this.$refs.frame.contentWindow.document.write('');
+          this.$refs.frame.contentWindow.document.write("");
           this.$refs.frame.contentWindow.document.write(this.generatedHtml);
         });
       }
@@ -432,65 +429,9 @@ iframe {
   align-items: center;
   height: calc(100vh - $header-height);
   position: relative;
-  // overflow-y: auto;
-  &__navbar {
-    width: 100%;
-    height: 62px;
-    background-color: $gray;
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: flex-start;
-    align-items: center;
-    left: 0px;
-    z-index: 10;
-    &-style {
-      display: inline-flex;
-      padding-right: 1rem;
-      border-right: 1px solid #e3e9f2;
-      margin-left: 15vw;
-    }
-    &-align {
-      display: inline-flex;
-      padding-left: 1rem;
-    }
-    &-btn {
-      width: 24px;
-      height: 24px;
-      background-size: 100%;
-      background-position: center;
-      background-repeat: no-repeat;
-      background-color: transparent;
-      border: none;
-      padding: 0;
-      margin: 0 0.5rem;
-      cursor: pointer;
-      &.bold {
-        background-image: url("~@/assets/format-bold.svg");
-      }
-      &.italic {
-        background-image: url("~@/assets/format-italic.svg");
-      }
-      &.underline {
-        background-image: url("~@/assets/format-underline.svg");
-      }
-      &.left {
-        background-image: url("~@/assets/align-left.svg");
-      }
-      &.center {
-        background-image: url("~@/assets/align-center.svg");
-      }
-      &.right {
-        background-image: url("~@/assets/align-right.svg");
-      }
-      &.justify {
-        background-image: url("~@/assets/align-justify.svg");
-      }
-    }
-  }
+  padding-top: 5.5rem;
+  overflow-y: auto;
   &__body {
-    width: 80%;
-    min-height: 500px;
-    height: 80%;
     display: flex;
     flex-flow: row nowrap;
     justify-content: center;
@@ -498,8 +439,7 @@ iframe {
   }
   &__mail {
     &-constructor {
-      flex-basis: 65%;
-      padding-left: 5%;
+      flex-basis: 100%;
       &-list {
         width: 100%;
         height: 100%;
@@ -518,6 +458,8 @@ iframe {
         letter-spacing: 0.01em;
         font-weight: 500;
         color: $black;
+        text-align: left;
+        margin-bottom: .3rem;
       }
       &-desc {
         color: $black;
@@ -540,6 +482,12 @@ iframe {
         padding: 6px 8px 6px 15.5px;
         border-radius: 6px;
         margin-bottom: 1rem;
+        box-sizing: border-box;
+        height: 32px;
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-between;
+        align-items: center;
         &-img {
           width: 5px;
           height: 15px;
@@ -551,7 +499,7 @@ iframe {
           line-height: 20px;
           letter-spacing: 0.01em;
           color: $black;
-          // margin-left: 12.5px;
+          margin-left: 11px;
         }
       }
     }
@@ -562,8 +510,5 @@ iframe {
   background: $gray;
   width: 100%;
   height: 100px;
-}
-
-.modal {
 }
 </style>

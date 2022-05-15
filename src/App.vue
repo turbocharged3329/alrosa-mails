@@ -3,7 +3,7 @@
     <div class="header container-fluid" v-if="headerVisibility">
       <div class="container">
         <div class="row">
-          <div class="col-11 offset-1 d-flex flex-row justify-content-between">
+          <div class="col-11 offset-1 d-flex flex-row justify-content-between align-items-center">
             <img class="logo" alt="Алроса" src="@/assets/logo.svg" />
             <div class="header__actions">
               <div class="header__actions-btns" v-if="showHeaderButtons">
