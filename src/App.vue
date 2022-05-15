@@ -111,5 +111,9 @@ export default {
   font-size: 10px !important;
   line-height: 100% !important;
   width: 176px !important;
+  &:hover {
+    background: $blue !important;
+    border-color: $blue !important;
+  }
 }
 </style>

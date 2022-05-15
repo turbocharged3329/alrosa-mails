@@ -110,5 +110,7 @@ export default {
       border-bottom: 1px solid #eeeeee;
     }
   }
+  &__btn {
+  }
 }
 </style>
