@@ -32,4 +32,7 @@ export const block = {
       this.showEditor = true;
     },
   },
+  mounted() {
+    this.showEditor = true;
+  }
 };
