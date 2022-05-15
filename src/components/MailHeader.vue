@@ -37,45 +37,16 @@
 </template>
 
 <script>
-import Badge from "@/components/Badge.vue";
-import MailNav from "@/components/MailNav.vue";
 import { fileLoader } from "@/mixins/file-loader.js";
 
 export default {
   name: "MailHeader",
   mixins: [fileLoader],
-  components: {
-    Badge,
-    MailNav,
-  },
-  props: ["imageUrl"],
   data() {
     return {
-      text: "",
-      fileRecords: [],
-      uploadUrl: "https://www.mocky.io/v2/5d4fb20b3000005c111099e3",
-      uploadHeaders: { "X-Test-Header": "vue-file-agent" },
-      fileRecordsForUpload: [], // maintain an upload queue
-      image: "",
       maxSize: "10MB",
-      helpText: '',
-    };
-  },
-  computed: {
-    imageLink() {
-      return process.env.VUE_APP_API + this.imageUrl;
-    },
-    // helpText() {
-    //   return document.querySelector(".help-text");
-    // },
-  },
-  created() {
-    this.image = this.imageUrl;
-  },
-  mounted() {
-    this.helpText = document.querySelector(".help-text");
-    this.helpText.innerHTML = `<span>Перетащите файлы сюда или нажмите,<br>чтобы <a class="select-file">выбрать файл для загрузки</a><br><span class="size">до ${this.maxSize}</span></span>`;
-  },
+    }
+  }
 };
 </script>
 
