@@ -8,13 +8,13 @@
             <div class="header__actions">
               <div class="header__actions-btns" v-if="showHeaderButtons">
                 <button
-                  class="btn-custom btn-secondary"
+                  class="btn-custom btn-secondary btn-save"
                   @click.prevent.stop="emitSave"
                 >
                   Сохранить
                 </button>
                 <button
-                  class="btn-custom btn-secondary"
+                  class="btn-custom btn-secondary btn-preview"
                   @click.prevent.stop="emitDraft"
                 >
                   Предпросмотр
@@ -105,5 +105,11 @@ export default {
 .logo {
   width: 139px;
   height: 20px;
+}
+.btn-save, .btn-preview {
+  height: 32px !important;
+  font-size: 10px !important;
+  line-height: 100% !important;
+  width: 176px !important;
 }
 </style>
