@@ -68,8 +68,9 @@
             </drag>
           </div>
         </div>
-        <modal name="modal" :width="'50%'" :height="'90%'">
-          <vue-iframe :src="src" width="100" height="100"></vue-iframe>
+        <modal name="modal" :width="'50%'" :height="'90%'" @opened="showMail">
+          <!-- <vue-iframe :src="src" width="100" height="100"></vue-iframe> -->
+          <iframe class="frame" ref="frame" width="100%" height="100%"></iframe>
         </modal>
       </div>
     </div>
@@ -219,23 +220,18 @@ export default {
       //массив блоков в редакторе
       elements: [],
       generatedHtml: "",
-      src: `<html lang="en">
-      <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Document</title>
-      </head>
-      <body>
-        <div>123</div>
-      </body>
-      </html>`,
+      src: `123`,
     };
   },
   computed: {
     ...mapGetters(["token", "postName"]),
   },
   methods: {
+    showMail() {
+      this.$refs.frame.contentWindow.document.open();
+      this.$refs.frame.contentWindow.document.write(this.generatedHtml);
+      this.$refs.frame.contentWindow.document.close();
+    },
     /**
      * обработчик перетаскивания блока в редактор
      */
@@ -246,8 +242,6 @@ export default {
         content: "",
       });
       this.elements.push();
-      // this.$refs.modal.open();
-      // this.$modal.show("modal");
     },
     /**
      * обработчик перемещения элемента в редакторе
@@ -303,7 +297,7 @@ export default {
           headers,
         }).then((response) => {
           this.generatedHtml = response.data.generated_html;
-          this.$refs.modal.open();
+          this.$modal.show("modal");
         });
       } else {
         axios({
@@ -317,9 +311,7 @@ export default {
           headers,
         }).then((response) => {
           this.generatedHtml = response.data.generated_html;
-          this.$refs.modal.open();
-          this.$refs.frame.contentWindow.document.write("");
-          this.$refs.frame.contentWindow.document.write(this.generatedHtml);
+          this.$modal.show("modal");
         });
       }
     },
@@ -510,5 +502,13 @@ iframe {
   background: $gray;
   width: 100%;
   height: 100px;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.frame {
+  padding: 2rem;
 }
 </style>
