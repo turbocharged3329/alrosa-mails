@@ -19,7 +19,7 @@
       :deletable="true"
       :meta="true"
       :accept="'image/*,.zip'"
-      :maxSize="'10MB'"
+      :maxSize="maxSize"
       :maxFiles="14"
       :helpText="'Перетащите файлы сюда или нажмите для загрузки'"
       :errorText="{
@@ -54,7 +54,8 @@ export default {
       uploadUrl: "https://www.mocky.io/v2/5d4fb20b3000005c111099e3",
       uploadHeaders: { "X-Test-Header": "vue-file-agent" },
       fileRecordsForUpload: [], // maintain an upload queue
-      image: ''
+      image: '',
+      maxSize: '10MB'
     };
   },
   computed: {
@@ -117,6 +118,10 @@ export default {
   },
   created() {
     this.image = this.imageUrl
+  },
+  mounted() {
+    const text = document.querySelector('.help-text');
+    text.innerHTML = `<span>Перетащите файлы сюда или нажмите,<br>чтобы <a class="select-file">выбрать файл для загрузки</a><br><span class="size">до ${this.maxSize}</span></span>`
   }
 };
 </script>

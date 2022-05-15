@@ -4,6 +4,10 @@
     font-family: "Avenir Next";
     src: url(~@/assets/fonts/AvenirNextCyr-Demi.otf);
 }
+@font-face {
+    font-family: "Avenir Next Regular";
+    src: url(~@/assets/fonts/AvenirNextCyr-Regular.otf);
+}
 
 @media (min-width: 1400px) {
     .container{
@@ -50,9 +54,23 @@ body {
     & .file-preview {
       justify-content: center;
       align-items: center;
-      width: 50% !important;
+      width: 90% !important;
+      font-family: Avenir Next Regular, sans-serif !important;
       & .help-text {
         text-align: center;
+        color: black;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 20px;
+        & .select-file {
+            color: $blue;
+            display: inline;
+        }
+        & .size {
+            color: #121212;
+            font-family: Avenir Next, sans-serif !important;
+            opacity: .5;
+        }
       }
       svg {
         display: none;
