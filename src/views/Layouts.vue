@@ -34,7 +34,7 @@
       <div class="layouts__footer row w-100 layouts__footer-row">
         <div class="col-4 offset-3 p-0">
           <button
-            class="layouts__create-btn btn-custom"
+            class="layouts__create-btn btn-custom btn-secondary"
             @click="$router.push({ name: 'AddNew' })"
           >
             Создать новую тему

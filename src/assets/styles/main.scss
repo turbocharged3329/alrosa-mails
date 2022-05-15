@@ -220,6 +220,11 @@ body {
 &-secondary {
     border: 2px solid $blue;
     background: transparent;
+    &:hover {
+        background: $blue !important;
+        border-color: $blue !important;
+        color: white !important;
+    }
 }
 }
 
