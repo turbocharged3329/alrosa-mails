@@ -37,11 +37,11 @@ export default {
   props: ['text'],
   data() {
     return {
-      content: "<h1></h1>",
+      content: "",
     };
   },
   created() {
-    this.content = `<h1>${this.text}</h1>`
+    this.content = `${this.text}`
   }
 };
 </script>

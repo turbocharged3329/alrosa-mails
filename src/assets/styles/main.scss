@@ -51,6 +51,9 @@ body {
     & .file-preview-wrapper::before {
       background-color: transparent !important;
     }
+    & .file-preview-wrapper-image {
+        // width: 100%;
+    }
     & .file-preview {
       justify-content: center;
       align-items: center;
