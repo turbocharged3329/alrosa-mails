@@ -69,8 +69,18 @@
           </div>
         </div>
         <modal name="modal" :width="'50%'" :height="'90%'" @opened="showMail">
-          <!-- <vue-iframe :src="src" width="100" height="100"></vue-iframe> -->
-          <iframe class="frame" ref="frame" width="100%" height="100%"></iframe>
+          <template>
+            <!-- <vue-iframe :src="src" width="100" height="100"></vue-iframe> -->
+            <iframe
+              class="frame"
+              ref="frame"
+              width="100%"
+              height="100%"
+            ></iframe>
+            <button class="modal__close-btn" @click="$modal.hide('modal')">
+              <img src="@/assets/close-modal.svg" alt="" class="modal__close-img">
+            </button>
+          </template>
         </modal>
       </div>
     </div>
@@ -450,7 +460,7 @@ iframe {
         font-weight: 500;
         color: $black;
         text-align: left;
-        margin-bottom: .3rem;
+        margin-bottom: 0.3rem;
       }
       &-desc {
         color: $black;
@@ -509,5 +519,23 @@ iframe {
 
 .frame {
   padding: 2rem;
+}
+::v-deep .vm--modal {
+  overflow: visible;
+}
+.modal__close-btn {
+  position: absolute;
+  top: 0px;
+  right: -37px;
+  border-radius: 50%;
+  width: 27px;
+  height: 27px;
+  background: white;
+  border: none;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
 }
 </style>

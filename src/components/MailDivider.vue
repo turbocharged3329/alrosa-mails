@@ -9,7 +9,7 @@
     ></mail-nav>
     <div class="mail-content">
       <badge>Разделитель</badge>
-      <hr>
+      <hr class="line">
     </div>
   </div>
 </template>
@@ -35,5 +35,10 @@ export default {
 <style lang="scss" scoped>
 .mail-divider {
   padding: 1rem 1rem !important;
+}
+.line {
+  color: #ff0000;
+  height: 2px;
+  opacity: 1;
 }
 </style>

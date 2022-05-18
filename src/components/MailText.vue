@@ -28,30 +28,30 @@
 </template>
 
 <script>
-import { block } from '@/mixins/block.js';
+import { block } from "@/mixins/block.js";
 
 export default {
   name: "MailText",
   mixins: [block],
-  props: ['text'],
+  props: ["text"],
   data() {
     return {
-      content: ''
+      content: "",
     };
   },
   created() {
-    this.content = `${this.text}`
-  }
+    this.content = `${this.text}`;
+  },
 };
 </script>
 
 <style lang="scss" scoped>
 .mail__input {
   font-style: normal;
-  font-weight: 400;
+  font-weight: 300;
   font-size: 22px;
   line-height: 27px;
-  letter-spacing: 0.01em;
-  color: $black;
+  letter-spacing: 0.01em !important;
+  color: #121212;
 }
 </style>
