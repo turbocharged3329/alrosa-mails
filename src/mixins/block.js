@@ -33,6 +33,8 @@ export const block = {
     },
   },
   mounted() {
-    this.showEditor = true;
+    if (!this.content) {
+      this.showEditor = true;
+    }
   }
 };

@@ -422,7 +422,6 @@ iframe {
   height: calc(100vh - $header-height);
   position: relative;
   padding-top: 5.5rem;
-  overflow-y: auto;
   &__body {
     display: flex;
     flex-flow: row nowrap;

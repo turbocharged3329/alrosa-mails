@@ -10,18 +10,19 @@
     <div class="mail-content">
       <badge>Кнопка</badge>
       <div class="mail-button__form" v-if="!showEditor">
-        <p class="mail__input" v-html="content"></p>
+        <p class="mail-button__text" v-html="content"></p>
       </div>
-      <p class="mail__input" v-if="!showEditor">Ссылка: <a :href="buttonLink" target="_blank">{{ buttonLink }}</a></p>
-      <vue-editor
-        v-model="content"
-        :editorToolbar="customToolbar"
-        class="wsywig"
-        v-if="showEditor"
-      ></vue-editor>
+      <p class="mail-button__text-label" v-if="showEditor">Укажите текст кнопки:</p>
+      <input v-model="content" class="content__input" v-if="showEditor" />
+      <p class="mail__input" v-if="!showEditor">
+        Ссылка: <a :href="buttonLink" target="_blank">{{ buttonLink }}</a>
+      </p>
       <div class="mail-button__link" v-if="showEditor">
-        <p>Укажите ссылку на кнопку</p>
-        <input v-model="buttonLink"  class="mail-button__link-input"/>
+        <p class="mail-button__link-label">Вставьте ссылку для перехода:</p>
+        <input
+          v-model="buttonLink"
+          class="mail-button__link-input content__input"
+        />
       </div>
       <button
         @click="saveContent"
@@ -35,29 +36,29 @@
 </template>
 
 <script>
-import { block } from '@/mixins/block.js';
+import { block } from "@/mixins/block.js";
 
 export default {
   name: "MailButton",
   mixins: [block],
-  props: ['text', 'link'],
+  props: ["text", "link"],
   data() {
     return {
-      content: '',
-      buttonLink: ''
-    }
+      content: "",
+      buttonLink: "",
+    };
   },
   methods: {
     saveContent() {
       this.showEditor = false;
-      this.$emit("save", this.content)
-      this.$emit("link", this.buttonLink)
+      this.$emit("save", this.content);
+      this.$emit("link", this.buttonLink);
     },
   },
   created() {
-    this.content = this.text
-    this.buttonLink = this.link
-  }
+    this.content = this.text;
+    this.buttonLink = this.link;
+  },
 };
 </script>
 
@@ -67,8 +68,8 @@ export default {
     border: 2px solid $blue;
     border-radius: 42px;
     width: fit-content;
-    height: 42px;
-    padding: 10px 36px;
+    height: 50px;
+    padding: 10px 45px;
     min-width: 200px;
     display: flex;
     flex-flow: row nowrap;
@@ -79,6 +80,16 @@ export default {
   &__link-input {
     width: 100%;
     margin-bottom: 1rem;
+  }
+  &__text {
+    font-style: normal;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 21px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin: 0;
+    text-align: center;
   }
 }
 .content {
