@@ -11,6 +11,7 @@
     <div class="mail-content">
       <badge>Шапка</badge>
       <img :src="imageLink" v-if="imageUrl" />
+      <image-selector></image-selector>
       <VueFileAgent
         class="mail-fileinput"
         ref="vueFileAgent"
@@ -37,10 +38,14 @@
 </template>
 
 <script>
+import ImageSelector from '@/components/ImageSelector.vue';
 import { fileLoader } from "@/mixins/file-loader.js";
 
 export default {
   name: "MailHeader",
+  components: {
+    ImageSelector
+  },
   mixins: [fileLoader],
   data() {
     return {

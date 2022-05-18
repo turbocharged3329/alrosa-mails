@@ -78,8 +78,13 @@
               height="100%"
             ></iframe>
             <button class="modal__close-btn" @click="$modal.hide('modal')">
-              <img src="@/assets/close-modal.svg" alt="" class="modal__close-img">
+              <img
+                src="@/assets/close-modal.svg"
+                alt=""
+                class="modal__close-img"
+              />
             </button>
+            <button class="modal__close-download">скачать макет</button>
           </template>
         </modal>
       </div>
@@ -432,11 +437,12 @@ iframe {
   height: calc(100vh - $header-height);
   position: relative;
   padding-top: 5.5rem;
+  overflow-y: auto;
   &__body {
     display: flex;
     flex-flow: row nowrap;
     justify-content: center;
-    overflow-y: auto;
+    // overflow-y: auto;
   }
   &__mail {
     &-constructor {
@@ -523,19 +529,44 @@ iframe {
 ::v-deep .vm--modal {
   overflow: visible;
 }
-.modal__close-btn {
-  position: absolute;
-  top: 0px;
-  right: -37px;
-  border-radius: 50%;
-  width: 27px;
-  height: 27px;
-  background: white;
-  border: none;
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: center;
-  align-items: center;
-  padding: 0;
+.modal__close {
+  &-btn {
+    position: absolute;
+    top: 0px;
+    right: -37px;
+    border-radius: 50%;
+    width: 27px;
+    height: 27px;
+    background: white;
+    border: none;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+  }
+  &-download {
+    @extend .btn-custom;
+    width: 275px;
+    height: 41px;
+    border: none;
+    background: $blue;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 21px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    font-family: Avenir Next Regular, sans-serif !important;
+    position: absolute;
+    top: 50%;
+    left: 124%;
+    transform: translate(-50%);
+
+    color: #ffffff;
+    &:hover {
+      background: $light-blue;
+    }
+  }
 }
 </style>
