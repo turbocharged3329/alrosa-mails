@@ -9,7 +9,7 @@
     ></mail-nav>
     <div class="mail-content">
       <badge>Название письма</badge>
-      <input v-model="content" class="content__input" v-if="showEditor"/>
+      <input v-model="content" class="content__input" v-if="showEditor" placeholder="Введите название письма"/>
       <p class="mail__input" v-html="content" v-if="!showEditor"></p>
       <button
         @click="saveContent"

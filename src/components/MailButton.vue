@@ -13,7 +13,7 @@
         <p class="mail-button__text" v-html="content"></p>
       </div>
       <p class="mail-button__text-label" v-if="showEditor">Укажите текст кнопки:</p>
-      <input v-model="content" class="content__input" v-if="showEditor" />
+      <input v-model="content" class="content__input" v-if="showEditor" placeholder="Текст кнопки"/>
       <p class="mail__input" v-if="!showEditor">
         Ссылка: <a :href="buttonLink" target="_blank">{{ buttonLink }}</a>
       </p>
@@ -22,6 +22,7 @@
         <input
           v-model="buttonLink"
           class="mail-button__link-input content__input"
+          placeholder="Ссылка"
         />
       </div>
       <button

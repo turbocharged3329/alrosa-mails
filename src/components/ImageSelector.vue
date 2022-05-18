@@ -4,7 +4,7 @@
       <div
         class="image-selector__item-wrapper"
         :key="item.id"
-        @click="selected = item.id"
+        @click="selectImage(item.id)"
         :class="{ selected: item.id == selected }"
       >
         <div class="image-selector__selection">
@@ -37,7 +37,12 @@ export default {
       selected: null,
     };
   },
-  methods: {},
+  methods: {
+    selectImage(id) {
+      this.selected = id;
+      this.$emit('select')
+    }
+  },
 };
 </script>
 
