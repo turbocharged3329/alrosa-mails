@@ -9,13 +9,8 @@
     ></mail-nav>
     <div class="mail-content">
       <badge>Заголовок H3</badge>
+      <input v-model="content" class="content__input" v-if="showEditor"/>
       <p class="mail__input" v-html="content" v-if="!showEditor"></p>
-      <vue-editor
-        v-model="content"
-        :editorToolbar="customToolbar"
-        class="wsywig"
-        v-else
-      ></vue-editor>
       <button
         @click="saveContent"
         class="btn-custom btn-primary"

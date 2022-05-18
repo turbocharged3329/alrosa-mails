@@ -219,6 +219,9 @@ body {
         color: #818c99;
         background: $gray;
     }
+    &:hover {
+        background-color: $light-blue;
+    }
 }
 &-secondary {
     border: 2px solid $blue;
