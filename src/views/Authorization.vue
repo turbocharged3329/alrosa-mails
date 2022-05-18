@@ -109,6 +109,7 @@ export default {
     border-bottom: 1px solid #eeeeee;
     width: 100%;
     height: 40px;
+    font-family: Avenir Next Regular, sans-serif !important;
     &:focus {
       outline: none;
       &::placeholder {
