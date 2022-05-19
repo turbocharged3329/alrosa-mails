@@ -107,6 +107,7 @@ export default {
     height: 32px;
     margin-bottom: 5.3rem;
     &:focus {
+      outline: none;
       border-bottom: 1px solid #eeeeee;
     }
   }
