@@ -13,6 +13,7 @@ export const fileLoader = {
       fileRecordsForUpload: [], // maintain an upload queue
       image: "",
       helpText: "",
+      showPreview: false
     };
   },
   computed: {
@@ -22,12 +23,19 @@ export const fileLoader = {
   },
   created() {
     this.image = this.imageUrl;
+    this.showPreview = this.imageUrl ? 1 : 0;
   },
   mounted() {
-    this.helpText = document.querySelector(".help-text");
+    this.helpText = this.$refs.vueFileAgent.$el.querySelector(".help-text");
     this.helpText.innerHTML = `<span>Перетащите файлы сюда или нажмите,<br>чтобы <a class="select-file">выбрать файл для загрузки</a><br><span class="size">до ${this.maxSize}</span></span>`;
   },
   methods: {
+    clearLoadedImage() {
+      this.showPreview = 0;
+      this.image = '';
+      this.$emit('image', null)
+      this.$emit('clear-image', null)
+    },
     uploadFiles() {
       // Using the default uploader. You may use another uploader instead.
       this.$refs.vueFileAgent.upload(

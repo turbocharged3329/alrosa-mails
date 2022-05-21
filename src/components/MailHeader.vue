@@ -10,7 +10,12 @@
     ></mail-nav>
     <div class="mail-content">
       <badge>Шапка</badge>
-      <img :src="imageLink" v-if="imageUrl" />
+      <div class="image-preview" v-if="showPreview">
+        <img :src="imageLink" class="image-preview__img"/>
+        <button class="image-preview__delete" @click="clearLoadedImage">
+          Удалить
+        </button>
+      </div>
       <image-selector></image-selector>
       <VueFileAgent
         class="mail-fileinput"

@@ -9,7 +9,12 @@
     ></mail-nav>
     <div class="mail-content">
       <badge>Футер/дно</badge>
-      <img :src="imageLink" v-if="imageUrl"/>
+      <div class="image-preview" v-if="showPreview">
+        <img :src="imageLink" class="image-preview__img"/>
+        <button class="image-preview__delete" @click="clearLoadedImage">
+          Удалить
+        </button>
+      </div>
       <VueFileAgent
         class="mail-fileinput"
         ref="vueFileAgent"
@@ -31,20 +36,6 @@
         v-model="fileRecords"
       >
       </VueFileAgent>
-      <p class="mail__input" v-html="content" v-if="!showEditor"></p>
-      <vue-editor
-        v-model="content"
-        :editorToolbar="customToolbar"
-        v-else
-        class="wsywig"
-      ></vue-editor>
-      <button
-        @click="saveContent"
-        class="btn-custom btn-primary"
-        v-if="showEditor"
-      >
-        Сохранить
-      </button>
     </div>
   </div>
 </template>

@@ -29,6 +29,7 @@
                     @save="item.content = $event"
                     @link="item.link = $event"
                     @image="item.file = $event"
+                    @clear-image="item.image = $event"
                     :text="item.content"
                     :link="item.link"
                     :image-url="item.image"
@@ -270,8 +271,18 @@ export default {
         data.direction == "up" ? indexToMove - 1 : indexToMove + 1;
       const elementToReplace = this.elements[indexToReplace];
 
-      Vue.set(this.elements, indexToMove, elementToReplace);
-      Vue.set(this.elements, indexToReplace, elementToMove);
+      //условие для предотвращения ошибок при перемещении вверх-вниз при остуствующих элементах рядом
+      if (data.direction == 'up') {
+        if (indexToReplace >= 0) {
+          Vue.set(this.elements, indexToMove, elementToReplace);
+          Vue.set(this.elements, indexToReplace, elementToMove);
+        }
+      } else if (data.direction == 'down') {
+        if (indexToReplace < this.elements.length) {
+          Vue.set(this.elements, indexToMove, elementToReplace);
+          Vue.set(this.elements, indexToReplace, elementToMove);
+        }
+      }
     },
     /**
      * удаление элемента из редактора
@@ -349,7 +360,11 @@ export default {
           } else if (
             ["header", "footer", "image", "wide_image"].includes(elem.type)
           ) {
-            data.base64_image = elem.file;
+            if (elem.file) {
+              data.base64_image = elem.file;
+            } else {
+              data.image = elem.image
+            }
           } else if (elem.type == "button") {
             data.label = elem.content.replace(/<\/?[a-z][a-z0-9]*>/gi, "");
             data.link = elem.link;

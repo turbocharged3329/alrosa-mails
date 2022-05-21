@@ -19,6 +19,7 @@ export default {
 
 <style lang="scss" scoped>
 .badge {
+  display: block !important;
   font-style: normal;
   font-weight: 500;
   font-size: 10px;
