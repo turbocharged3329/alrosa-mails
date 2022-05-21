@@ -30,6 +30,7 @@
                     @link="item.link = $event"
                     @image="item.file = $event"
                     @clear-image="item.image = $event"
+                    @open-modal="openImagesSelector(item)"
                     :text="item.content"
                     :link="item.link"
                     :image-url="item.image"
@@ -88,6 +89,16 @@
             <button class="modal__close-download">скачать макет</button>
           </template>
         </modal>
+        <modal name="images" :width="'50%'" :height="'90%'">
+          <image-selector @apply-selection="applyImageSelection"></image-selector>
+          <button class="modal__close-btn" @click="$modal.hide('images')">
+              <img
+                src="@/assets/close-modal.svg"
+                alt=""
+                class="modal__close-img"
+              />
+            </button>
+        </modal>
       </div>
     </div>
   </div>
@@ -107,6 +118,7 @@ import MailPicture from "@/components/MailPicture.vue";
 import MailPictureWide from "@/components/MailPictureWide.vue";
 import MailButton from "@/components/MailButton.vue";
 import MailFooter from "@/components/MailFooter.vue";
+import ImageSelector from '@/components/ImageSelector.vue';
 import axios from "axios";
 import Vue from "vue";
 import { mapGetters } from "vuex";
@@ -130,6 +142,7 @@ export default {
     MailButton,
     MailFooter,
     SweetModal,
+    ImageSelector
   },
   props: {
     postData: {
@@ -237,6 +250,7 @@ export default {
       elements: [],
       generatedHtml: "",
       src: `123`,
+      imageBlockInSelectMode: null,
     };
   },
   computed: {
@@ -402,6 +416,15 @@ export default {
     backToTemplates() {
       this.$router.push({ name: "Layouts" });
     },
+    openImagesSelector(data) {
+      this.imageBlockInSelectMode = data;
+      this.$modal.show('images')
+    },
+    applyImageSelection(event) {
+      this.imageBlockInSelectMode.image = event;
+      this.imageBlockInSelectMode.file = '';
+      this.$modal.hide('images')
+    }
   },
   created() {
     this.$parent.$on("save-post", this.savePost);

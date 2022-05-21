@@ -9,6 +9,7 @@
       no-edit
     ></mail-nav>
     <div class="mail-content">
+      <button @click="$emit('open-modal')">123</button>
       <badge>Шапка</badge>
       <div class="image-preview" v-if="showPreview">
         <img :src="imageLink" class="image-preview__img"/>
@@ -16,7 +17,7 @@
           Удалить
         </button>
       </div>
-      <image-selector></image-selector>
+      <h3 class="mail-block__heading">Загрузить новое изображение</h3>
       <VueFileAgent
         class="mail-fileinput"
         ref="vueFileAgent"
@@ -38,19 +39,16 @@
         v-model="fileRecords"
       >
       </VueFileAgent>
+      <h3 class="mail-block__heading">Выбрать из существующих</h3>
     </div>
   </div>
 </template>
 
 <script>
-import ImageSelector from '@/components/ImageSelector.vue';
 import { fileLoader } from "@/mixins/file-loader.js";
 
 export default {
   name: "MailHeader",
-  components: {
-    ImageSelector
-  },
   mixins: [fileLoader],
   data() {
     return {

@@ -1,21 +1,32 @@
 <template>
   <div class="image-selector">
-    <template v-for="item in images">
-      <div
-        class="image-selector__item-wrapper"
-        :key="item.id"
-        @click="selectImage(item.id)"
-        :class="{ selected: item.id == selected }"
-      >
-        <div class="image-selector__selection">
-          <div class="image-selector__selection-badge">Выбрано</div>
+    <h3 class="image-selector__title mail-block__heading">
+      Выберите одно из существующих изображений
+    </h3>
+    <div class="image-selector__variants">
+      <template v-for="item in images">
+        <div
+          class="image-selector__item-wrapper"
+          :key="item.id"
+          @click="selectImage(item.id)"
+          :class="{ selected: item.id == selected }"
+        >
+          <div class="image-selector__selection">
+            <div class="image-selector__selection-badge">Выбрано</div>
+          </div>
+          <img
+            class="image-selector__preview"
+            :src="require(`@/assets/preloaded_pictures/${item.id}.png`)"
+          />
         </div>
-        <img
-          class="image-selector__preview"
-          :src="require(`@/assets/preloaded_pictures/${item.id}.png`)"
-        />
-      </div>
-    </template>
+      </template>
+    </div>
+    <button
+      class="image-selector__save-btn btn-custom btn-primary"
+      @click="emitSave"
+    >
+      Сохранить
+    </button>
   </div>
 </template>
 
@@ -38,19 +49,43 @@ export default {
     };
   },
   methods: {
+    //выбор изображения
     selectImage(id) {
       this.selected = id;
-      this.$emit('select')
-    }
+      this.$emit("select");
+    },
+    //сохранение выбранных изменений
+    emitSave() {
+      this.$emit("apply-selection", "123");
+    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
 .image-selector {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  padding: 1.5rem;
+  width: 100%;
+  height: 100%;
+  &__title {
+    width: 100%;
+    text-align: left;
+    margin-bottom: 1rem;
+  }
+  &__variants {
+    display: flex;
+    flex-flow: column nowrap;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+  }
   &__item-wrapper {
-    width: fit-content;
-    height: fit-content;
+    width: auto;
+    height: auto;
     margin-bottom: 31px;
     position: relative;
     &.selected {
@@ -90,6 +125,10 @@ export default {
       bottom: 10px;
       right: 10px;
     }
+  }
+  &__save-btn {
+    width: 271px;
+    height: 42px;
   }
 }
 </style>
