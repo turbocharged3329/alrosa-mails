@@ -371,18 +371,24 @@ export default {
               elem.type
             )
           ) {
-            data.text = elem.content.replace(/<\/?[a-z][a-z0-9]*>/gi, "");
+            if (elem.content) {
+              data.text = elem.content.replace(/<\/?[a-z][a-z0-9]*>/gi, "");
+            } else return 
           } else if (
             ["header", "footer", "image", "wide_image"].includes(elem.type)
           ) {
             if (elem.file) {
               data.base64_image = elem.file;
             } else {
-              data.image = elem.image
+              if (elem.image) {
+                data.image = elem.image
+              } else return 
             }
           } else if (elem.type == "button") {
+            if (elem.content && elem.link) {
             data.label = elem.content.replace(/<\/?[a-z][a-z0-9]*>/gi, "");
             data.link = elem.link;
+            } else return 
           } else if (elem.type == "divider") {
             data.text = [];
           }
