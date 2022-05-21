@@ -86,7 +86,7 @@
                 class="modal__close-img"
               />
             </button>
-            <button class="modal__close-download">скачать макет</button>
+            <button class="modal__close-download" @click="copyEmailTemplate">скачать макет</button>
           </template>
         </modal>
         <modal name="images" :width="'50%'" :height="'90%'">
@@ -423,15 +423,28 @@ export default {
     backToTemplates() {
       this.$router.push({ name: "Layouts" });
     },
+    /**
+     * открытие модального окна с выбором предзагруженных изображений
+     */
     openImagesSelector(event, data) {
       this.isFooterImageSelection = event;
       this.imageBlockInSelectMode = data;
       this.$modal.show('images')
     },
+    /**
+     * сохранение выбранного изображения из модального окна
+     */
     applyImageSelection(event) {
       this.imageBlockInSelectMode.image = event;
       this.imageBlockInSelectMode.file = '';
       this.$modal.hide('images')
+    },
+    /**
+     * копирование полученной разметки письма в буфер обмена
+     */
+    async copyEmailTemplate() {
+      await await navigator.clipboard.writeText(this.generatedHtml);
+      alert('Разметка письма скопирована в буфер обмена')
     }
   },
   created() {
