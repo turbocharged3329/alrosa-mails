@@ -9,7 +9,6 @@
       no-edit
     ></mail-nav>
     <div class="mail-content">
-      <button @click="$emit('open-modal')">123</button>
       <badge>Шапка</badge>
       <div class="image-preview" v-if="showPreview">
         <img :src="imageLink" class="image-preview__img"/>
@@ -39,7 +38,7 @@
         v-model="fileRecords"
       >
       </VueFileAgent>
-      <h3 class="mail-block__heading">Выбрать из существующих</h3>
+      <h3 class="mail-block__heading"><a class="select-preloaded" @click.prevent.stop="$emit('open-modal')">Выбрать</a> из существующих</h3>
     </div>
   </div>
 </template>

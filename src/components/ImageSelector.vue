@@ -8,20 +8,23 @@
         <div
           class="image-selector__item-wrapper"
           :key="item.id"
-          @click="selectImage(item.id)"
-          :class="{ selected: item.id == selected }"
+          @click="selectImage(item.serverPath, item.id)"
+          :class="{ selected: item.id == selectedId }"
         >
           <div class="image-selector__selection">
             <div class="image-selector__selection-badge">Выбрано</div>
           </div>
           <img
             class="image-selector__preview"
-            :src="require(`@/assets/preloaded_pictures/${item.id}.png`)"
+            :src="`${item.src}.png`"
+            :srcset="`${item.src}@2x.png`"
           />
         </div>
       </template>
     </div>
     <button
+      :disabled="!selected"
+      :class="{disabled: !selected}"
       class="image-selector__save-btn btn-custom btn-primary"
       @click="emitSave"
     >
@@ -33,11 +36,15 @@
 <script>
 export default {
   name: "ImageSelector",
-  components: {},
-  props: {},
+  props: {
+    isFooter: {
+      type: Boolean,
+      default: false
+    }
+  },
   data() {
     return {
-      images: [
+      image: [
         {
           id: 1,
         },
@@ -46,17 +53,34 @@ export default {
         },
       ],
       selected: null,
+      selectedId: null,
     };
+  },
+  computed: {
+    images() {
+    const imagesNames = !this.isFooter 
+    ? ['header 1', 'header 2', 'header 3', 'header 4']
+    : ['footer 2', 'footer 3', 'footer 4'];
+
+    return imagesNames.map((image, index) => {
+      return {
+        id: index + 1,
+        src: `${process.env.VUE_APP_API}/static/img/${image}`,
+        serverPath: `/static/img/${image}.png` 
+      }
+    }) 
+    }
   },
   methods: {
     //выбор изображения
-    selectImage(id) {
-      this.selected = id;
+    selectImage(path, id) {
+      this.selectedId = id;
+      this.selected = path;
       this.$emit("select");
     },
     //сохранение выбранных изменений
     emitSave() {
-      this.$emit("apply-selection", "123");
+      this.$emit("apply-selection", this.selected);
     },
   },
 };
@@ -84,7 +108,7 @@ export default {
     overflow-y: auto;
   }
   &__item-wrapper {
-    width: auto;
+    width: 98%;
     height: auto;
     margin-bottom: 31px;
     position: relative;

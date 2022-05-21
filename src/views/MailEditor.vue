@@ -30,7 +30,7 @@
                     @link="item.link = $event"
                     @image="item.file = $event"
                     @clear-image="item.image = $event"
-                    @open-modal="openImagesSelector(item)"
+                    @open-modal="openImagesSelector($event, item)"
                     :text="item.content"
                     :link="item.link"
                     :image-url="item.image"
@@ -90,7 +90,7 @@
           </template>
         </modal>
         <modal name="images" :width="'50%'" :height="'90%'">
-          <image-selector @apply-selection="applyImageSelection"></image-selector>
+          <image-selector @apply-selection="applyImageSelection" :isFooter="isFooterImageSelection"></image-selector>
           <button class="modal__close-btn" @click="$modal.hide('images')">
               <img
                 src="@/assets/close-modal.svg"
@@ -251,6 +251,7 @@ export default {
       generatedHtml: "",
       src: `123`,
       imageBlockInSelectMode: null,
+      isFooterImageSelection: false,
     };
   },
   computed: {
@@ -416,7 +417,8 @@ export default {
     backToTemplates() {
       this.$router.push({ name: "Layouts" });
     },
-    openImagesSelector(data) {
+    openImagesSelector(event, data) {
+      this.isFooterImageSelection = event;
       this.imageBlockInSelectMode = data;
       this.$modal.show('images')
     },

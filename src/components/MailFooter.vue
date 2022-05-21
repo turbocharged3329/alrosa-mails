@@ -15,6 +15,7 @@
           Удалить
         </button>
       </div>
+      <h3 class="mail-block__heading">Загрузить новое изображение</h3>
       <VueFileAgent
         class="mail-fileinput"
         ref="vueFileAgent"
@@ -36,6 +37,7 @@
         v-model="fileRecords"
       >
       </VueFileAgent>
+      <h3 class="mail-block__heading"><a class="select-preloaded" @click.prevent.stop="$emit('open-modal', true)">Выбрать</a> из существующих</h3>
     </div>
   </div>
 </template>

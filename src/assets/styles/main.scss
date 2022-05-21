@@ -55,9 +55,6 @@ body {
     & .file-preview-wrapper::before {
       background-color: transparent !important;
     }
-    & .file-preview-wrapper-image {
-        // width: 100%;
-    }
     & .file-preview {
       justify-content: center;
       align-items: center;
@@ -349,5 +346,22 @@ body {
         line-height: 12px;
         letter-spacing: 0.03em;
         text-transform: uppercase;
+      }
+  }
+
+  .select-preloaded {
+      @extend .select-file;
+      color: $blue;
+      cursor: pointer;
+      &:hover {
+        color: $light-blue;
+      }
+  }
+
+  .disabled {
+      background-color: $gray;
+      cursor: default;
+      &:hover {
+          background-color: $gray;
       }
   }
