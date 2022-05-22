@@ -214,12 +214,14 @@ body {
     justify-content: center;
     align-items: center;
     width: 100%;
+    box-shadow: none !important;
 }
-&-primary {
+&-primary-custom {
     border: none;
     background: $blue;
     color: white;
     cursor: pointer;
+    box-shadow: none !important;
     &.disabled {
         cursor: default;
         color: #818c99;
@@ -229,9 +231,10 @@ body {
         background-color: $light-blue;
     }
 }
-&-secondary {
+&-secondary-custom {
     border: 2px solid $blue;
     background: transparent;
+    box-shadow: none !important;
     &:hover {
         background: $blue !important;
         border-color: $blue !important;

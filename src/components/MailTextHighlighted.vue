@@ -18,7 +18,7 @@
       ></vue-editor>
       <button
         @click="saveContent"
-        class="btn-custom btn-primary"
+        class="btn-custom btn-primary-custom"
         v-if="showEditor"
       >
         Сохранить

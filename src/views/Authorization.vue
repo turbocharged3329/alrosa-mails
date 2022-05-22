@@ -36,7 +36,7 @@
               >Неверный логин или пароль</span
             >
             <button
-              class="auth__login-btn btn-primary btn-custom"
+              class="auth__login-btn btn-primary-custom btn-custom"
               :class="{ disabled: !email.length || !password.length }"
               :disabled="!email.length || !password.length"
               @click.prevent.stop="auth"

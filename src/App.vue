@@ -8,13 +8,13 @@
             <div class="header__actions">
               <div class="header__actions-btns" v-if="showHeaderButtons">
                 <button
-                  class="btn-custom btn-secondary btn-save"
+                  class="btn-custom btn-secondary-custom btn-save"
                   @click.prevent.stop="emitSave"
                 >
                   Сохранить
                 </button>
                 <button
-                  class="btn-custom btn-secondary btn-preview"
+                  class="btn-custom btn-secondary-custom btn-preview"
                   @click.prevent.stop="emitDraft"
                 >
                   Предпросмотр

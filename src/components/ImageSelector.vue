@@ -25,7 +25,7 @@
     <button
       :disabled="!selected"
       :class="{disabled: !selected}"
-      class="image-selector__save-btn btn-custom btn-primary"
+      class="image-selector__save-btn btn-custom btn-primary-custom"
       @click="emitSave"
     >
       Сохранить

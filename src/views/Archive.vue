@@ -56,7 +56,7 @@
       <div class="row archive__footer-row">
         <div class="col-4 offset-3 p-0">
           <button
-            class="archive__create-btn btn-custom btn-secondary"
+            class="archive__create-btn btn-custom btn-secondary-custom"
             @click="$router.push({ name: 'AddNew' })"
           >
             Создать новую тему

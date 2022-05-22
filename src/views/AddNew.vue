@@ -26,7 +26,7 @@
       <div class="row">
         <div class="col-3 offset-3">
           <button
-            class="add-new__btn btn-primary btn-custom"
+            class="add-new__btn btn-primary-custom btn-custom"
             @click="savePost"
             :class="{ disabled: !name.length }"
             :disabled="!name.length"
