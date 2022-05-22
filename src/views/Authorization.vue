@@ -41,7 +41,8 @@
               :disabled="!email.length || !password.length"
               @click.prevent.stop="auth"
             >
-              Войти
+              <span v-if="!loading">Войти</span>
+              <pulse-loader class="custom-class" :color="'#F0F2F5'" :loading="loading" :size="10" :sizeUnit="px"></pulse-loader>
             </button>
           </form>
         </div>
@@ -57,6 +58,7 @@
 
 <script>
 import { mapActions } from "vuex";
+
 export default {
   name: "Authorization",
   components: {},
@@ -67,6 +69,7 @@ export default {
       email: "",
       password: "",
       loginError: false,
+      loading: false,
     };
   },
   methods: {
@@ -75,6 +78,7 @@ export default {
       this.showPass = !this.showPass;
     },
     auth() {
+      this.loading = true;
       this.getToken({ email: this.email, password: this.password }).then(
         (response) => {
           this.loginError = !response;
@@ -82,6 +86,8 @@ export default {
           if (!this.loginError) {
             this.$router.push({ name: "Layouts" });
           }
+
+          this.loading = false
         }
       );
     },

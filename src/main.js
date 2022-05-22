@@ -10,11 +10,12 @@ import VModal from 'vue-js-modal/dist/index.nocss.js'
 import 'vue-js-modal/dist/styles.css'
 import VueIframe from 'vue-iframes'
 import 'bootstrap/dist/css/bootstrap.css';
-
+import { VueSpinners } from '@saeris/vue-spinners'
 
 Vue.prototype.moment = moment
 
 Vue.use(VueIframe)
+Vue.use(VueSpinners)
 Vue.use(VueFileAgent);
 Vue.use(VModal)
 Vue.config.productionTip = false

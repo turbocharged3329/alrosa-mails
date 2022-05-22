@@ -16,7 +16,8 @@
       <div class="row archive__list-row">
         <div class="col-8 offset-2 h-100">
             <div class="archive__list">
-              <p v-if="!posts.length">Загрузка...</p>
+              <!-- <p v-if="!posts.length">Загрузка...</p> -->
+              <pulse-loader class="custom-class" :color="'#F0F2F5'" :loading="!posts.length" :size="15" :sizeUnit="px"></pulse-loader>
               <template v-for="item in posts">
                 <div
                   class="archive__list-item"
