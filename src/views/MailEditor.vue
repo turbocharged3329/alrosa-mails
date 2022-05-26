@@ -10,7 +10,17 @@
           </div>
         </div>
         <div class="editor__body col-7">
-          <div class="editor__mail-constructor">
+          <div
+            class="editor__mail-constructor"
+            @mouseover="hideMainPlaceholder"
+          >
+            <div
+              class="editor__mail-constructor-message"
+              v-if="!elements.length && showMainPlaceholder"
+            >
+              Справа список блоков, из которых складывается письмо.
+              Перетаскивайте их мышкой и наполняйте текстом или картинками.
+            </div>
             <drop-list
               :items="elements"
               class="editor__mail-constructor-list"
@@ -86,18 +96,23 @@
                 class="modal__close-img"
               />
             </button>
-            <button class="modal__close-download" @click="copyEmailTemplate">скачать макет</button>
+            <button class="modal__close-download" @click="copyEmailTemplate">
+              скачать макет
+            </button>
           </template>
         </modal>
         <modal name="images" :width="'50%'" :height="'90%'">
-          <image-selector @apply-selection="applyImageSelection" :isFooter="isFooterImageSelection"></image-selector>
+          <image-selector
+            @apply-selection="applyImageSelection"
+            :isFooter="isFooterImageSelection"
+          ></image-selector>
           <button class="modal__close-btn" @click="$modal.hide('images')">
-              <img
-                src="@/assets/close-modal.svg"
-                alt=""
-                class="modal__close-img"
-              />
-            </button>
+            <img
+              src="@/assets/close-modal.svg"
+              alt=""
+              class="modal__close-img"
+            />
+          </button>
         </modal>
       </div>
     </div>
@@ -118,7 +133,7 @@ import MailPicture from "@/components/MailPicture.vue";
 import MailPictureWide from "@/components/MailPictureWide.vue";
 import MailButton from "@/components/MailButton.vue";
 import MailFooter from "@/components/MailFooter.vue";
-import ImageSelector from '@/components/ImageSelector.vue';
+import ImageSelector from "@/components/ImageSelector.vue";
 import axios from "axios";
 import Vue from "vue";
 import { mapGetters } from "vuex";
@@ -142,7 +157,7 @@ export default {
     MailButton,
     MailFooter,
     SweetModal,
-    ImageSelector
+    ImageSelector,
   },
   props: {
     postData: {
@@ -252,6 +267,7 @@ export default {
       src: `123`,
       imageBlockInSelectMode: null,
       isFooterImageSelection: false,
+      showMainPlaceholder: true,
     };
   },
   computed: {
@@ -287,12 +303,12 @@ export default {
       const elementToReplace = this.elements[indexToReplace];
 
       //условие для предотвращения ошибок при перемещении вверх-вниз при остуствующих элементах рядом
-      if (data.direction == 'up') {
+      if (data.direction == "up") {
         if (indexToReplace >= 0) {
           Vue.set(this.elements, indexToMove, elementToReplace);
           Vue.set(this.elements, indexToReplace, elementToMove);
         }
-      } else if (data.direction == 'down') {
+      } else if (data.direction == "down") {
         if (indexToReplace < this.elements.length) {
           Vue.set(this.elements, indexToMove, elementToReplace);
           Vue.set(this.elements, indexToReplace, elementToMove);
@@ -307,6 +323,8 @@ export default {
         this.elements.findIndex((elem) => elem.id == data.id),
         1
       );
+
+      this.showMainPlaceholder = this.elements.length ? false : true;
     },
     /**
      * генерация идентификатора
@@ -373,7 +391,7 @@ export default {
           ) {
             if (elem.content) {
               data.text = elem.content.replace(/<\/?[a-z][a-z0-9]*>/gi, "");
-            } else return 
+            } else return;
           } else if (
             ["header", "footer", "image", "wide_image"].includes(elem.type)
           ) {
@@ -381,14 +399,14 @@ export default {
               data.base64_image = elem.file;
             } else {
               if (elem.image) {
-                data.image = elem.image
-              } else return 
+                data.image = elem.image;
+              } else return;
             }
           } else if (elem.type == "button") {
             if (elem.content && elem.link) {
-            data.label = elem.content.replace(/<\/?[a-z][a-z0-9]*>/gi, "");
-            data.link = elem.link;
-            } else return 
+              data.label = elem.content.replace(/<\/?[a-z][a-z0-9]*>/gi, "");
+              data.link = elem.link;
+            } else return;
           } else if (elem.type == "divider") {
             data.text = [];
           }
@@ -429,23 +447,29 @@ export default {
     openImagesSelector(event, data) {
       this.isFooterImageSelection = event;
       this.imageBlockInSelectMode = data;
-      this.$modal.show('images')
+      this.$modal.show("images");
     },
     /**
      * сохранение выбранного изображения из модального окна
      */
     applyImageSelection(event) {
       this.imageBlockInSelectMode.image = event;
-      this.imageBlockInSelectMode.file = '';
-      this.$modal.hide('images')
+      this.imageBlockInSelectMode.file = "";
+      this.$modal.hide("images");
     },
     /**
      * копирование полученной разметки письма в буфер обмена
      */
     async copyEmailTemplate() {
       await await navigator.clipboard.writeText(this.generatedHtml);
-      alert('Разметка письма скопирована в буфер обмена')
-    }
+      alert("Разметка письма скопирована в буфер обмена");
+    },
+    hideMainPlaceholder(event) {
+      //проверка на нажатие клавиши мыши (проверка на перетаскивание)
+      if (event.buttons !== 0) {
+        this.showMainPlaceholder = false;
+      }
+    },
   },
   created() {
     this.$parent.$on("save-post", this.savePost);
@@ -471,6 +495,7 @@ iframe {
     border: 1px solid black;
     margin: 100px auto;
     width: 200px;
+    padding-bottom: 100px;
 
     .item {
       padding: 20px;
@@ -510,6 +535,26 @@ iframe {
         width: 100%;
         height: 100%;
         background: transparent;
+      }
+      &-message {
+        width: 100%;
+        height: 110px;
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: center;
+        align-items: center;
+        padding: 25px 27.5px;
+        background-color: #f5f5f5;
+        font-style: normal;
+        font-weight: 450;
+        font-size: 14px;
+        text-align: left;
+        line-height: 140%;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        word-break: break-word;
+        color: #818c99;
+        font-family: "Avenir Next Regular", sans-serif;
       }
     }
     &-blocks {

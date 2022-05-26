@@ -104,7 +104,8 @@ export default {
     position: relative;
     background: transparent;
     border-bottom: 1px solid #eeeeee;
-    height: 32px;
+    height: 42px;
+    min-height: 42px;
     margin-bottom: 5.3rem;
     &:focus {
       outline: none;
