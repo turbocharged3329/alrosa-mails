@@ -37,7 +37,7 @@
         v-model="fileRecords"
       >
       </VueFileAgent>
-      <h3 class="mail-block__heading"><a class="select-preloaded" @click.prevent.stop="$emit('open-modal', true)">Выбрать</a> из существующих</h3>
+      <button class="select-preloaded btn-custom btn-secondary-custom" @click.prevent.stop="$emit('open-modal', true)">выберите картинку из готовых</button>
     </div>
   </div>
 </template>

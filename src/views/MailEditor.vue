@@ -465,13 +465,17 @@ export default {
       // await await navigator.clipboard.writeText(this.generatedHtml);
       // alert("Разметка письма скопирована в буфер обмена");
     // },
+    
+    /**
+     * загрузка сформированного html письма
+     */
     downloadHtml() {
       var element = document.createElement("a");
         element.setAttribute(
           "href",
           "data:text/html;charset=utf-8," + encodeURIComponent(this.generatedHtml)
         );
-        element.setAttribute("download", 'mail.html');
+        element.setAttribute("download", `${this.postData.name ? this.postData.name : this.postName}.html`);
 
         element.style.display = "none";
         document.body.appendChild(element);
@@ -679,7 +683,7 @@ iframe {
     text-transform: uppercase;
     font-family: Avenir Next Regular, sans-serif !important;
     position: absolute;
-    top: 50%;
+    top: 85%;
     left: 124%;
     transform: translate(-50%);
 
