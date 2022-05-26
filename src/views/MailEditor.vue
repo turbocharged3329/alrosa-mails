@@ -96,7 +96,7 @@
                 class="modal__close-img"
               />
             </button>
-            <button class="modal__close-download" @click="copyEmailTemplate">
+            <button class="modal__close-download" @click="downloadHtml">
               скачать макет
             </button>
           </template>
@@ -273,6 +273,7 @@ export default {
   computed: {
     ...mapGetters(["token", "postName"]),
   },
+
   methods: {
     showMail() {
       this.$refs.frame.contentWindow.document.open();
@@ -460,9 +461,24 @@ export default {
     /**
      * копирование полученной разметки письма в буфер обмена
      */
-    async copyEmailTemplate() {
-      await await navigator.clipboard.writeText(this.generatedHtml);
-      alert("Разметка письма скопирована в буфер обмена");
+    // async copyEmailTemplate() {
+      // await await navigator.clipboard.writeText(this.generatedHtml);
+      // alert("Разметка письма скопирована в буфер обмена");
+    // },
+    downloadHtml() {
+      var element = document.createElement("a");
+        element.setAttribute(
+          "href",
+          "data:text/html;charset=utf-8," + encodeURIComponent(this.generatedHtml)
+        );
+        element.setAttribute("download", 'mail.html');
+
+        element.style.display = "none";
+        document.body.appendChild(element);
+
+        element.click();
+
+        document.body.removeChild(element);
     },
     hideMainPlaceholder(event) {
       //проверка на нажатие клавиши мыши (проверка на перетаскивание)
@@ -554,7 +570,7 @@ iframe {
         text-transform: uppercase;
         word-break: break-word;
         color: #818c99;
-        font-family: "Avenir Next Regular", sans-serif;
+        font-family: "Avenir Next Medium", sans-serif;
       }
     }
     &-blocks {

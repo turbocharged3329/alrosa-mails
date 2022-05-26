@@ -12,6 +12,10 @@
     font-family: "Avenir Next Light";
     src: url(~@/assets/fonts/AvenirNextCyr-Light.otf);
 }
+@font-face {
+    font-family: "Avenir Next Medium";
+    src: url(~@/assets/fonts/AvenirNextCyr-Medium.otf);
+}
 
 @media (min-width: 1400px) {
     .container{

@@ -42,7 +42,7 @@
               @click.prevent.stop="auth"
             >
               <span v-if="!loading">Войти</span>
-              <pulse-loader class="custom-class" :color="'#F0F2F5'" :loading="loading" :size="10" :sizeUnit="px"></pulse-loader>
+              <pulse-loader class="custom-class" :color="'#F0F2F5'" :loading="loading" :size="10" :sizeUnit="'px'"></pulse-loader>
             </button>
           </form>
         </div>
