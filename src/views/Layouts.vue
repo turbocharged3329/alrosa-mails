@@ -12,7 +12,7 @@
             <div
               class="layouts__list-item"
               :key="item.id"
-              @click="$router.push({ name: 'Constructor' })"
+              @click="createTempaltedMail(item)"
             >
               <img
                 class="layouts__list-item-img"
@@ -56,14 +56,50 @@ export default {
       layouts: [
         { id: 1, title: "Мониторинг СМИ" },
         { id: 2, title: "Профилактические работы" },
-        { id: 3, title: "Обращение генерального директора" },
+        {
+          id: 3,
+          title: "Обращение генерального директора",
+          params: { postData: {} },
+        },
         { id: 4, title: "Поздравление" },
         { id: 5, title: "HR" },
       ],
     };
   },
   methods: {
-    ...mapActions(["setHeaderVisibility"]),
+    ...mapActions(["setHeaderVisibility", "setPostName"]),
+    async createTempaltedMail(data) {
+      await this.setPostName(data.title);
+      this.$router.push({
+        name: "Constructor",
+        params: {
+          postData: {
+            template_blocks: [
+              {
+                type: "header",
+                image: "/static/img/header 1.png",
+              },
+              {
+                type: "title",
+                text: "Обращение генерального директора Алроса",
+              },
+              {
+                type: "h1",
+                text: "",
+              },
+              {
+                type: "text",
+                text: "",
+              },
+              {
+                type: "footer",
+                image: "/static/img/footer 2.png",
+              },
+            ],
+          },
+        },
+      });
+    },
   },
   mounted() {
     this.setHeaderVisibility(true);

@@ -386,18 +386,14 @@ export default {
             type: elem.type,
           };
 
-          if (
-            ["h1", "h2", "h3", "title"].includes(
-              elem.type
-            )
-          ) {
+          if (["h1", "h2", "h3", "title"].includes(elem.type)) {
             if (elem.content) {
               data.text = elem.content.replace(/<\/?[a-z][a-z0-9]*>/gi, "");
             } else return;
           } else if (["text", "highlighted_text"].includes(elem.type)) {
             if (elem.content) {
-              data.html = elem.content
-            } else return 
+              data.html = elem.content;
+            } else return;
           } else if (
             ["header", "footer", "image", "wide_image"].includes(elem.type)
           ) {
@@ -430,14 +426,14 @@ export default {
       if (this.postData?.template_blocks?.length) {
         this.postData.template_blocks.forEach((elem) => {
           const index = this.blocks.findIndex((item) => item.type == elem.type);
-          this.elements.splice(index, 0, {
+
+          this.elements.push({
             ...this.blocks[index],
             id: this.generateId(),
             content: elem.text || elem.label || elem.html || "",
             link: elem.link || "",
             image: elem.image || "",
           });
-          this.elements.push();
         });
       }
     },
@@ -467,27 +463,30 @@ export default {
      * копирование полученной разметки письма в буфер обмена
      */
     // async copyEmailTemplate() {
-      // await await navigator.clipboard.writeText(this.generatedHtml);
-      // alert("Разметка письма скопирована в буфер обмена");
+    // await await navigator.clipboard.writeText(this.generatedHtml);
+    // alert("Разметка письма скопирована в буфер обмена");
     // },
-    
+
     /**
      * загрузка сформированного html письма
      */
     downloadHtml() {
       var element = document.createElement("a");
-        element.setAttribute(
-          "href",
-          "data:text/html;charset=utf-8," + encodeURIComponent(this.generatedHtml)
-        );
-        element.setAttribute("download", `${this.postData.name ? this.postData.name : this.postName}.html`);
+      element.setAttribute(
+        "href",
+        "data:text/html;charset=utf-8," + encodeURIComponent(this.generatedHtml)
+      );
+      element.setAttribute(
+        "download",
+        `${this.postData.name ? this.postData.name : this.postName}.html`
+      );
 
-        element.style.display = "none";
-        document.body.appendChild(element);
+      element.style.display = "none";
+      document.body.appendChild(element);
 
-        element.click();
+      element.click();
 
-        document.body.removeChild(element);
+      document.body.removeChild(element);
     },
     hideMainPlaceholder(event) {
       //проверка на нажатие клавиши мыши (проверка на перетаскивание)
