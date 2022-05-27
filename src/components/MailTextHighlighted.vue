@@ -32,7 +32,7 @@ import { block } from '@/mixins/block.js';
 
 export default {
   name: "MailTextHighlighted",
-  props: ['text'],
+  props: ['html'],
   mixins: [block],
   data() {
     return {
@@ -40,7 +40,7 @@ export default {
     };
   },
   created() {
-    this.content = `${this.text}`
+    this.content = this.html
   }
 };
 </script>

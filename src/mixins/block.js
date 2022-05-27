@@ -12,6 +12,7 @@ export const block = {
     return {
       customToolbar: [
         ["bold", "italic", "underline"],
+        ["link"],
         [
           { align: "" },
           { align: "center" },

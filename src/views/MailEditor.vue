@@ -42,6 +42,7 @@
                     @clear-image="item.image = $event"
                     @open-modal="openImagesSelector($event, item)"
                     :text="item.content"
+                    :html="item.content"
                     :link="item.link"
                     :image-url="item.image"
                   ></component>
@@ -386,13 +387,17 @@ export default {
           };
 
           if (
-            ["h1", "h2", "h3", "title", "text", "highlighted_text"].includes(
+            ["h1", "h2", "h3", "title"].includes(
               elem.type
             )
           ) {
             if (elem.content) {
               data.text = elem.content.replace(/<\/?[a-z][a-z0-9]*>/gi, "");
             } else return;
+          } else if (["text", "highlighted_text"].includes(elem.type)) {
+            if (elem.content) {
+              data.html = elem.content
+            } else return 
           } else if (
             ["header", "footer", "image", "wide_image"].includes(elem.type)
           ) {
@@ -428,7 +433,7 @@ export default {
           this.elements.splice(index, 0, {
             ...this.blocks[index],
             id: this.generateId(),
-            content: elem.text || elem.label || "",
+            content: elem.text || elem.label || elem.html || "",
             link: elem.link || "",
             image: elem.image || "",
           });
