@@ -1,0 +1,48 @@
+[
+    {
+        "id": 1,
+        "title": "Мониторинг СМИ"
+    },
+    {
+        "id": 2,
+        "title": "Профилактические работы"
+    },
+    {
+        "id": 3,
+        "title": "Обращение генерального директора",
+        "params": {
+            "postData": {
+                "template_blocks": [
+                    {
+                        "type": "header",
+                        "image": "/static/img/header 1.png"
+                    },
+                    {
+                        "type": "title",
+                        "text": "Обращение генерального директора Алроса"
+                    },
+                    {
+                        "type": "h1",
+                        "text": ""
+                    },
+                    {
+                        "type": "text",
+                        "text": ""
+                    },
+                    {
+                        "type": "footer",
+                        "image": "/static/img/footer 2.png"
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "id": 4,
+        "title": "Поздравление"
+    },
+    {
+        "id": 5,
+        "title": "HR"
+    }
+]

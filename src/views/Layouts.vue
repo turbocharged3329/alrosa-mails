@@ -46,25 +46,11 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 export default {
   name: "Layouts",
-  components: {},
-  props: {},
-  data() {
-    return {
-      layouts: [
-        { id: 1, title: "Мониторинг СМИ" },
-        { id: 2, title: "Профилактические работы" },
-        {
-          id: 3,
-          title: "Обращение генерального директора",
-          params: { postData: {} },
-        },
-        { id: 4, title: "Поздравление" },
-        { id: 5, title: "HR" },
-      ],
-    };
+  computed: {
+    ...mapGetters(['layouts'])
   },
   methods: {
     ...mapActions(["setHeaderVisibility", "setPostName"]),
@@ -72,32 +58,7 @@ export default {
       await this.setPostName(data.title);
       this.$router.push({
         name: "Constructor",
-        params: {
-          postData: {
-            template_blocks: [
-              {
-                type: "header",
-                image: "/static/img/header 1.png",
-              },
-              {
-                type: "title",
-                text: "Обращение генерального директора Алроса",
-              },
-              {
-                type: "h1",
-                text: "",
-              },
-              {
-                type: "text",
-                text: "",
-              },
-              {
-                type: "footer",
-                image: "/static/img/footer 2.png",
-              },
-            ],
-          },
-        },
+        params: data.params,
       });
     },
   },
