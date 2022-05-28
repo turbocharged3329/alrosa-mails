@@ -24,11 +24,6 @@ export default {
     MailNav,
     Badge
   },
-  props: {},
-  data() {
-    return {}
-  },
-  methods: {}
 }
 </script>
 

@@ -9,11 +9,6 @@
 <script>
 export default {
   name: "Badge",
-  components: {},
-  data() {
-    return {};
-  },
-  methods: {},
 };
 </script>
 

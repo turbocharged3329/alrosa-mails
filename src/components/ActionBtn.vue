@@ -5,17 +5,12 @@
 <script>
 export default {
   name: 'ActionBtn',
-  components: {},
   props: {
     action: {
       type: String,
       default: 'up'
     }
   },
-  data() {
-    return {}
-  },
-  methods: {}
 }
 </script>
 
