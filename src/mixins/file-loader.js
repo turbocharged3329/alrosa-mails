@@ -21,9 +21,14 @@ export const fileLoader = {
       return process.env.VUE_APP_API + this.imageUrl;
     },
   },
+  watch: {
+    imageUrl(value) {
+      this.showPreview = value ? true : false
+    }
+  },
   created() {
     this.image = this.imageUrl;
-    this.showPreview = this.imageUrl ? 1 : 0;
+    this.showPreview = this.imageUrl ? true : false;
   },
   mounted() {
     this.helpText = this.$refs.vueFileAgent.$el.querySelector(".help-text");
@@ -31,10 +36,13 @@ export const fileLoader = {
   },
   methods: {
     clearLoadedImage() {
-      this.showPreview = 0;
+      this.showPreview = false;
       this.image = '';
       this.$emit('image', null)
       this.$emit('clear-image', null)
+    },
+    showSelectedImage() {
+      this.showPreview = true;
     },
     uploadFiles() {
       // Using the default uploader. You may use another uploader instead.

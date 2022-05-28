@@ -52,8 +52,6 @@ export default {
     return {
       maxSize: "10MB",
     }
-  }
+  },
 };
 </script>
-
-<style lang="scss" scoped></style>

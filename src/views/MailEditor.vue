@@ -289,6 +289,7 @@ export default {
         ...event.data,
         id: this.generateId(),
         content: "",
+        image: ""
       });
       this.elements.push();
     },
@@ -455,6 +456,7 @@ export default {
      * сохранение выбранного изображения из модального окна
      */
     applyImageSelection(event) {
+      console.log(event);
       this.imageBlockInSelectMode.image = event;
       this.imageBlockInSelectMode.file = "";
       this.$modal.hide("images");

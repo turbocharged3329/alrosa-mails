@@ -43,12 +43,11 @@
 </template>
 
 <script>
-import { block } from "@/mixins/block.js";
 import { fileLoader } from "@/mixins/file-loader.js";
 
 export default {
   name: "MailFooter",
-  mixins: [block, fileLoader],
+  mixins: [fileLoader],
   data() {
     return {
       maxSize: "10MB",
