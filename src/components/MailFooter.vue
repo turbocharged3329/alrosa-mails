@@ -3,9 +3,9 @@
     <div class="dragger"></div>
     <mail-nav
       @delete="$emit('delete')"
-      @edit="editContent"
       @up="$emit('up')"
       @down="$emit('down')"
+      no-edit
     ></mail-nav>
     <div class="mail-content">
       <badge>Футер/дно</badge>
@@ -15,7 +15,6 @@
           Удалить
         </button>
       </div>
-      <h3 class="mail-block__heading">Загрузить новое изображение</h3>
       <VueFileAgent
         class="mail-fileinput"
         ref="vueFileAgent"

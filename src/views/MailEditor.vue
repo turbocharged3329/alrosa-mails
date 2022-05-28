@@ -137,7 +137,7 @@ import MailFooter from "@/components/MailFooter.vue";
 import ImageSelector from "@/components/ImageSelector.vue";
 import axios from "axios";
 import Vue from "vue";
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 import { SweetModal } from "sweet-modal-vue";
 
 export default {
@@ -272,10 +272,11 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["token", "postName"]),
+    ...mapGetters(["token", "postName", "currentPost"]),
   },
 
   methods: {
+    ...mapActions(["setCurrentPost"]),
     showMail() {
       this.$refs.frame.contentWindow.document.open();
       this.$refs.frame.contentWindow.document.write(this.generatedHtml);
@@ -424,8 +425,17 @@ export default {
      * добавление блоков в редактор при их наличии (есл загружают созданное письмо)
      */
     addTemplateBlocks() {
+      let data;
+
+      //получаем список блоков из props или из кэша vuex
       if (this.postData?.template_blocks?.length) {
-        this.postData.template_blocks.forEach((elem) => {
+        data = this.postData.template_blocks
+      } else if (this.currentPost) {
+        data = this.currentPost
+      }
+
+      if (data) {
+        data.forEach((elem) => {
           const index = this.blocks.findIndex((item) => item.type == elem.type);
 
           this.elements.push({
@@ -442,6 +452,7 @@ export default {
      * нажатие на ссылку "Назад"
      */
     backToTemplates() {
+      this.setCurrentPost({})
       this.$router.push({ name: "Layouts" });
     },
     /**
@@ -503,6 +514,10 @@ export default {
   mounted() {
     this.$emit("show", true);
     this.addTemplateBlocks();
+
+    if (this.postData.template_blocks) {
+      this.setCurrentPost(this.postData.template_blocks)
+    } 
   },
   beforeDestroy() {
     this.$emit("show", false);

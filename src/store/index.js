@@ -8,7 +8,7 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
   plugins: [
     createPersistedState({
-      paths: ["token", "postName", "headerVisibility", "user"],
+      paths: ["token", "postName", "headerVisibility", "user", "currentPost"],
     }),
   ],
   state: () => ({
@@ -17,6 +17,7 @@ const store = new Vuex.Store({
     token: null,
     postName: "",
     user: null,
+    currentPost: null,
   }),
   mutations: {
     SET_HEADER_VISIBILITY(state, payload) {
@@ -34,6 +35,9 @@ const store = new Vuex.Store({
     SET_USER_DATA(state, payload) {
       state.user = payload;
     },
+    SET_CURRENT_POST(state, payload) {
+      state.currentPost = payload;
+    }
   },
   actions: {
     setHeaderVisibility({ commit }, payload) {
@@ -82,6 +86,9 @@ const store = new Vuex.Store({
     setPostName({ commit }, payload) {
       commit("SET_POST_NAME", payload);
     },
+    setCurrentPost({commit}, payload) {
+      commit("SET_CURRENT_POST", payload)
+    },
     logout({ commit }) {
       commit("SET_TOKEN", "");
     },
@@ -92,6 +99,7 @@ const store = new Vuex.Store({
     token: (state) => state.token,
     postName: (state) => state.postName,
     user: (state) => state.user,
+    currentPost: (state) => state.currentPost,
   },
 });
 
