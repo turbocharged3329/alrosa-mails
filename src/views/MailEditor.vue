@@ -425,7 +425,7 @@ export default {
      * добавление блоков в редактор при их наличии (есл загружают созданное письмо)
      */
     addTemplateBlocks() {
-      let data;
+      let data = [];
 
       //получаем список блоков из props или из кэша vuex
       if (this.postData?.template_blocks?.length) {
@@ -434,7 +434,7 @@ export default {
         data = this.currentPost
       }
 
-      if (data) {
+      if (data.length) {
         data.forEach((elem) => {
           const index = this.blocks.findIndex((item) => item.type == elem.type);
 
