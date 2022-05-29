@@ -704,7 +704,7 @@ iframe {
     text-transform: uppercase;
     font-family: Avenir Next Regular, sans-serif !important;
     position: absolute;
-    top: 85%;
+    bottom: 0%;
     left: 124%;
     transform: translate(-50%);
 

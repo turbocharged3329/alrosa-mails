@@ -12,7 +12,7 @@
       <div class="image-preview" v-if="showPreview">
         <img :src="imageLink" class="image-preview__img"/>
         <button class="image-preview__delete" @click="clearLoadedImage">
-          Удалить
+          Очистить
         </button>
       </div>
       <VueFileAgent

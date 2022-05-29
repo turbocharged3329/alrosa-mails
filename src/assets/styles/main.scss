@@ -57,12 +57,22 @@ body {
       align-items: center;
       height: 135px;
     }
+    & .file-preview-wrapper-png {
+        width: 100%;
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: center;
+        align-items: center;
+    }
     & .file-input-wrapper {
         border: 1px dashed #E3E9F2;
         border-radius: 4px;
     }
     & .file-preview-wrapper::before {
       background-color: transparent !important;
+    }
+    &.file-delete {
+        display: none;
     }
     & .file-preview {
       justify-content: center;

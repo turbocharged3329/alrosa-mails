@@ -1,14 +1,6 @@
 [
     {
         "id": 1,
-        "title": "Мониторинг СМИ"
-    },
-    {
-        "id": 2,
-        "title": "Профилактические работы"
-    },
-    {
-        "id": 3,
         "title": "Обращение генерального директора",
         "params": {
             "postData": {
@@ -38,11 +30,67 @@
         }
     },
     {
-        "id": 4,
-        "title": "Поздравление"
+        "id": 2,
+        "title": "HR",
+        "params": {
+            "postData": {
+                "template_blocks": [
+                    {
+                        "type": "header",
+                        "image": "/static/img/header 1.png"
+                    },
+                    {
+                        "type": "title",
+                        "text": "КОРПОРАТИВНЫЕ НОВОСТИ И ОБЪЯВЛЕНИЯ"
+                    },
+                    {
+                        "type": "h1",
+                        "text": "КАДРОВЫЕ ИЗМЕНЕНИЯ"
+                    },
+                    {
+                        "type": "text",
+                        "text": ""
+                    },
+                    {
+                        "type": "wide_image",
+                        "image": ""
+                    },
+                    {
+                        "type": "text",
+                        "text": ""
+                    },
+                    {
+                        "type": "footer",
+                        "image": "/static/img/footer 2.png"
+                    }
+                ]
+            }
+        }
     },
     {
-        "id": 5,
-        "title": "HR"
+        "id": 3,
+        "title": "IT",
+        "params": {
+            "postData": {
+                "template_blocks": [
+                    {
+                        "type": "header",
+                        "image": "/static/img/header 4.png"
+                    },
+                    {
+                        "type": "h1",
+                        "text": ""
+                    },
+                    {
+                        "type": "text",
+                        "text": ""
+                    },
+                    {
+                        "type": "footer",
+                        "image": "/static/img/footer 3.png"
+                    }
+                ]
+            }
+        }
     }
 ]
