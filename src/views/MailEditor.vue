@@ -467,7 +467,6 @@ export default {
      * сохранение выбранного изображения из модального окна
      */
     applyImageSelection(event) {
-      console.log(event);
       this.imageBlockInSelectMode.image = event;
       this.imageBlockInSelectMode.file = "";
       this.$modal.hide("images");

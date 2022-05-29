@@ -13,7 +13,7 @@ export const fileLoader = {
       fileRecordsForUpload: [], // maintain an upload queue
       image: "",
       helpText: "",
-      showPreview: false
+      showPreview: false,
     };
   },
   computed: {
@@ -24,7 +24,12 @@ export const fileLoader = {
   watch: {
     imageUrl(value) {
       this.showPreview = value ? true : false
-    }
+      
+      if (value) {
+        this.fileRecords = []
+        this.fileRecordsForUpload = []
+      }
+    },
   },
   created() {
     this.image = this.imageUrl;
@@ -43,6 +48,8 @@ export const fileLoader = {
     },
     showSelectedImage() {
       this.showPreview = true;
+      this.file = '';
+      this.fileRecords = []
     },
     uploadFiles() {
       // Using the default uploader. You may use another uploader instead.
@@ -73,6 +80,8 @@ export const fileLoader = {
       reader.onload = () => {
         this.$emit("image", reader.result);
       };
+      this.image = null;
+      this.showPreview = false;
     },
     onBeforeDelete(fileRecord) {
       let i = this.fileRecordsForUpload.indexOf(fileRecord);

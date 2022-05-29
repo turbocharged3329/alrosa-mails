@@ -57,7 +57,7 @@ body {
       align-items: center;
       height: 135px;
     }
-    & .file-preview-wrapper-png {
+    & .file-preview-wrapper-image {
         width: 100%;
         display: flex;
         flex-flow: row nowrap;
@@ -343,14 +343,14 @@ body {
         }
       }
       &__img {
-          width: auto;
-          height: 100%;
-          max-width: 300px;
+          width: 100%;
+          height: auto;
+        //   max-width: 300px;
           max-height: 300px;
       }
       &__delete {
         position: absolute;
-        top: 0px;
+        top: 5px;
         right: 5px;
         border-radius: 22px;
         width: 100px;
