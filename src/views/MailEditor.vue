@@ -54,7 +54,7 @@
             </drop-list>
           </div>
         </div>
-        <div class="col-3 offset-1 p-0">
+        <div class="editor__mail-blocks-col col-3 offset-1 p-0">
           <h3 class="editor__mail-blocks-title">Блоки</h3>
           <p class="editor__mail-blocks-desc">
             Выберите блоки и перетащите их в правую область
@@ -571,6 +571,7 @@ iframe {
   &__mail {
     &-constructor {
       flex-basis: 100%;
+      padding-bottom: 100px;
       &-list {
         width: 100%;
         height: 100%;
@@ -603,6 +604,11 @@ iframe {
       width: 230px;
       position: sticky;
       top: 0px;
+      &-col {
+        height: fit-content;
+        position: sticky;
+        top: 0px;
+      }
       &-title {
         font-size: 22px;
         line-height: 27px;
