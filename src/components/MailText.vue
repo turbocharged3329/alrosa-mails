@@ -47,8 +47,9 @@ export default {
 
 <style lang="scss" scoped>
 .mail__input {
+  font-family: "Avenir Next Regular";
   font-style: normal;
-  font-weight: 300;
+  font-weight: 400;
   font-size: 22px;
   line-height: 27px;
   letter-spacing: 0.01em !important;

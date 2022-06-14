@@ -633,6 +633,8 @@ iframe {
         flex-flow: column nowrap;
         justify-content: flex-start;
         align-items: flex-start;
+        max-height: 520px;
+        overflow-y: auto;
       }
       &-item {
         background: $gray;
