@@ -237,14 +237,14 @@ body {
 }
 &-primary-custom {
     border: none;
-    background: $blue;
+    background-color: $blue;
     color: white;
     cursor: pointer;
     box-shadow: none !important;
     &.disabled {
         cursor: default;
         color: #818c99;
-        background: $gray;
+        background-color: $gray;
     }
     &:hover {
         background-color: $light-blue;
@@ -252,10 +252,10 @@ body {
 }
 &-secondary-custom {
     border: 2px solid $blue;
-    background: transparent;
+    background-color: transparent;
     box-shadow: none !important;
     &:hover {
-        background: $blue !important;
+        background-color: $blue !important;
         border-color: $blue !important;
         color: white !important;
     }

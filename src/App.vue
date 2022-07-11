@@ -7,6 +7,10 @@
             <img class="logo" alt="Алроса" src="@/assets/logo.svg" />
             <div class="header__actions">
               <div class="header__actions-btns" v-if="showHeaderButtons">
+                <div class="header__menu-wrapper">
+                  <button class="btn-menu btn-secondary-custom" @click="toggleContextMenu()"></button>
+                  <context-menu v-if="showContextMenu" @save-draft="toggleContextMenu(false)"></context-menu>
+                </div>
                 <button
                   class="btn-custom btn-secondary-custom btn-save"
                   @click.prevent.stop="emitSave"
@@ -34,18 +38,26 @@
 
 <script>
 import { mapActions, mapGetters } from "vuex";
+import ContextMenu from "@/components/ContextMenu.vue";
 export default {
   name: "App",
   data() {
     return {
       showHeaderButtons: false,
+      showContextMenu: false,
     };
   },
+  components: {
+    ContextMenu
+  }, 
   methods: {
     ...mapActions(["logout"]),
     logoutUser() {
       this.logout();
       this.$router.push({ path: "/" });
+    },
+    toggleContextMenu(show = true) {
+       this.showContextMenu = show; 
     },
     emitSave() {
       this.$emit("save-post", null);
@@ -101,6 +113,9 @@ export default {
       text-decoration: none;
     }
   }
+  &__menu-wrapper {
+    position: relative;
+  }
 }
 .logo {
   width: 139px;
@@ -111,5 +126,20 @@ export default {
   font-size: 10px !important;
   line-height: 100% !important;
   width: 176px !important;
+}
+.btn-menu {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-image: url("data:image/svg+xml,%3Csvg width='14' height='2' viewBox='0 0 14 2' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='1' cy='1' r='1' fill='black'/%3E%3Ccircle cx='7' cy='1' r='1' fill='black'/%3E%3Ccircle cx='13' cy='1' r='1' fill='black'/%3E%3C/svg%3E%0A") !important;
+  background-repeat: no-repeat !important;
+  background-size: 14px 2px !important;
+  background-position: center !important;
+  &:hover {
+    background-image: url("data:image/svg+xml,%3Csvg width='14' height='2' viewBox='0 0 14 2' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='1' cy='1' r='1' fill='black'/%3E%3Ccircle cx='7' cy='1' r='1' fill='black'/%3E%3Ccircle cx='13' cy='1' r='1' fill='black'/%3E%3C/svg%3E%0A") !important;
+    background-repeat: no-repeat !important;
+    background-size: 14px 2px !important;
+    background-position: center !important;
+  }
 }
 </style>

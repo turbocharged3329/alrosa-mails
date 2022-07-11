@@ -1,6 +1,16 @@
 <template>
   <div class="layouts container-fluid">
     <div class="layouts__body container p-0">
+      <div class="row layouts__notification-row">
+        <div class="col-10 offset-1">
+          <notification-bar
+            :text="notification.text"
+            :color="notification.color"
+            v-if="isShowNotification"
+            @close="isShowNotification = false"
+          ></notification-bar>
+        </div>
+      </div>
       <div class="row w-100 layouts__title-row">
         <div class="col-9 offset-3">
           <h1 class="layouts__title">Выберите тему письма</h1>
@@ -32,7 +42,7 @@
         </div>
       </div>
       <div class="layouts__footer row w-100 layouts__footer-row">
-        <div class="col-4 offset-3 p-0">
+        <div class="col-3 offset-3">
           <button
             class="layouts__create-btn btn-custom btn-secondary-custom"
             @click="$router.push({ name: 'AddNew' })"
@@ -47,10 +57,20 @@
 
 <script>
 import { mapActions, mapGetters } from "vuex";
+import NotificationBar from "@/components/NotificationBar.vue";
 export default {
   name: "Layouts",
+  components: {
+    NotificationBar,
+  },
+  data() {
+    return {
+      isShowNotification: false,
+      notification: {},
+    }
+  },
   computed: {
-    ...mapGetters(['layouts'])
+    ...mapGetters(["layouts"]),
   },
   methods: {
     ...mapActions(["setHeaderVisibility", "setPostName"]),
@@ -64,7 +84,15 @@ export default {
   },
   mounted() {
     this.setHeaderVisibility(true);
+    
+    if (this.$route.params?.notification) {
+      this.isShowNotification = true;
+      this.notification = this.$route.params.notification
+    }
   },
+  beforeDestroy() {
+    this.isShowNotification = false;
+  }
 };
 </script>
 
@@ -77,7 +105,10 @@ export default {
   width: 100%;
   height: calc(100vh - $header-height);
   box-sizing: border-box;
-  padding: 5.5rem 0;
+  // padding: 5.5rem 0;
+  padding-top: 1.5rem;
+  padding-bottom: 5.5rem;
+  position: relative;
   &__body {
     height: 100%;
     min-height: 100%;
@@ -96,7 +127,7 @@ export default {
     &-row {
       height: 66%;
       flex-basis: 100%;
-      margin-bottom: 5.6%;
+      margin-bottom: 2%;
     }
     &-item {
       flex-basis: 31.6%;
@@ -179,6 +210,11 @@ export default {
   &__footer-row {
     height: 14.4%;
     flex-basis: 100%;
+  }
+  &__notification-row {
+    width: 100%;
+    height: 40px;
+    margin-bottom: 1rem;
   }
 }
 </style>

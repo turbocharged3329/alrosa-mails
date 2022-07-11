@@ -453,7 +453,8 @@ export default {
      */
     backToTemplates() {
       this.setCurrentPost({})
-      this.$router.push({ name: "Layouts" });
+      this.$router.push({ name: "Layouts"});
+      // this.$router.push({ name: "Layouts", params: {notification: {text: 'Новый шаблон добавлен!', show: true}}});
     },
     /**
      * открытие модального окна с выбором предзагруженных изображений
