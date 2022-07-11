@@ -150,6 +150,9 @@ export default {
         background-size: cover;
         background-repeat: no-repeat;
         margin-bottom: 1rem;
+        &.is-new {
+          border-bottom: 3px solid #ED1D25;
+        }
       }
       &-title {
         font-weight: 500;
