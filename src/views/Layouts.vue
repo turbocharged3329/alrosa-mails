@@ -17,7 +17,7 @@
         </div>
       </div>
       <div class="row w-100 layouts__list-row">
-        <div class="layouts__list col-9 offset-1 d-flex flex-row flex-wrap g-0">
+        <div class="layouts__list col-9 offset-1 d-flex flex-row flex-wrap">
           <template v-for="item in layouts">
             <div
               class="layouts__list-item"
