@@ -26,6 +26,7 @@
             >
               <img
                 class="layouts__list-item-img"
+                :class="{'is-new' : checkRecentlyAddedTemplate(item.created_at)}"
                 :style="{
                   backgroundImage: item.preview_image || 'url(' + require(`@/assets/bg.png`) + ')',
                 }"
@@ -84,6 +85,12 @@ export default {
         }},
       });
     },
+    checkRecentlyAddedTemplate(createdAt) {
+      return this.computeMinutes((Date.now() - new Date(createdAt))) < 1;
+    },
+    computeMinutes(mileseconds) {
+      return mileseconds / 60000
+    }
   },
   mounted() {
     this.setHeaderVisibility(true);

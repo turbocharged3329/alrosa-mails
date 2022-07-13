@@ -1,10 +1,14 @@
 <template>
   <div class="context-menu" @mouseleave="$emit('close')">
     <div class="context-menu__item">
-      <span class="context-menu__item-content" @click="emitSaveToDrafts">сохранить черновик</span>
+      <span class="context-menu__item-content" @click="emitSaveToDrafts"
+        >сохранить черновик</span
+      >
     </div>
     <div class="context-menu__item">
-      <span class="context-menu__item-content" @click="emitSaveReady">готово к отправке</span>
+      <span class="context-menu__item-content bold" @click="emitSaveReady"
+        >готово к отправке</span
+      >
     </div>
     <hr class="context-menu__divider" />
     <div class="context-menu__item" @click="emitSaveToTemplates">
@@ -15,7 +19,9 @@
     </div>
     <hr class="context-menu__divider" />
     <div class="context-menu__item">
-      <span class="context-menu__item-content" @click="emitDownload">скачать html</span>
+      <span class="context-menu__item-content" @click="emitDownload"
+        >скачать html</span
+      >
     </div>
   </div>
 </template>
@@ -25,23 +31,23 @@ export default {
   name: "ContextMenu",
   components: {},
   props: {},
-  emits: ['save-draft'],
+  emits: ["save-draft"],
   data() {
     return {};
   },
   methods: {
     emitSaveToDrafts() {
-      this.$emit('save-draft')
+      this.$emit("save-draft");
     },
     emitSaveToTemplates() {
-      this.$emit('save-templates')
+      this.$emit("save-templates");
     },
     emitSaveReady() {
-      this.$emit('save-ready')
+      this.$emit("save-ready");
     },
     emitDownload() {
-      this.$emit('save-download')
-    }
+      this.$emit("save-download");
+    },
   },
 };
 </script>
@@ -75,6 +81,9 @@ export default {
       letter-spacing: 0.15em;
       font-size: 10px;
       line-height: 100%;
+      &.bold {
+        font-weight: 600;
+      }
     }
   }
   &__divider {

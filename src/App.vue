@@ -165,6 +165,7 @@ export default {
   font-size: 10px !important;
   line-height: 100% !important;
   width: 176px !important;
+  margin-left: 20px;
 }
 .btn-menu {
   width: 32px;
