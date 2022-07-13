@@ -1,10 +1,10 @@
 <template>
-  <div class="context-menu">
+  <div class="context-menu" @mouseleave="$emit('close')">
     <div class="context-menu__item">
       <span class="context-menu__item-content" @click="emitSaveToDrafts">сохранить черновик</span>
     </div>
     <div class="context-menu__item">
-      <span class="context-menu__item-content">готово к отправке</span>
+      <span class="context-menu__item-content" @click="emitSaveReady">готово к отправке</span>
     </div>
     <hr class="context-menu__divider" />
     <div class="context-menu__item" @click="emitSaveToTemplates">
@@ -35,6 +35,9 @@ export default {
     },
     emitSaveToTemplates() {
       this.$emit('save-templates')
+    },
+    emitSaveReady() {
+      this.$emit('save-ready')
     }
   },
 };

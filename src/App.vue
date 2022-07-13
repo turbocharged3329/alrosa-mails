@@ -3,20 +3,25 @@
     <div class="header container-fluid" v-if="headerVisibility">
       <div class="container">
         <div class="row header__row">
-          <div class="col-11 offset-1 d-flex flex-row justify-content-between align-items-center">
+          <div
+            class="col-11 offset-1 d-flex flex-row justify-content-between align-items-center"
+          >
             <img class="logo" alt="Алроса" src="@/assets/logo.svg" />
             <div class="header__actions">
               <div class="header__actions-btns" v-if="showHeaderButtons">
                 <div class="header__menu-wrapper">
-                  <button class="btn-menu btn-secondary-custom" @click="toggleContextMenu()"></button>
-                  <context-menu v-if="showContextMenu" @save-draft="toggleContextMenu(false)" @save-templates="emitTemplates"></context-menu>
+                  <button
+                    class="btn-menu btn-secondary-custom"
+                    @click="toggleContextMenu()"
+                  ></button>
+                  <context-menu
+                    v-if="showContextMenu"
+                    @save-templates="emitTemplates"
+                    @save-ready="emitSave"
+                    @save-draft="emitDraft"
+                    @close="checkContextMenuLeave"
+                  ></context-menu>
                 </div>
-                <button
-                  class="btn-custom btn-secondary-custom btn-save"
-                  @click.prevent.stop="emitSave"
-                >
-                  Сохранить
-                </button>
                 <button
                   class="btn-custom btn-secondary-custom btn-preview"
                   @click.prevent.stop="emitDraft"
@@ -47,9 +52,12 @@ export default {
       showContextMenu: false,
     };
   },
+  computed: {
+    ...mapGetters(["headerVisibility"]),
+  },
   components: {
-    ContextMenu
-  }, 
+    ContextMenu,
+  },
   methods: {
     ...mapActions(["logout"]),
     logoutUser() {
@@ -57,21 +65,25 @@ export default {
       this.$router.push({ path: "/" });
     },
     toggleContextMenu(show = true) {
-       this.showContextMenu = show; 
+      this.showContextMenu = show;
     },
     emitSave() {
+      this.toggleContextMenu(false);
       this.$emit("save-post", null);
     },
     emitTemplates() {
+      this.toggleContextMenu(false);
       this.$emit("save-templates", null);
     },
     emitDraft() {
+      this.toggleContextMenu(false);
       this.$emit("save-post", true);
     },
-  },
-  computed: {
-    ...mapGetters(["headerVisibility"]),
-  },
+    checkContextMenuLeave() {
+      console.log('here');
+      this.toggleContextMenu(false);
+    }
+  }, 
 };
 </script>
 
@@ -127,7 +139,8 @@ export default {
   width: 139px;
   height: 20px;
 }
-.btn-save, .btn-preview {
+.btn-save,
+.btn-preview {
   height: 32px !important;
   font-size: 10px !important;
   line-height: 100% !important;

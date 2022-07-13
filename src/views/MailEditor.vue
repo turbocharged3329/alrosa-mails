@@ -359,8 +359,10 @@ export default {
           },
           headers,
         }).then((response) => {
-          this.generatedHtml = response.data.generated_html;
-          this.$modal.show("modal");
+          if (toDrafts) {
+            this.generatedHtml = response.data.generated_html;
+            this.$modal.show("modal");
+          }
         });
       } else {
         axios({
