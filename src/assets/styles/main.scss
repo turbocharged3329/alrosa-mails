@@ -84,6 +84,7 @@ body {
         color: black;
         font-weight: 400;
         font-size: 14px;
+        font-family: "Avenir Next Regular", sans-serif !important;
         line-height: 20px;
         width: 100%;
         display: flex;
@@ -212,6 +213,9 @@ body {
         max-width: 100%;
         word-break: break-word;
         text-align: left;
+        &.add-new__input {
+            font-size: 14px !important;
+        }
     }
 }
 

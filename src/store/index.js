@@ -19,6 +19,7 @@ const store = new Vuex.Store({
     postName: "",
     user: null,
     currentPost: null,
+    templates: [],
     layouts
   }),
   mutations: {
@@ -39,6 +40,9 @@ const store = new Vuex.Store({
     },
     SET_CURRENT_POST(state, payload) {
       state.currentPost = payload;
+    },
+    SET_TEMPLATES(state, payload) {
+      state.templates = payload;
     }
   },
   actions: {
@@ -54,6 +58,17 @@ const store = new Vuex.Store({
         },
       }).then((response) => {
         commit("SET_POSTS", response.data);
+      });
+    },
+    getTemplates({ commit }) {
+      return axios({
+        method: "GET",
+        url: `${process.env.VUE_APP_API}/premade-email-templates/`,
+        headers: {
+          Authorization: "Token da2da7a36ef5fd7e39944f10c589e7ccddf29217",
+        },
+      }).then((response) => {
+        commit("SET_TEMPLATES", response.data);
       });
     },
     getToken({ commit, dispatch }, payload) {
@@ -103,6 +118,7 @@ const store = new Vuex.Store({
     user: (state) => state.user,
     currentPost: (state) => state.currentPost,
     layouts: (state) => state.layouts,
+    templates: (state) => state.templates
   },
 });
 

@@ -10,6 +10,11 @@ const routes = [
     name: "AddNew",
   },
   {
+    path: "/add-template",
+    component: () => import("@/views/AddTemplate.vue"),
+    name: "AddTemplate",
+  },
+  {
     path: "/archive",
     component: () => import("@/views/Archive.vue"),
     name: "Archive",

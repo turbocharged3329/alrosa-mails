@@ -28,8 +28,8 @@
         :maxFiles="14"
         :helpText="'Перетащите файлы сюда или нажмите для загрузки'"
         :errorText="{
-          type: 'Invalid file type. Only images or zip Allowed',
-          size: 'Files should not exceed 10MB in size',
+          type: 'Неверный типа файла',
+          size: `Файл не должен быть больше ${maxSize}`,
         }"
         @select="filesSelected($event)"
         @beforedelete="onBeforeDelete($event)"
