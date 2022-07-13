@@ -339,7 +339,7 @@ export default {
     /**
      * сохранение изменений письма
      */
-    savePost(toDrafts) {
+    savePost({toDrafts = true, showModal = true, downloadAfter = false} = {}) {
       const headers = {
         Authorization: `Token ${this.token}`,
         "Content-Type": "application/json",
@@ -347,7 +347,7 @@ export default {
       const url = `${process.env.VUE_APP_API}/email-templates/${
         this.postData.id || ""
       }`;
-
+      //если создали новое письмо
       if (!this.postData.id) {
         axios({
           method: "POST",
@@ -359,11 +359,17 @@ export default {
           },
           headers,
         }).then((response) => {
-          if (toDrafts) {
-            this.generatedHtml = response.data.generated_html;
+          this.generatedHtml = response.data.generated_html;
+
+          if (downloadAfter) {
+            this.downloadHtml()
+          }
+
+          if (showModal) {
             this.$modal.show("modal");
           }
         });
+        //если редактировали готовое
       } else {
         axios({
           method: "PATCH",
@@ -376,7 +382,14 @@ export default {
           headers,
         }).then((response) => {
           this.generatedHtml = response.data.generated_html;
-          this.$modal.show("modal");
+
+          if (downloadAfter) {
+            this.downloadHtml()
+          }
+
+          if (showModal) {
+            this.$modal.show("modal");
+          }
         });
       }
     },

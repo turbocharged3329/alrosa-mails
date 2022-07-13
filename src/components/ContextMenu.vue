@@ -15,7 +15,7 @@
     </div>
     <hr class="context-menu__divider" />
     <div class="context-menu__item">
-      <span class="context-menu__item-content">скачать html</span>
+      <span class="context-menu__item-content" @click="emitDownload">скачать html</span>
     </div>
   </div>
 </template>
@@ -38,6 +38,9 @@ export default {
     },
     emitSaveReady() {
       this.$emit('save-ready')
+    },
+    emitDownload() {
+      this.$emit('save-download')
     }
   },
 };

@@ -19,6 +19,7 @@
                     @save-templates="emitTemplates"
                     @save-ready="emitSave"
                     @save-draft="emitDraft"
+                    @save-download="emitDownload"
                     @close="checkContextMenuLeave"
                   ></context-menu>
                 </div>
@@ -69,21 +70,40 @@ export default {
     },
     emitSave() {
       this.toggleContextMenu(false);
-      this.$emit("save-post", null);
+      this.$emit("save-post", {
+        toDrafts: false,
+        showModal: false,
+        downloadAfter: false,
+      });
     },
     emitTemplates() {
       this.toggleContextMenu(false);
-      this.$emit("save-templates", null);
+      this.$emit("save-templates", {
+        toDrafts: false,
+        showModal: false,
+        downloadAfter: false,
+      });
     },
     emitDraft() {
       this.toggleContextMenu(false);
-      this.$emit("save-post", true);
+      this.$emit("save-post", {
+        toDrafts: true,
+        showModal: true,
+        downloadAfter: false,
+      });
+    },
+    emitDownload() {
+      this.toggleContextMenu(false);
+      this.$emit("save-post", {
+        toDrafts: true,
+        showModal: false,
+        downloadAfter: true,
+      });
     },
     checkContextMenuLeave() {
-      console.log('here');
       this.toggleContextMenu(false);
-    }
-  }, 
+    },
+  },
 };
 </script>
 
