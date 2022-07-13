@@ -27,24 +27,24 @@
       <div class="row">
         <div class="col-5 offset-3">
           <VueFileAgent
-          class="mail-fileinput"
-          ref="vueFileAgent"
-          :theme="'list'"
-          :multiple="false"
-          :deletable="true"
-          :meta="true"
-          :accept="'image/*,.zip'"
-          :maxSize="'200KB'"
-          :maxFiles="1"
-          :helpText="'Перетащите файлы сюда или нажмите для загрузки'"
-          :errorText="{
-            type: 'Неверный типа файла',
-            size: `Файл не должен быть больше ${maxSize}`,
-          }"
-          @select="filesSelected($event)"
-          @beforedelete="onBeforeDelete($event)"
-          @delete="fileDeleted($event)"
-          v-model="fileRecords"
+            class="mail-fileinput"
+            ref="vueFileAgent"
+            :theme="'list'"
+            :multiple="false"
+            :deletable="true"
+            :meta="true"
+            :accept="'image/*,.zip'"
+            :maxSize="'200KB'"
+            :maxFiles="1"
+            :helpText="'Перетащите файлы сюда или нажмите для загрузки'"
+            :errorText="{
+              type: 'Неверный типа файла',
+              size: `Файл не должен быть больше ${maxSize}`,
+            }"
+            @select="filesSelected($event)"
+            @beforedelete="onBeforeDelete($event)"
+            @delete="fileDeleted($event)"
+            v-model="fileRecords"
           >
           </VueFileAgent>
         </div>
@@ -53,7 +53,7 @@
         <div class="col-3 offset-3">
           <button
             class="add-new__btn btn-primary-custom btn-custom"
-            @click="savePost"
+            @click="saveTemplate"
             :class="{ disabled: !name.length }"
             :disabled="!name.length"
           >
@@ -67,33 +67,53 @@
 
 <script>
 import { fileLoader } from "@/mixins/file-loader.js";
-import { mapActions } from "vuex";
+import axios from "axios";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: "AddTemplate",
   mixins: [fileLoader],
   components: {},
-  props: {},
+  props: {
+    template: {
+      type: String,
+      default: "",
+    },
+  },
   data() {
     return {
       name: "",
-      maxSize: '200KB'
+      maxSize: "200KB",
     };
+  },
+  computed: {
+    ...mapGetters(['token'])
   },
   methods: {
     ...mapActions(["setPostName"]),
     enterName(event) {
       this.name = event.target.innerHTML;
     },
-    savePost() {
-      this.setPostName(this.name);
-      this.$router.push({ name: "Constructor" });
+    saveTemplate() {
+      axios({
+        method: "POST",
+        url: `${process.env.VUE_APP_API}/premade-email-templates/`,
+        data: {
+          name: this.name,
+          status: "draft",
+          template_blocks: this.template,
+        },
+        headers: {
+          Authorization: `Token ${this.token}`,
+          "Content-Type": "application/json",
+        },
+      });
+    },
+    mounted() {
+      this.$refs.input.focus();
+      this.helpText.innerHTML = `<p class="loader-title">картинка-превью 280 Х 120</p><span>Перетащите файлы сюда или нажмите,<br>чтобы <a class="select-file">выбрать файл для загрузки</a><br><span class="size">до ${this.maxSize}</span></span>`;
     },
   },
-  mounted() {
-    this.$refs.input.focus();
-    this.helpText.innerHTML = `<p class="loader-title">картинка-превью 280 Х 120</p><span>Перетащите файлы сюда или нажмите,<br>чтобы <a class="select-file">выбрать файл для загрузки</a><br><span class="size">до ${this.maxSize}</span></span>`;
-  }
 };
 </script>
 

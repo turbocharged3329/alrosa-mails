@@ -378,6 +378,9 @@ export default {
         });
       }
     },
+    prepareEmailToTemplateSave() {
+      this.$router.push({ name: 'AddTemplate', params: {template: this.makeJSON()}})
+    },
     /**
      * подготовка шаблона для сохранения письма
      */
@@ -510,6 +513,7 @@ export default {
   },
   created() {
     this.$parent.$on("save-post", this.savePost);
+    this.$parent.$on('save-templates', this.prepareEmailToTemplateSave)
   },
   mounted() {
     this.$emit("show", true);
@@ -522,6 +526,7 @@ export default {
   beforeDestroy() {
     this.$emit("show", false);
     this.$parent.$off("save-post", this.savePost);
+    this.$parent.$off("save-templates", this.prepareEmailToTemplateSave);
   },
 };
 </script>

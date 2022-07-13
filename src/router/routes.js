@@ -13,6 +13,7 @@ const routes = [
     path: "/add-template",
     component: () => import("@/views/AddTemplate.vue"),
     name: "AddTemplate",
+    props: true,
   },
   {
     path: "/archive",

@@ -2,14 +2,14 @@
   <div id="app">
     <div class="header container-fluid" v-if="headerVisibility">
       <div class="container">
-        <div class="row">
+        <div class="row header__row">
           <div class="col-11 offset-1 d-flex flex-row justify-content-between align-items-center">
             <img class="logo" alt="Алроса" src="@/assets/logo.svg" />
             <div class="header__actions">
               <div class="header__actions-btns" v-if="showHeaderButtons">
                 <div class="header__menu-wrapper">
                   <button class="btn-menu btn-secondary-custom" @click="toggleContextMenu()"></button>
-                  <context-menu v-if="showContextMenu" @save-draft="toggleContextMenu(false)"></context-menu>
+                  <context-menu v-if="showContextMenu" @save-draft="toggleContextMenu(false)" @save-templates="emitTemplates"></context-menu>
                 </div>
                 <button
                   class="btn-custom btn-secondary-custom btn-save"
@@ -62,6 +62,9 @@ export default {
     emitSave() {
       this.$emit("save-post", null);
     },
+    emitTemplates() {
+      this.$emit("save-templates", null);
+    },
     emitDraft() {
       this.$emit("save-post", true);
     },
@@ -83,6 +86,9 @@ export default {
   height: $header-height;
   padding: 0 10%;
   border-bottom: 1px solid #e3e9f2;
+  &__row {
+    padding: 0 8px;
+  }
   &__actions {
     width: 50%;
     display: flex;

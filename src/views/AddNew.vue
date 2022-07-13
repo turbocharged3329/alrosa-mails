@@ -95,6 +95,7 @@ export default {
     color: $black;
     margin: 0;
     margin-bottom: 8rem;
+    letter-spacing: 0.07em;
   }
   &__input {
     @extend .mail__input;

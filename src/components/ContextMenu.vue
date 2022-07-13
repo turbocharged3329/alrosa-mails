@@ -7,7 +7,7 @@
       <span class="context-menu__item-content">готово к отправке</span>
     </div>
     <hr class="context-menu__divider" />
-    <div class="context-menu__item" @click="createTemplateFrom">
+    <div class="context-menu__item" @click="emitSaveToTemplates">
       <span class="context-menu__item-content">превратить в шаблон</span>
     </div>
     <div class="context-menu__item">
@@ -33,8 +33,8 @@ export default {
     emitSaveToDrafts() {
       this.$emit('save-draft')
     },
-    createTemplateFrom() {
-      this.$router.push({ name: 'AddTemplate'})
+    emitSaveToTemplates() {
+      this.$emit('save-templates')
     }
   },
 };
