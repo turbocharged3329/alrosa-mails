@@ -107,6 +107,9 @@ export default {
           Authorization: `Token ${this.token}`,
           "Content-Type": "application/json",
         },
+      })
+      .then(() => {
+        this.$router.push({name: 'Layouts'})
       });
     },
     mounted() {
