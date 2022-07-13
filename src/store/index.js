@@ -2,7 +2,6 @@ import Vue from "vue";
 import Vuex from "vuex";
 import axios from "axios";
 import createPersistedState from "vuex-persistedstate";
-import layouts from '/public/layouts.json'
 
 Vue.use(Vuex);
 
@@ -20,7 +19,6 @@ const store = new Vuex.Store({
     user: null,
     currentPost: null,
     templates: [],
-    layouts
   }),
   mutations: {
     SET_HEADER_VISIBILITY(state, payload) {
@@ -117,7 +115,6 @@ const store = new Vuex.Store({
     postName: (state) => state.postName,
     user: (state) => state.user,
     currentPost: (state) => state.currentPost,
-    layouts: (state) => state.layouts,
     templates: (state) => state.templates
   },
 });

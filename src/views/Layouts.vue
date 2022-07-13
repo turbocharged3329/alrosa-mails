@@ -18,7 +18,7 @@
       </div>
       <div class="row w-100 layouts__list-row">
         <div class="layouts__list col-9 offset-1 d-flex flex-row flex-wrap">
-          <template v-for="item in layouts">
+          <template v-for="item in templates">
             <div
               class="layouts__list-item"
               :key="item.id"
@@ -27,10 +27,10 @@
               <img
                 class="layouts__list-item-img"
                 :style="{
-                  backgroundImage: 'url(' + require(`@/assets/bg.png`) + ')',
+                  backgroundImage: item.preview_image || 'url(' + require(`@/assets/bg.png`) + ')',
                 }"
               />
-              <p class="layouts__list-item-title">{{ item.title }}</p>
+              <p class="layouts__list-item-title">{{ item.name }}</p>
             </div>
           </template>
           <div
@@ -70,20 +70,24 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["layouts"]),
+    ...mapGetters(["templates"]),
   },
   methods: {
-    ...mapActions(["setHeaderVisibility", "setPostName"]),
+    ...mapActions(["setHeaderVisibility", "setPostName", "getTemplates"]),
     async createTempaltedMail(data) {
-      await this.setPostName(data.title);
+      await this.setPostName(data.name);
       this.$router.push({
         name: "Constructor",
-        params: data.params,
+        params: {postData: {
+          ...data,
+          template_blocks: JSON.parse(data.template_blocks)
+        }},
       });
     },
   },
   mounted() {
     this.setHeaderVisibility(true);
+    this.getTemplates()
     
     if (this.$route.params?.notification) {
       this.isShowNotification = true;
