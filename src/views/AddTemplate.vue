@@ -87,9 +87,9 @@ export default {
       type: Number,
     },
     postName: {
-      type: String
-    }
-  }, 
+      type: String,
+    },
+  },
   data() {
     return {
       templateName: "",
@@ -97,14 +97,17 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['token'])
+    ...mapGetters(["token"]),
   },
   methods: {
     ...mapActions(["setPostName"]),
-    saveTemplate() {
-      axios({
-        method: `${this.postId ? 'PATCH' : 'POST'}`,
-        url: `${process.env.VUE_APP_API}/premade-email-templates/${this.postId ? this.postId : ''}`,
+    async saveTemplate() {
+      const url = `${process.env.VUE_APP_API}/premade-email-templates/${
+        this.postId ? this.postId : ""
+      }`;
+      await axios({
+        method: `${this.postId ? "PATCH" : "POST"}`,
+        url,
         data: {
           name: this.templateName,
           status: "draft",
@@ -114,30 +117,30 @@ export default {
           Authorization: `Token ${this.token}`,
           "Content-Type": "application/json",
         },
-      })
-      .then(() => {
-        const formData = new FormData();
-        formData.append('preview_image', this.fileRecords[0].file)
-
-        axios({
-        method: `${this.postId ? 'PATCH' : 'POST'}`,
-        url: `${process.env.VUE_APP_API}/premade-email-templates/${this.postId ? this.postId : ''}`,
-        data: formData,
-        headers: {
-          Authorization: `Token ${this.token}`,
-          "Content-Type": " multipart/form-data",
-        },
-        })
-        .then(() => {
-          this.$router.push({name: 'Layouts'})
-        })
       });
+
+      if (this.fileRecords[0]?.file) {
+        const formData = new FormData();
+        formData.append("preview_image", this.fileRecords[0].file);
+
+        await axios({
+          method: `${this.postId ? "PATCH" : "POST"}`,
+          url,
+          data: formData,
+          headers: {
+            Authorization: `Token ${this.token}`,
+            "Content-Type": " multipart/form-data",
+          },
+        });
+      }
+
+      this.$router.push({ name: "Layouts" });
     },
   },
   mounted() {
-      this.$refs.input.focus();
-      this.helpText.innerHTML = `<p class="loader-title">картинка-превью 280 Х 120</p><span>Перетащите файлы сюда или нажмите,<br>чтобы <a class="select-file">выбрать файл для загрузки</a><br><span class="size">до ${this.maxSize}</span></span>`;
-      this.templateName = this.postName;
+    this.$refs.input.focus();
+    this.helpText.innerHTML = `<p class="loader-title">картинка-превью 280 Х 120</p><span>Перетащите файлы сюда или нажмите,<br>чтобы <a class="select-file">выбрать файл для загрузки</a><br><span class="size">до ${this.maxSize}</span></span>`;
+    this.templateName = this.postName;
   },
 };
 </script>
