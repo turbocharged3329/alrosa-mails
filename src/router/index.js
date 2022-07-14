@@ -14,6 +14,9 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
 	if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini/i.test(navigator.userAgent) && to.name != 'ErrorPage') {
 		return next({path: 'device-error'})
+	} else if (!JSON.parse(localStorage.getItem('vuex')).token && to.name != 'Authoriztion') {
+		console.error('Non-autorized')
+		return next({name: 'Authoriztion'});
 	} else {
 		return next()
 	}
