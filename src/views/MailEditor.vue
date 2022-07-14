@@ -394,7 +394,7 @@ export default {
       }
     },
     prepareEmailToTemplateSave() {
-      this.$router.push({ name: 'AddTemplate', params: {template: this.makeJSON()}})
+      this.$router.push({ name: 'AddTemplate', params: {template: this.makeJSON(), postId: this.postData.id, postName: this.postData.name}})
     },
     /**
      * подготовка шаблона для сохранения письма

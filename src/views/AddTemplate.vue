@@ -10,7 +10,10 @@
           </div>
         </div>
         <div class="col-9 offset-2">
-          <h1 class="add-new__title">Создание шаблона</h1>
+          <h1 class="add-new__title">
+            <span v-if="postId">Изменение шаблона</span>
+            <span v-else>Создание шаблона</span>
+          </h1>
         </div>
       </div>
       <div class="row">
@@ -19,7 +22,7 @@
             ref="input"
             class="add-new__input"
             contenteditable="true"
-            v-model="name"
+            v-model="templateName"
             placeholder="Название шаблона"
           />
         </div>
@@ -54,10 +57,11 @@
           <button
             class="add-new__btn btn-primary-custom btn-custom"
             @click="saveTemplate"
-            :class="{ disabled: !name.length }"
-            :disabled="!name.length"
+            :class="{ disabled: !templateName.length }"
+            :disabled="!templateName.length"
           >
-            Создать
+            <span v-if="postId">Сохранить</span>
+            <span v-else>Создать</span>
           </button>
         </div>
       </div>
@@ -79,10 +83,16 @@ export default {
       type: String,
       default: "",
     },
-  },
+    postId: {
+      type: Number,
+    },
+    postName: {
+      type: String
+    }
+  }, 
   data() {
     return {
-      name: "",
+      templateName: "",
       maxSize: "200KB",
     };
   },
@@ -91,15 +101,12 @@ export default {
   },
   methods: {
     ...mapActions(["setPostName"]),
-    enterName(event) {
-      this.name = event.target.innerHTML;
-    },
     saveTemplate() {
       axios({
-        method: "POST",
-        url: `${process.env.VUE_APP_API}/premade-email-templates/`,
+        method: `${this.postId ? 'PATCH' : 'POST'}`,
+        url: `${process.env.VUE_APP_API}/premade-email-templates/${this.postId ? this.postId : ''}`,
         data: {
-          name: this.name,
+          name: this.templateName,
           status: "draft",
           template_blocks: this.template,
         },
@@ -109,13 +116,28 @@ export default {
         },
       })
       .then(() => {
-        this.$router.push({name: 'Layouts'})
+        const formData = new FormData();
+        formData.append('preview_image', this.fileRecords[0].file)
+
+        axios({
+        method: `${this.postId ? 'PATCH' : 'POST'}`,
+        url: `${process.env.VUE_APP_API}/premade-email-templates/${this.postId ? this.postId : ''}`,
+        data: formData,
+        headers: {
+          Authorization: `Token ${this.token}`,
+          "Content-Type": " multipart/form-data",
+        },
+        })
+        .then(() => {
+          this.$router.push({name: 'Layouts'})
+        })
       });
     },
-    mounted() {
+  },
+  mounted() {
       this.$refs.input.focus();
       this.helpText.innerHTML = `<p class="loader-title">картинка-превью 280 Х 120</p><span>Перетащите файлы сюда или нажмите,<br>чтобы <a class="select-file">выбрать файл для загрузки</a><br><span class="size">до ${this.maxSize}</span></span>`;
-    },
+      this.templateName = this.postName;
   },
 };
 </script>

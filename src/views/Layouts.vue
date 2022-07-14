@@ -28,7 +28,7 @@
                 class="layouts__list-item-img"
                 :class="{'is-new' : checkRecentlyAddedTemplate(item.created_at)}"
                 :style="{
-                  backgroundImage: item.preview_image || 'url(' + require(`@/assets/bg.png`) + ')',
+                  backgroundImage: item.preview_image ? `url(${item.preview_image})` : 'url(' + require(`@/assets/bg.png`) + ')',
                 }"
               />
               <p class="layouts__list-item-title">{{ item.name }}</p>
