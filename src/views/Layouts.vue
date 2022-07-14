@@ -174,7 +174,7 @@ export default {
         text-align: left;
         width: 100%;
         margin: 0;
-        height: 100%;
+        height: auto;
       }
     }
   }
