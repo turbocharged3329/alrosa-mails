@@ -10,6 +10,7 @@ export const block = {
     MailNav,
     ColorSelector
   },
+  props: ["bgColor"],
   data() {
     return {
       customToolbar: [
@@ -37,9 +38,12 @@ export const block = {
     },
     setBackgroundColor(event) {
       this.backgroundColor = event;
+      this.$emit("color", this.backgroundColor)
     }
   },
   mounted() {
+    this.backgroundColor = this.bgColor;
+    this.$emit('set-color', this.bgColor);
     if (!this.content) {
       this.showEditor = true;
     }

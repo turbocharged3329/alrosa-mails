@@ -15,7 +15,7 @@
 <script>
 export default {
   name: "ColorSelector",
-  props: {},
+  props: ['startColor'],
   data() {
     return {
       colors: [
@@ -36,7 +36,17 @@ export default {
       this.selected = color;
       this.$emit('color', color);
     },
+    setColor(color) {
+      this.selected = color;
+    }
   },
+  mounted() {
+    this.$parent.$on('set-color', this.setColor)
+    this.selected = this.startColor
+  },
+  beforeDestroy() {
+    this.$parent.$off('set-color', this.setColor)
+  }
 };
 </script>
 

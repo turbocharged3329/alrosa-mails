@@ -39,12 +39,14 @@
                     @save="item.content = $event"
                     @link="item.link = $event"
                     @image="item.file = $event"
+                    @color="item.background_color = $event"
                     @clear-image="item.image = $event"
                     @open-modal="openImagesSelector($event, item)"
                     :text="item.content"
                     :html="item.content"
                     :link="item.link"
                     :image-url="item.image"
+                    :bg-color="item.background_color"
                   ></component>
                 </drag>
               </template>
@@ -283,14 +285,15 @@ export default {
       this.$refs.frame.contentWindow.document.close();
     },
     /**
-     * обработчик перетаскивания блока в редактор
+     * обработчик перетаскивания и добавления блока в редактор
      */
     onInsert(event) {
       this.elements.splice(event.index, 0, {
         ...event.data,
         id: this.generateId(),
         content: "",
-        image: ""
+        image: "",
+        background_color: "#fff"
       });
       this.elements.push();
     },
@@ -433,6 +436,8 @@ export default {
             data.text = [];
           }
 
+          data.background_color = elem.background_color;
+
           return data;
         })
       );
@@ -462,6 +467,7 @@ export default {
             content: elem.text || elem.label || elem.html || "",
             link: elem.link || "",
             image: elem.image || "",
+            background_color: elem.background_color || ""
           });
         });
       }

@@ -16,7 +16,7 @@
         class="wsywig"
         v-else
       ></vue-editor>
-      <color-selector @color="setBackgroundColor"></color-selector>
+      <color-selector @color="setBackgroundColor" v-if="showEditor" :start-color="backgroundColor"></color-selector>
       <button
         @click="saveContent"
         class="btn-custom btn-primary-custom"
