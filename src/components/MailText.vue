@@ -1,5 +1,5 @@
 <template>
-  <div class="mail-text mail-block">
+  <div class="mail-text mail-block" :style="{backgroundColor: backgroundColor}">
     <div class="dragger"></div>
     <mail-nav
       @delete="$emit('delete')"
@@ -16,6 +16,7 @@
         class="wsywig"
         v-else
       ></vue-editor>
+      <color-selector @color="setBackgroundColor"></color-selector>
       <button
         @click="saveContent"
         class="btn-custom btn-primary-custom"

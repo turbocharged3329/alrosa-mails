@@ -1,12 +1,14 @@
 import { VueEditor } from "vue2-editor";
 import Badge from "@/components/Badge.vue";
 import MailNav from "@/components/MailNav.vue";
+import ColorSelector from "@/components/ColorSelector.vue";
 
 export const block = {
   components: {
     VueEditor,
     Badge,
     MailNav,
+    ColorSelector
   },
   data() {
     return {
@@ -21,6 +23,7 @@ export const block = {
         ],
       ],
       showEditor: false,
+      backgroundColor: '#fff',
     };
   },
   methods: {
@@ -32,6 +35,9 @@ export const block = {
       this.$emit("edit");
       this.showEditor = true;
     },
+    setBackgroundColor(event) {
+      this.backgroundColor = event;
+    }
   },
   mounted() {
     if (!this.content) {
