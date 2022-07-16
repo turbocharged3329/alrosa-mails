@@ -16,17 +16,12 @@
 </template>
 
 <script>
-import MailNav from "@/components/MailNav.vue";
-import Badge from "@/components/Badge.vue";
 import { block } from "@/mixins/block.js";
+import { color } from "@/mixins/color.js";
 
 export default {
   name: 'MailDivider',
-  mixins: [block],
-  components: {
-    MailNav,
-    Badge
-  },
+  mixins: [block, color],
 }
 </script>
 

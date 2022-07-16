@@ -1,5 +1,5 @@
 <template>
-  <div class="mail-highlight mail-block">
+  <div class="mail-highlight mail-block" :style="{backgroundColor: backgroundColor}">
     <div class="dragger"></div>
     <mail-nav
       @delete="$emit('delete')"
@@ -16,6 +16,7 @@
         class="wsywig"
         v-else
       ></vue-editor>
+      <color-selector @color="setBackgroundColor" :start-color="backgroundColor"></color-selector>
       <button
         @click="saveContent"
         class="btn-custom btn-primary-custom"
@@ -29,11 +30,12 @@
 
 <script>
 import { block } from '@/mixins/block.js';
+import { color } from "@/mixins/color.js";
 
 export default {
   name: "MailTextHighlighted",
   props: ['html'],
-  mixins: [block],
+  mixins: [block, color],
   data() {
     return {
       content: ''

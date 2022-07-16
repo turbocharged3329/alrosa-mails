@@ -30,10 +30,11 @@
 
 <script>
 import { block } from "@/mixins/block.js";
+import { color } from "@/mixins/color.js";
 
 export default {
   name: "MailQuote",
-  mixins: [block],
+  mixins: [block, color],
   props: ["html"],
   data() {
     return {

@@ -433,12 +433,13 @@ export default {
           if (["h1", "h2", "h3", "title"].includes(elem.type)) {
             if (elem.content) {
               data.text = elem.content.replace(/<\/?[a-z][a-z0-9]*>/gi, "");
-            } else return data;
+            } 
+            // else return data;
           } else if (["text", "highlighted_text", "quote"].includes(elem.type)) {
             if (elem.content) {
               data.html = elem.content;
-            } else 
-            return data;
+            } 
+            // else return data;
           } else if (
             ["header", "footer", "image", "wide_image"].includes(elem.type)
           ) {
@@ -452,19 +453,21 @@ export default {
             } else {
               if (elem.image) {
                 data.image = elem.image;
-              } else return data;
+              } 
+              // else return data;
             }
           } else if (elem.type == "button") {
             if (elem.content && elem.link) {
               data.label = elem.content.replace(/<\/?[a-z][a-z0-9]*>/gi, "");
               data.link = elem.link;
-            } else return data;
+            } 
+            // else return data;
           } else if (elem.type == "divider") {
             data.text = [];
           }
 
           if (elem.type) {
-            data.background_color = elem.background_color;
+            data.background_color = elem.background_color || '#fff';
           }
 
           return data;

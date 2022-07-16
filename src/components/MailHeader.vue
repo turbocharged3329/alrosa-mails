@@ -1,5 +1,5 @@
 <template>
-  <div class="mail-header mail-block">
+  <div class="mail-header mail-block" :style="{backgroundColor: backgroundColor}">
     <div class="dragger"></div>
     <mail-nav
       @delete="$emit('delete')"
@@ -38,16 +38,18 @@
       >
       </VueFileAgent>
       <button class="select-preloaded btn-custom btn-secondary-custom" @click.prevent.stop="$emit('open-modal')">выберите картинку из готовых</button>
+      <color-selector @color="setBackgroundColor" :start-color="backgroundColor"></color-selector>
     </div>
   </div>
 </template>
 
 <script>
 import { fileLoader } from "@/mixins/file-loader.js";
+import { color } from "@/mixins/color.js";
 
 export default {
   name: "MailHeader",
-  mixins: [fileLoader],
+  mixins: [fileLoader, color],
   data() {
     return {
       maxSize: "10MB",

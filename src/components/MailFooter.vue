@@ -59,10 +59,11 @@
 <script>
 import { fileLoader } from "@/mixins/file-loader.js";
 import { block } from "@/mixins/block.js";
+import { color } from "@/mixins/color.js";
 
 export default {
   name: "MailFooter",
-  mixins: [fileLoader, block],
+  mixins: [fileLoader, block, color],
   props: ['text'],
   data() {
     return {

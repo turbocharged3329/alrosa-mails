@@ -1,5 +1,5 @@
 <template>
-  <div class="mail-picture mail-block">
+  <div class="mail-picture mail-block" :style="{backgroundColor: backgroundColor}">
     <div class="dragger"></div>
     <mail-nav
       @delete="$emit('delete')"
@@ -13,7 +13,7 @@
        <div class="image-preview" v-if="showPreview">
         <img :src="imageLink" class="image-preview__img"/>
         <button class="image-preview__delete" @click="clearLoadedImage">
-          Удалить
+          Очистить
         </button>
       </div>
       <VueFileAgent
@@ -37,16 +37,18 @@
         v-model="fileRecords"
       >
       </VueFileAgent>
+      <color-selector @color="setBackgroundColor" :start-color="backgroundColor"></color-selector>
     </div>
   </div>
 </template>
 
 <script>
 import { fileLoader } from "@/mixins/file-loader.js";
+import { color } from "@/mixins/color.js";
 
 export default {
   name: "MailPicture",
-  mixins: [fileLoader],
+  mixins: [fileLoader, color],
   data() {
     return {
       maxSize: "10MB",
