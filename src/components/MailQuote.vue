@@ -1,5 +1,5 @@
 <template>
-  <div class="mail-text mail-block" :style="{backgroundColor: backgroundColor}">
+  <div class="mail-quote mail-block" :style="{backgroundColor: backgroundColor}">
     <div class="dragger"></div>
     <mail-nav
       @delete="$emit('delete')"
@@ -8,7 +8,7 @@
       @down="$emit('down')"
     ></mail-nav>
     <div class="mail-content">
-      <badge>Обычный текст</badge>
+      <badge>Цитата</badge>
       <p class="mail__input" v-html="content" v-if="!showEditor"></p>
       <vue-editor
         v-model="content"
@@ -16,7 +16,7 @@
         class="wsywig"
         v-else
       ></vue-editor>
-      <color-selector @color="setBackgroundColor" :start-color="backgroundColor"></color-selector>
+      <color-selector @color="setBackgroundColor" v-if="showEditor" :start-color="backgroundColor"></color-selector>
       <button
         @click="saveContent"
         class="btn-custom btn-primary-custom"
@@ -32,7 +32,7 @@
 import { block } from "@/mixins/block.js";
 
 export default {
-  name: "MailText",
+  name: "MailQuote",
   mixins: [block],
   props: ["html"],
   data() {

@@ -1,5 +1,5 @@
 <template>
-  <div class="mail-divider mail-block">
+  <div class="mail-divider mail-block" :style="{backgroundColor: backgroundColor}">
     <div class="dragger"></div>
     <mail-nav
       @delete="$emit('delete')"
@@ -10,6 +10,7 @@
     <div class="mail-content">
       <badge>Разделитель</badge>
       <hr class="line">
+      <color-selector @color="setBackgroundColor" :start-color="backgroundColor"></color-selector>
     </div>
   </div>
 </template>
@@ -17,9 +18,11 @@
 <script>
 import MailNav from "@/components/MailNav.vue";
 import Badge from "@/components/Badge.vue";
+import { block } from "@/mixins/block.js";
 
 export default {
   name: 'MailDivider',
+  mixins: [block],
   components: {
     MailNav,
     Badge

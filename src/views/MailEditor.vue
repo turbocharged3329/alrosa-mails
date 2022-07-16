@@ -136,6 +136,7 @@ import MailPicture from "@/components/MailPicture.vue";
 import MailPictureWide from "@/components/MailPictureWide.vue";
 import MailButton from "@/components/MailButton.vue";
 import MailFooter from "@/components/MailFooter.vue";
+import MailQuote from "@/components/MailQuote.vue";
 import ImageSelector from "@/components/ImageSelector.vue";
 import axios from "axios";
 import Vue from "vue";
@@ -159,6 +160,7 @@ export default {
     MailPictureWide,
     MailButton,
     MailFooter,
+    MailQuote,
     SweetModal,
     ImageSelector,
   },
@@ -247,14 +249,14 @@ export default {
           content: null,
           file: "",
         },
-        {
-          id: 11,
-          title: "Кнопка",
-          component: "MailButton",
-          type: "button",
-          content: null,
-          link: null,
-        },
+        // {
+        //   id: 11,
+        //   title: "Кнопка",
+        //   component: "MailButton",
+        //   type: "button",
+        //   content: null,
+        //   link: null,
+        // },
         {
           id: 12,
           title: "Футер/дно",
@@ -262,6 +264,13 @@ export default {
           type: "footer",
           content: null,
           file: "",
+        },
+        {
+          id: 13,
+          title: "Цитата",
+          component: "MailQuote",
+          type: "quote",
+          content: null,
         },
       ],
       //массив блоков в редакторе
@@ -362,14 +371,18 @@ export default {
           },
           headers,
         }).then((response) => {
-          this.generatedHtml = response.data.generated_html;
-
-          if (downloadAfter) {
-            this.downloadHtml()
-          }
-
-          if (showModal) {
-            this.$modal.show("modal");
+          if (response.status == 400) {
+            this.alertValidationError()
+          } else {
+            this.generatedHtml = response.data.generated_html;
+  
+            if (downloadAfter) {
+              this.downloadHtml()
+            }
+  
+            if (showModal) {
+              this.$modal.show("modal");
+            }
           }
         });
         //если редактировали готовое
@@ -384,17 +397,25 @@ export default {
           },
           headers,
         }).then((response) => {
-          this.generatedHtml = response.data.generated_html;
-
-          if (downloadAfter) {
-            this.downloadHtml()
-          }
-
-          if (showModal) {
-            this.$modal.show("modal");
+          if (response.status == 400) {
+            console.log(response);
+            this.alertValidationError()
+          } else {
+            this.generatedHtml = response.data.generated_html;
+  
+            if (downloadAfter) {
+              this.downloadHtml()
+            }
+  
+            if (showModal) {
+              this.$modal.show("modal");
+            }
           }
         });
       }
+    },
+    alertValidationError() {
+      alert('Не все поля заполнены!')
     },
     prepareEmailToTemplateSave() {
       this.$router.push({ name: 'AddTemplate', params: {template: this.makeJSON(), postId: this.postData.id, postName: this.postData.name}})
@@ -408,15 +429,17 @@ export default {
           const data = {
             type: elem.type,
           };
+          console.log(data);
 
           if (["h1", "h2", "h3", "title"].includes(elem.type)) {
             if (elem.content) {
               data.text = elem.content.replace(/<\/?[a-z][a-z0-9]*>/gi, "");
-            } else return;
-          } else if (["text", "highlighted_text"].includes(elem.type)) {
+            } else return data;
+          } else if (["text", "highlighted_text", "quote"].includes(elem.type)) {
             if (elem.content) {
               data.html = elem.content;
-            } else return;
+            } else 
+            return data;
           } else if (
             ["header", "footer", "image", "wide_image"].includes(elem.type)
           ) {
@@ -425,19 +448,22 @@ export default {
             } else {
               if (elem.image) {
                 data.image = elem.image;
-              } else return;
+              } else return data;
             }
           } else if (elem.type == "button") {
             if (elem.content && elem.link) {
               data.label = elem.content.replace(/<\/?[a-z][a-z0-9]*>/gi, "");
               data.link = elem.link;
-            } else return;
+            } else return data;
           } else if (elem.type == "divider") {
             data.text = [];
           }
 
-          data.background_color = elem.background_color;
+          if (elem.type) {
+            data.background_color = elem.background_color;
+          }
 
+          console.log('final data', data);
           return data;
         })
       );
