@@ -1,11 +1,11 @@
 <template>
-  <div class="mail-footer mail-block">
+  <div class="mail-footer mail-block" :style="{backgroundColor: backgroundColor}">
     <div class="dragger"></div>
     <mail-nav
       @delete="$emit('delete')"
       @up="$emit('up')"
       @down="$emit('down')"
-      no-edit
+      @edit="editContent"
     ></mail-nav>
     <div class="mail-content">
       <badge>Футер/дно</badge>
@@ -37,21 +37,41 @@
       >
       </VueFileAgent>
       <button class="select-preloaded btn-custom btn-secondary-custom" @click.prevent.stop="$emit('open-modal', true)">выберите картинку из готовых</button>
+      <p class="mail__input" v-html="content" v-if="!showEditor"></p>
+      <vue-editor
+        v-model="content"
+        :editorToolbar="customToolbar"
+        class="wsywig"
+        v-if="showEditor"
+      ></vue-editor>
+      <color-selector @color="setBackgroundColor" :start-color="backgroundColor"></color-selector>
+      <button
+        @click="saveContent"
+        class="btn-custom btn-primary-custom"
+        v-if="showEditor"
+      >
+        Сохранить
+      </button>
     </div>
   </div>
 </template>
 
 <script>
 import { fileLoader } from "@/mixins/file-loader.js";
+import { block } from "@/mixins/block.js";
 
 export default {
   name: "MailFooter",
-  mixins: [fileLoader],
+  mixins: [fileLoader, block],
+  props: ['text'],
   data() {
     return {
       maxSize: "10MB",
     }
-  }
+  },
+  created() {
+    this.content = `${this.text}`
+  },
 };
 </script>
 

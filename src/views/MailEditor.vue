@@ -429,7 +429,6 @@ export default {
           const data = {
             type: elem.type,
           };
-          console.log(data);
 
           if (["h1", "h2", "h3", "title"].includes(elem.type)) {
             if (elem.content) {
@@ -443,6 +442,11 @@ export default {
           } else if (
             ["header", "footer", "image", "wide_image"].includes(elem.type)
           ) {
+            if (elem.type == "footer") {
+              if (elem.content) {
+                data.text = elem.content.replace(/<\/?[a-z][a-z0-9]*>/gi, "");
+              }
+            }
             if (elem.file) {
               data.base64_image = elem.file;
             } else {
@@ -463,7 +467,6 @@ export default {
             data.background_color = elem.background_color;
           }
 
-          console.log('final data', data);
           return data;
         })
       );
