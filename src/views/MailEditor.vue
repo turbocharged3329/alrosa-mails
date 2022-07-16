@@ -302,7 +302,7 @@ export default {
         id: this.generateId(),
         content: "",
         image: "",
-        background_color: "#fff"
+        background_color: "#fff",
       });
       this.elements.push();
     },
@@ -351,7 +351,11 @@ export default {
     /**
      * сохранение изменений письма
      */
-    savePost({toDrafts = true, showModal = true, downloadAfter = false} = {}) {
+    savePost({
+      toDrafts = true,
+      showModal = true,
+      downloadAfter = false,
+    } = {}) {
       const headers = {
         Authorization: `Token ${this.token}`,
         "Content-Type": "application/json",
@@ -372,14 +376,14 @@ export default {
           headers,
         }).then((response) => {
           if (response.status == 400) {
-            this.alertValidationError()
+            this.alertValidationError();
           } else {
             this.generatedHtml = response.data.generated_html;
-  
+
             if (downloadAfter) {
-              this.downloadHtml()
+              this.downloadHtml();
             }
-  
+
             if (showModal) {
               this.$modal.show("modal");
             }
@@ -399,14 +403,14 @@ export default {
         }).then((response) => {
           if (response.status == 400) {
             console.log(response);
-            this.alertValidationError()
+            this.alertValidationError();
           } else {
             this.generatedHtml = response.data.generated_html;
-  
+
             if (downloadAfter) {
-              this.downloadHtml()
+              this.downloadHtml();
             }
-  
+
             if (showModal) {
               this.$modal.show("modal");
             }
@@ -415,10 +419,17 @@ export default {
       }
     },
     alertValidationError() {
-      alert('Не все поля заполнены!')
+      alert("Не все поля заполнены!");
     },
     prepareEmailToTemplateSave() {
-      this.$router.push({ name: 'AddTemplate', params: {template: this.makeJSON(), postId: this.postData.id, postName: this.postData.name}})
+      this.$router.push({
+        name: "AddTemplate",
+        params: {
+          template: this.makeJSON(),
+          postId: this.postData.id,
+          postName: this.postData.name,
+        },
+      });
     },
     /**
      * подготовка шаблона для сохранения письма
@@ -431,14 +442,25 @@ export default {
           };
 
           if (["h1", "h2", "h3", "title"].includes(elem.type)) {
+            if (elem.type == "title") {
+              if (elem.file) {
+                data.base64_image = elem.file;
+              } else {
+                if (elem.image) {
+                  data.image = elem.image;
+                }
+              }
+            }
             if (elem.content) {
               data.text = elem.content.replace(/<\/?[a-z][a-z0-9]*>/gi, "");
-            } 
+            }
             // else return data;
-          } else if (["text", "highlighted_text", "quote"].includes(elem.type)) {
+          } else if (
+            ["text", "highlighted_text", "quote"].includes(elem.type)
+          ) {
             if (elem.content) {
               data.html = elem.content;
-            } 
+            }
             // else return data;
           } else if (
             ["header", "footer", "image", "wide_image"].includes(elem.type)
@@ -453,21 +475,21 @@ export default {
             } else {
               if (elem.image) {
                 data.image = elem.image;
-              } 
+              }
               // else return data;
             }
           } else if (elem.type == "button") {
             if (elem.content && elem.link) {
               data.label = elem.content.replace(/<\/?[a-z][a-z0-9]*>/gi, "");
               data.link = elem.link;
-            } 
+            }
             // else return data;
           } else if (elem.type == "divider") {
             data.text = [];
           }
 
           if (elem.type) {
-            data.background_color = elem.background_color || '#fff';
+            data.background_color = elem.background_color || "#fff";
           }
 
           return data;
@@ -484,9 +506,9 @@ export default {
 
       //получаем список блоков из props или из кэша vuex
       if (this.postData?.template_blocks?.length) {
-        data = this.postData.template_blocks
+        data = this.postData.template_blocks;
       } else if (this.currentPost) {
-        data = this.currentPost
+        data = this.currentPost;
       }
 
       if (data.length) {
@@ -499,7 +521,7 @@ export default {
             content: elem.text || elem.label || elem.html || "",
             link: elem.link || "",
             image: elem.image || "",
-            background_color: elem.background_color || ""
+            background_color: elem.background_color || "",
           });
         });
       }
@@ -508,8 +530,8 @@ export default {
      * нажатие на ссылку "Назад"
      */
     backToTemplates() {
-      this.setCurrentPost({})
-      this.$router.push({ name: "Layouts"});
+      this.setCurrentPost({});
+      this.$router.push({ name: "Layouts" });
       // this.$router.push({ name: "Layouts", params: {notification: {text: 'Новый шаблон добавлен!', show: true}}});
     },
     /**
@@ -566,15 +588,15 @@ export default {
   },
   created() {
     this.$parent.$on("save-post", this.savePost);
-    this.$parent.$on('save-templates', this.prepareEmailToTemplateSave)
+    this.$parent.$on("save-templates", this.prepareEmailToTemplateSave);
   },
   mounted() {
     this.$emit("show", true);
     this.addTemplateBlocks();
 
     if (this.postData.template_blocks) {
-      this.setCurrentPost(this.postData.template_blocks)
-    } 
+      this.setCurrentPost(this.postData.template_blocks);
+    }
   },
   beforeDestroy() {
     this.$emit("show", false);
