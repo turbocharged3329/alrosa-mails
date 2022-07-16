@@ -85,6 +85,7 @@ export default {
       });
     },
     emitDraft() {
+      console.log('here');
       this.toggleContextMenu(false);
       this.$emit("save-post", {
         toDrafts: true,

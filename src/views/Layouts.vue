@@ -81,7 +81,8 @@ export default {
         name: "Constructor",
         params: {postData: {
           ...data,
-          template_blocks: JSON.parse(data.template_blocks)
+          template_blocks: JSON.parse(data.template_blocks),
+          isPremadeLoaded: true,
         }},
       });
     },

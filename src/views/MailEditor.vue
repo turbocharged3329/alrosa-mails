@@ -396,13 +396,12 @@ export default {
           url,
           data: {
             name: this.postData.name,
-            status: "ready",
+            status: toDrafts ? "draft" : "ready",
             template_blocks: this.makeJSON(),
           },
           headers,
         }).then((response) => {
           if (response.status == 400) {
-            console.log(response);
             this.alertValidationError();
           } else {
             this.generatedHtml = response.data.generated_html;
@@ -428,6 +427,7 @@ export default {
           template: this.makeJSON(),
           postId: this.postData.id,
           postName: this.postData.name,
+          isPremadeLoaded: this.postData.isPremadeLoaded
         },
       });
     },

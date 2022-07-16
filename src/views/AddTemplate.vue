@@ -89,6 +89,9 @@ export default {
     postName: {
       type: String,
     },
+    isPremadeLoaded: {
+      type: Boolean
+    }
   },
   data() {
     return {
@@ -103,10 +106,10 @@ export default {
     ...mapActions(["setPostName"]),
     async saveTemplate() {
       const url = `${process.env.VUE_APP_API}/premade-email-templates/${
-        this.postId ? this.postId : ""
+        this.postId && this.isPremadeLoaded ? this.postId : ""
       }`;
       await axios({
-        method: `${this.postId ? "PATCH" : "POST"}`,
+        method: `${this.postId && this.isPremadeLoaded ? "PATCH" : "POST"}`,
         url,
         data: {
           name: this.templateName,
