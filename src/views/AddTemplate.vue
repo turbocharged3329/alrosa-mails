@@ -90,8 +90,8 @@ export default {
       type: String,
     },
     isPremadeLoaded: {
-      type: Boolean
-    }
+      type: Boolean,
+    },
   },
   data() {
     return {
@@ -138,14 +138,35 @@ export default {
       }
 
       // this.$router.push({ name: "Layouts" });
-      this.$router.push({ name: "Layouts", params: {notification: {text:  this.postId && this.isPremadeLoaded ? 'Шаблон был изменен!' : 'Новый шаблон добавлен!', show: true}}});
+      this.$router.push({
+        name: "Layouts",
+        params: {
+          notification: {
+            text:
+              this.postId && this.isPremadeLoaded
+                ? "Шаблон был изменен!"
+                : "Новый шаблон добавлен!",
+            show: true,
+          },
+        },
+      });
     },
     /**
      * нажатие на ссылку "Назад"
      */
     backToEditor() {
-      this.$router.push({ name: "Constructor", params: {postData: {...this.currentTemplate}} });
-      // this.setCurrentTemplate({});
+      this.$router.push({
+        name: "Constructor",
+        params: {
+          postData: {
+            ...this.currentTemplate,
+            id: this.currentTemplate.postId,
+            name: this.currentTemplate.postName,
+            template_blocks: JSON.parse(this.currentTemplate.template)
+          },
+        },
+      });
+      this.setCurrentTemplate({});
     },
   },
   mounted() {

@@ -421,19 +421,16 @@ export default {
       alert("Не все поля заполнены!");
     },
     prepareEmailToTemplateSave() {
-      // this.setCurrentTemplate({
-      //   template: this.makeJSON(),
-      //   postId: this.postData.id,
-      //   postName: this.postData.name,
-      //   isPremadeLoaded: this.postData.isPremadeLoaded
-      // })
+      this.setCurrentTemplate({
+        template: this.makeJSON(),
+        postId: this.postData.id,
+        postName: this.postData.name,
+        isPremadeLoaded: this.postData.isPremadeLoaded
+      })
       this.$router.push({
         name: "AddTemplate",
         params: {
-          template: this.makeJSON(),
-          postId: this.postData.id,
-          postName: this.postData.name,
-          isPremadeLoaded: this.postData.isPremadeLoaded
+          ...this.currentTemplate
         },
       });
     },
