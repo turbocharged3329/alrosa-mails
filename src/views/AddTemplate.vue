@@ -5,13 +5,13 @@
         <div
           class="col-1 d-flex flex-row justify-content-end align-items-start"
         >
-          <div class="back-link" @click="$router.go(-1)">
+          <div class="back-link" @click="backToEditor">
             <span class="back-link-text">Назад</span>
           </div>
         </div>
         <div class="col-9 offset-2">
           <h1 class="add-new__title">
-            <span v-if="postId">Изменение шаблона</span>
+            <span v-if="postId && isPremadeLoaded">Изменение шаблона</span>
             <span v-else>Создание шаблона</span>
           </h1>
         </div>
@@ -60,7 +60,7 @@
             :class="{ disabled: !templateName.length }"
             :disabled="!templateName.length"
           >
-            <span v-if="postId">Сохранить</span>
+            <span v-if="postId && isPremadeLoaded">Сохранить</span>
             <span v-else>Создать</span>
           </button>
         </div>
@@ -100,10 +100,10 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["token"]),
+    ...mapGetters(["token", "currentTemplate"]),
   },
   methods: {
-    ...mapActions(["setPostName"]),
+    ...mapActions(["setPostName", "setCurrentTemplate"]),
     async saveTemplate() {
       const url = `${process.env.VUE_APP_API}/premade-email-templates/${
         this.postId && this.isPremadeLoaded ? this.postId : ""
@@ -137,7 +137,15 @@ export default {
         });
       }
 
-      this.$router.push({ name: "Layouts" });
+      // this.$router.push({ name: "Layouts" });
+      this.$router.push({ name: "Layouts", params: {notification: {text:  this.postId && this.isPremadeLoaded ? 'Шаблон был изменен!' : 'Новый шаблон добавлен!', show: true}}});
+    },
+    /**
+     * нажатие на ссылку "Назад"
+     */
+    backToEditor() {
+      this.$router.push({ name: "Constructor", params: {postData: {...this.currentTemplate}} });
+      // this.setCurrentTemplate({});
     },
   },
   mounted() {

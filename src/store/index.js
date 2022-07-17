@@ -8,7 +8,7 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
   plugins: [
     createPersistedState({
-      paths: ["token", "postName", "headerVisibility", "user", "currentPost"],
+      paths: ["token", "postName", "headerVisibility", "user", "currentPost", "currentTemplate"],
     }),
   ],
   state: () => ({
@@ -18,6 +18,7 @@ const store = new Vuex.Store({
     postName: "",
     user: null,
     currentPost: null,
+    currentTemplate: null,
     templates: [],
   }),
   mutations: {
@@ -38,6 +39,9 @@ const store = new Vuex.Store({
     },
     SET_CURRENT_POST(state, payload) {
       state.currentPost = payload;
+    },
+    SET_CURRENT_TEMPLATE(state, payload) {
+      state.currentTemplate = payload;
     },
     SET_TEMPLATES(state, payload) {
       state.templates = payload;
@@ -104,6 +108,9 @@ const store = new Vuex.Store({
     setCurrentPost({commit}, payload) {
       commit("SET_CURRENT_POST", payload)
     },
+    setCurrentTemplate({commit}, payload) {
+      commit("SET_CURRENT_TEMPLATE", payload)
+    },
     logout({ commit }) {
       commit("SET_TOKEN", "");
     },
@@ -115,6 +122,7 @@ const store = new Vuex.Store({
     postName: (state) => state.postName,
     user: (state) => state.user,
     currentPost: (state) => state.currentPost,
+    currentTemplate: (state) => state.currentTemplate,
     templates: (state) => state.templates
   },
 });
