@@ -58,7 +58,7 @@ export default {
     },
     savePost() {
       this.setPostName(this.name);
-      this.$router.push({ name: "Constructor" });
+      this.$router.push({ name: "Constructor", params: {id: 'new'} });
     },
   },
   mounted() {

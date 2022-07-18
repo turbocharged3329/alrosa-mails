@@ -287,7 +287,11 @@ export default {
   },
 
   methods: {
-    ...mapActions(["setCurrentPost", "setCurrentTemplate", "setDisabledCopyStatus"]),
+    ...mapActions([
+      "setCurrentPost",
+      "setCurrentTemplate",
+      "setDisabledCopyStatus",
+    ]),
     showMail() {
       this.$refs.frame.contentWindow.document.open();
       this.$refs.frame.contentWindow.document.write(this.generatedHtml);
@@ -417,6 +421,40 @@ export default {
         });
       }
     },
+    saveCopyAndOpen() {
+      const headers = {
+        Authorization: `Token ${this.token}`,
+        "Content-Type": "application/json",
+      };
+      const url = `${process.env.VUE_APP_API}/email-templates/`;
+      //если создали новое письмо
+      axios({
+        method: "POST",
+        url,
+        data: {
+          name: this.postData.name,
+          status: "draft",
+          template_blocks: this.makeJSON(),
+        },
+        headers,
+      }).then((response) => {
+        if (response.status == 400) {
+          this.alertValidationError();
+        } else {
+          this.$router.push({
+            name: "Constructor",
+            params: {
+              postData: {
+                ...response.data,
+                template_blocks: JSON.parse(response.data.template_blocks),
+              },
+              id: response.data.id
+            },
+          });
+          
+        }
+      });
+    },
     alertValidationError() {
       alert("Не все поля заполнены!");
     },
@@ -425,12 +463,12 @@ export default {
         template: this.makeJSON(),
         postId: this.postData.id,
         postName: this.postData.name,
-        isPremadeLoaded: this.postData.isPremadeLoaded
-      })
+        isPremadeLoaded: this.postData.isPremadeLoaded,
+      });
       this.$router.push({
         name: "AddTemplate",
         params: {
-          ...this.currentTemplate
+          ...this.currentTemplate,
         },
       });
     },
@@ -592,10 +630,11 @@ export default {
   created() {
     this.$parent.$on("save-post", this.savePost);
     this.$parent.$on("save-templates", this.prepareEmailToTemplateSave);
+    this.$parent.$on("save-copy", this.saveCopyAndOpen);
   },
   mounted() {
     this.$emit("show", true);
-    this.setDisabledCopyStatus(!this.postData?.id ? true : false)
+    this.setDisabledCopyStatus(!this.postData?.id ? true : false);
     this.addTemplateBlocks();
 
     if (this.postData.template_blocks) {
@@ -606,6 +645,7 @@ export default {
     this.$emit("show", false);
     this.$parent.$off("save-post", this.savePost);
     this.$parent.$off("save-templates", this.prepareEmailToTemplateSave);
+    this.$parent.$off("save-copy", this.saveCopyAndOpen);
   },
 };
 </script>

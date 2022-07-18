@@ -103,6 +103,7 @@ export default {
             ...data,
             template_blocks: JSON.parse(data.template_blocks),
           },
+          id: data.id
         },
       });
     },

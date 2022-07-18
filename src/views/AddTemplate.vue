@@ -164,6 +164,7 @@ export default {
             name: this.currentTemplate.postName,
             template_blocks: JSON.parse(this.currentTemplate.template)
           },
+          id: this.currentTemplate.postId,
         },
       });
       this.setCurrentTemplate({});

@@ -83,7 +83,8 @@ export default {
           ...data,
           template_blocks: JSON.parse(data.template_blocks),
           isPremadeLoaded: true,
-        }},
+        },
+        id: data.id},
       });
     },
     checkRecentlyAddedTemplate(createdAt) {

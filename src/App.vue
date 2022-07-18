@@ -20,6 +20,7 @@
                     @save-ready="emitSave"
                     @save-draft="emitDraft"
                     @save-download="emitDownload"
+                    @save-copy="emitCopy"
                     @close="checkContextMenuLeave"
                   ></context-menu>
                 </div>
@@ -89,6 +90,14 @@ export default {
       this.$emit("save-post", {
         toDrafts: true,
         showModal: true,
+        downloadAfter: false,
+      });
+    },
+    emitCopy() {
+      this.toggleContextMenu(false);
+      this.$emit("save-copy", {
+        toDrafts: true,
+        showModal: false,
         downloadAfter: false,
       });
     },

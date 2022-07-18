@@ -1,5 +1,5 @@
 <template>
-  <div class="context-menu" >
+  <div class="context-menu" @mouseleave="$emit('close')">
     <div class="context-menu__item">
       <span class="context-menu__item-content" @click="emitSaveToDrafts"
         >сохранить черновик</span
@@ -14,7 +14,7 @@
     <div class="context-menu__item" @click="emitSaveToTemplates">
       <span class="context-menu__item-content">превратить в шаблон</span>
     </div>
-    <div class="context-menu__item">
+    <div class="context-menu__item" @click="emitCopy">
       <span class="context-menu__item-content" :class="{disabled: isDisabledCopy}">дублировать</span>
     </div>
     <hr class="context-menu__divider" />

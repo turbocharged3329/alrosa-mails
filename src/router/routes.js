@@ -31,7 +31,7 @@ const routes = [
     name: "Authoriztaion",
   },
   {
-    path: "/constructor",
+    path: "/constructor/:id",
     component: () => import("@/views/MailEditor.vue"),
     name: "Constructor",
     props: true,
