@@ -365,10 +365,10 @@ export default {
         "Content-Type": "application/json",
       };
       const url = `${process.env.VUE_APP_API}/email-templates/${
-        this.postData.id || ""
+        this.postData.id && !this.postData.isPremadeLoaded ? this.postData.id : ""
       }`;
       //если создали новое письмо
-      if (!this.postData.id) {
+      if (!this.postData.id || this.postData.isPremadeLoaded) {
         axios({
           method: "POST",
           url,
@@ -387,6 +387,17 @@ export default {
             if (downloadAfter) {
               this.downloadHtml();
             }
+
+            this.$router.push({
+            name: "Constructor",
+            params: {
+              postData: {
+                ...response.data,
+                template_blocks: JSON.parse(response.data.template_blocks),
+              },
+              id: response.data.id
+            },
+            });
 
             if (showModal) {
               this.$modal.show("modal");

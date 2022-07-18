@@ -60,7 +60,8 @@ const store = new Vuex.Store({
         method: "GET",
         url: `${process.env.VUE_APP_API}/email-templates/`,
         headers: {
-          Authorization: "Token da2da7a36ef5fd7e39944f10c589e7ccddf29217",
+          // Authorization: "Token da2da7a36ef5fd7e39944f10c589e7ccddf29217",
+          Authorization: `Token ${this.state.token}`,
         },
       }).then((response) => {
         commit("SET_POSTS", response.data);
@@ -71,7 +72,8 @@ const store = new Vuex.Store({
         method: "GET",
         url: `${process.env.VUE_APP_API}/premade-email-templates/`,
         headers: {
-          Authorization: "Token da2da7a36ef5fd7e39944f10c589e7ccddf29217",
+          // Authorization: "Token da2da7a36ef5fd7e39944f10c589e7ccddf29217",
+          Authorization: `Token ${this.state.token}`,
         },
       }).then((response) => {
         commit("SET_TEMPLATES", response.data);
@@ -100,7 +102,8 @@ const store = new Vuex.Store({
         method: "GET",
         url: `${process.env.VUE_APP_API}/user/`,
         headers: {
-          Authorization: "Token da2da7a36ef5fd7e39944f10c589e7ccddf29217",
+          // Authorization: "Token da2da7a36ef5fd7e39944f10c589e7ccddf29217",
+          Authorization: `Token ${this.state.token}`,
         },
       }).then((response) => {
         commit("SET_USER_DATA", response.data);
