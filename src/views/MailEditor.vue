@@ -287,7 +287,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(["setCurrentPost", "setCurrentTemplate"]),
+    ...mapActions(["setCurrentPost", "setCurrentTemplate", "setDisabledCopyStatus"]),
     showMail() {
       this.$refs.frame.contentWindow.document.open();
       this.$refs.frame.contentWindow.document.write(this.generatedHtml);
@@ -595,6 +595,7 @@ export default {
   },
   mounted() {
     this.$emit("show", true);
+    this.setDisabledCopyStatus(!this.postData?.id ? true : false)
     this.addTemplateBlocks();
 
     if (this.postData.template_blocks) {

@@ -20,6 +20,7 @@ const store = new Vuex.Store({
     currentPost: null,
     currentTemplate: null,
     templates: [],
+    isDisabledCopy: false,
   }),
   mutations: {
     SET_HEADER_VISIBILITY(state, payload) {
@@ -45,7 +46,10 @@ const store = new Vuex.Store({
     },
     SET_TEMPLATES(state, payload) {
       state.templates = payload;
-    }
+    },
+    SET_COPY_DISABLED_STATUS(state, payload) {
+      state.isDisabledCopy = payload;
+    },
   },
   actions: {
     setHeaderVisibility({ commit }, payload) {
@@ -111,6 +115,9 @@ const store = new Vuex.Store({
     setCurrentTemplate({commit}, payload) {
       commit("SET_CURRENT_TEMPLATE", payload)
     },
+    setDisabledCopyStatus({commit}, payload) {
+      commit("SET_COPY_DISABLED_STATUS", payload)
+    },
     logout({ commit }) {
       commit("SET_TOKEN", "");
     },
@@ -123,6 +130,7 @@ const store = new Vuex.Store({
     user: (state) => state.user,
     currentPost: (state) => state.currentPost,
     currentTemplate: (state) => state.currentTemplate,
+    isDisabledCopy: (state) => state.isDisabledCopy,
     templates: (state) => state.templates
   },
 });

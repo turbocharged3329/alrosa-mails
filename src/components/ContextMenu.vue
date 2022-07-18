@@ -1,5 +1,5 @@
 <template>
-  <div class="context-menu" @mouseleave="$emit('close')">
+  <div class="context-menu" >
     <div class="context-menu__item">
       <span class="context-menu__item-content" @click="emitSaveToDrafts"
         >сохранить черновик</span
@@ -15,7 +15,7 @@
       <span class="context-menu__item-content">превратить в шаблон</span>
     </div>
     <div class="context-menu__item">
-      <span class="context-menu__item-content">дублировать</span>
+      <span class="context-menu__item-content" :class="{disabled: isDisabledCopy}">дублировать</span>
     </div>
     <hr class="context-menu__divider" />
     <div class="context-menu__item">
@@ -27,6 +27,7 @@
 </template>
 
 <script>
+import {mapGetters} from "vuex";
 export default {
   name: "ContextMenu",
   components: {},
@@ -34,6 +35,9 @@ export default {
   emits: ["save-draft"],
   data() {
     return {};
+  },
+  computed: {
+    ...mapGetters(["isDisabledCopy"])
   },
   methods: {
     emitSaveToDrafts() {
@@ -48,6 +52,11 @@ export default {
     emitDownload() {
       this.$emit("save-download");
     },
+    emitCopy() {
+      if (!this.isDisabledCopy) {
+        this.$emit('save-copy');
+      }
+    }
   },
 };
 </script>
@@ -81,9 +90,14 @@ export default {
       letter-spacing: 0.15em;
       font-size: 10px;
       line-height: 100%;
+      background-color: transparent;
       &.bold {
         font-weight: 600;
       }
+      &.disabled {
+      opacity: .25;
+      cursor: default;
+    }
     }
   }
   &__divider {
