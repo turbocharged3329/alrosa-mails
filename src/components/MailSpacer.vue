@@ -1,5 +1,8 @@
 <template>
-  <div class="mail-spacer mail-block" :style="{backgroundColor: backgroundColor}">
+  <div
+    class="mail-spacer mail-block"
+    :style="{ backgroundColor: backgroundColor }"
+  >
     <div class="dragger"></div>
     <mail-nav
       @delete="$emit('delete')"
@@ -8,8 +11,13 @@
       @down="$emit('down')"
     ></mail-nav>
     <div class="mail-content">
-      <badge>Отступ х1</badge>
-      <color-selector @color="setBackgroundColor" :start-color="backgroundColor"></color-selector>
+      <badge>
+        Отступ х{{ gap }}
+      </badge>
+      <color-selector
+        @color="setBackgroundColor"
+        :start-color="backgroundColor"
+      ></color-selector>
     </div>
   </div>
 </template>
@@ -19,9 +27,20 @@ import { block } from "@/mixins/block.js";
 import { color } from "@/mixins/color.js";
 
 export default {
-  name: "MailH1",
+  name: "MailSpacer",
+  props: ["gap"],
   mixins: [block, color],
+  data() {
+    return {
+      badgeContent: {
+        content: 123,
+      },
+    };
+  },
+  // computed: {
+  //   badgeContent() {
+  //     return { content: `Отступ ${this.gap}` };
+  //   },
+  // },
 };
 </script>
-
-<style lang="scss" scoped></style>

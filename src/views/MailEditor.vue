@@ -52,6 +52,7 @@
                     :link="item.link"
                     :image-url="item.image"
                     :bg-color="item.background_color"
+                    :gap="item.gap"
                   ></component>
                 </drag>
               </template>
@@ -341,6 +342,30 @@ export default {
           component: "MailSpacer",
           type: "spacer_x1",
         },
+        {
+          id: 29,
+          title: "Отступ х2",
+          component: "MailSpacer",
+          type: "spacer_x2",
+        },
+        {
+          id: 30,
+          title: "Отступ х3",
+          component: "MailSpacer",
+          type: "spacer_x3",
+        },
+        {
+          id: 31,
+          title: "Отступ х4",
+          component: "MailSpacer",
+          type: "spacer_x4",
+        },
+        {
+          id: 32,
+          title: "Отступ х5",
+          component: "MailSpacer",
+          type: "spacer_x5",
+        },
       ],
       //массив блоков в редакторе
       elements: [],
@@ -378,7 +403,8 @@ export default {
         image: "",
         background_color: "#fff",
         h1: "",
-        title_content: ""
+        title_content: "",
+        gap: event.data.type.includes('spacer') ? event.data.type[event.data.type.length - 1] : "",
       });
       this.elements.push();
     },
@@ -636,7 +662,6 @@ export default {
       if (data.length) {
         data.forEach((elem) => {
           const index = this.blocks.findIndex((item) => item.type == elem.type);
-
           this.elements.push({
             ...this.blocks[index],
             id: this.generateId(),
@@ -648,6 +673,7 @@ export default {
             title_content: elem.title || "",
             html_left: elem.html_left || "",
             html_right: elem.html_right || "",
+            gap: elem.type.includes('spacer') ? elem.type[elem.type.length - 1] : ""
           });
         });
       }
