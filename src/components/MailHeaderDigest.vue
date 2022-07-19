@@ -62,6 +62,9 @@ export default {
     this.contentH1 = `${this.h1}`;
     this.contentTitle = `${this.titleContent}`;
   },
+  mounted() {
+      this.showEditor = !this.contentH1 || !this.contentTitle ? true : false;
+  }
 };
 </script>
 
