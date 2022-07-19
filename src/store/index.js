@@ -16,6 +16,7 @@ const store = new Vuex.Store({
         "currentPost",
         "currentTemplate",
         "pattern_img",
+        "it_img",
       ],
     }),
   ],
@@ -30,6 +31,7 @@ const store = new Vuex.Store({
     templates: [],
     isDisabledCopy: false,
     pattern_img: null,
+    it_img: null,
   }),
   mutations: {
     SET_HEADER_VISIBILITY(state, payload) {
@@ -58,6 +60,9 @@ const store = new Vuex.Store({
     },
     SET_PATTERN_IMAGE(state, payload) {
       state.pattern_img = payload[0].image;
+    },
+    SET_IT_IMAGE(state, payload) {
+      state.it_img = payload[0].image;
     },
     SET_COPY_DISABLED_STATUS(state, payload) {
       state.isDisabledCopy = payload;
@@ -121,15 +126,26 @@ const store = new Vuex.Store({
         commit("SET_USER_DATA", response.data);
       });
     },
-    getPatternImage({ commit }) {
+    getPatternImage({ commit }, payload) {
+      let url = `${process.env.VUE_APP_API}`;
+      if (payload == 'pattern') {
+        url += '/header-with-pattern-images/'
+      } else if (payload == 'it') {
+        url += '/header-from-it-department-images/'
+      }
+
       return axios({
         method: "GET",
-        url: `${process.env.VUE_APP_API}/header-with-pattern-images/`,
+        url,
         headers: {
           Authorization: `Token ${this.state.token}`,
         },
       }).then((response) => {
-        commit("SET_PATTERN_IMAGE", response.data);
+        if (payload == 'pattern') {
+          commit("SET_PATTERN_IMAGE", response.data);
+        } else if (payload == 'it') {
+          commit("SET_IT_IMAGE", response.data);
+        }
       });
     },
     setPostName({ commit }, payload) {
@@ -159,6 +175,7 @@ const store = new Vuex.Store({
     isDisabledCopy: (state) => state.isDisabledCopy,
     templates: (state) => state.templates,
     pattern_img: (state) => state.pattern_img,
+    it_img: (state) => state.it_img,
   },
 });
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="mail-header__img mail-block" :style="{backgroundColor: backgroundColor}">
+  <div class="mail-header__pattern mail-block" :style="{backgroundColor: backgroundColor}">
     <div class="dragger"></div>
     <mail-nav
       @delete="$emit('delete')"
@@ -24,7 +24,7 @@ import { color } from "@/mixins/color.js";
 import MailNav from "@/components/MailNav.vue";
 import Badge from "@/components/Badge.vue";
 export default {
-  name: "MailHeaderImg",
+  name: "MailHeaderPattern",
   mixins: [color],
   components: {
     MailNav,

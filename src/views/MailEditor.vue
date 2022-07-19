@@ -126,7 +126,8 @@
 <script>
 import { Drag, DropList } from "vue-easy-dnd";
 import MailHeader from "@/components/MailHeader.vue";
-import MailHeaderImg from "@/components/MailHeaderImg.vue";
+import MailHeaderPattern from "@/components/MailHeaderPattern.vue";
+import MailHeaderIt from "@/components/MailHeaderIt.vue";
 import MailH1 from "@/components/MailH1.vue";
 import MailH2 from "@/components/MailH2.vue";
 import MailH3 from "@/components/MailH3.vue";
@@ -151,7 +152,8 @@ export default {
     Drag,
     DropList,
     MailHeader,
-    MailHeaderImg,
+    MailHeaderPattern,
+    MailHeaderIt,
     MailH1,
     MailH2,
     MailH3,
@@ -180,18 +182,26 @@ export default {
       //массив блоков с параметрами для перетаскивания в редактор
       blocks: [
         {
+          id: 21,
+          title: "Шапка(паттерн)",
+          component: "MailHeaderPattern",
+          type: "header_with_pattern",
+          content: null,
+          image: null,
+        },
+        {
           id: 1,
-          title: "Шапка",
+          title: "Шапка(картинка)",
           component: "MailHeader",
-          type: "header",
+          type: "header_with_image",
           content: null,
           file: "",
         },
         {
-          id: 21,
-          title: "Шапка(паттерн)",
-          component: "MailHeaderImg",
-          type: "header_with_pattern",
+          id: 22,
+          title: "Шапка IT",
+          component: "MailHeaderIt",
+          type: "header_from_it_department",
           content: null,
           image: null,
         },
@@ -527,7 +537,7 @@ export default {
             }
             // else return data;
           } else if (
-            ["header", "footer", "image", "wide_image", "header_with_pattern"].includes(elem.type)
+            ["header_with_image", "footer", "image", "wide_image", "header_with_pattern", 'header_from_it_department'].includes(elem.type)
           ) {
             if (elem.type == "footer") {
               if (elem.content) {
@@ -650,12 +660,14 @@ export default {
       }
     },
   },
-  created() {
+  async created() {
     this.$parent.$on("save-post", this.savePost);
     this.$parent.$on("save-templates", this.prepareEmailToTemplateSave);
     this.$parent.$on("save-copy", this.saveCopyAndOpen);
+    await this.getPatternImage('pattern')
+    await this.getPatternImage('it')
   },
-  async mounted() {
+  mounted() {
     this.$emit("show", true);
     this.setDisabledCopyStatus(!this.postData?.id ? true : false);
     this.addTemplateBlocks();
@@ -663,8 +675,6 @@ export default {
     if (this.postData.template_blocks) {
       this.setCurrentPost(this.postData.template_blocks);
     }
-
-    await this.getPatternImage()
     //  const headers = {
     //     Authorization: `Token ${this.token}`,
     //     "Content-Type": "application/json",
