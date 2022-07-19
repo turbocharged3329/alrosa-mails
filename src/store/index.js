@@ -17,7 +17,8 @@ const store = new Vuex.Store({
         "currentTemplate",
         "pattern_img",
         "it_img",
-        "signature_img"
+        "signature_img",
+        "footer_img"
       ],
     }),
   ],
@@ -33,7 +34,8 @@ const store = new Vuex.Store({
     isDisabledCopy: false,
     pattern_img: null,
     it_img: null,
-    signature_img: null
+    signature_img: null,
+    footer_img: null
   }),
   mutations: {
     SET_HEADER_VISIBILITY(state, payload) {
@@ -68,6 +70,9 @@ const store = new Vuex.Store({
     },
     SET_SIGNATURE_IMAGE(state, payload) {
       state.signature_img = payload[0].image;
+    },
+    SET_FOOTER_IMAGE(state, payload) {
+      state.footer_img = payload[0].image;
     },
     SET_COPY_DISABLED_STATUS(state, payload) {
       state.isDisabledCopy = payload;
@@ -139,6 +144,8 @@ const store = new Vuex.Store({
         url += '/header-from-it-department-images/'
       } else if (payload == 'signature') {
         url += '/signature-images/'
+      } else if (payload == 'footer') {
+        url += '/footer-images/'
       }
 
       return axios({
@@ -154,6 +161,8 @@ const store = new Vuex.Store({
           commit("SET_IT_IMAGE", response.data);
         } else if (payload == 'signature') {
           commit("SET_SIGNATURE_IMAGE", response.data);
+        } else if (payload == 'footer') {
+          commit("SET_FOOTER_IMAGE", response.data);
         }
       });
     },
@@ -186,6 +195,7 @@ const store = new Vuex.Store({
     pattern_img: (state) => state.pattern_img,
     it_img: (state) => state.it_img,
     signature_img: (state) => state.signature_img,
+    footer_img: (state) => state.footer_img,
   },
 });
 

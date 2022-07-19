@@ -1,5 +1,8 @@
 <template>
-  <div class="mail-footer mail-block" :style="{backgroundColor: backgroundColor}">
+  <div
+    class="mail-footer mail-block"
+    :style="{ backgroundColor: backgroundColor }"
+  >
     <div class="dragger"></div>
     <mail-nav
       @delete="$emit('delete')"
@@ -9,7 +12,7 @@
     ></mail-nav>
     <div class="mail-content">
       <badge>Футер/дно</badge>
-      <div class="image-preview" v-if="showPreview">
+      <!-- <div class="image-preview" v-if="showPreview">
         <img :src="imageLink" class="image-preview__img"/>
         <button class="image-preview__delete" @click="clearLoadedImage">
           Очистить
@@ -36,7 +39,10 @@
         v-model="fileRecords"
       >
       </VueFileAgent>
-      <button class="select-preloaded btn-custom btn-secondary-custom" @click.prevent.stop="$emit('open-modal', true)">выберите картинку из готовых</button>
+      <button class="select-preloaded btn-custom btn-secondary-custom" @click.prevent.stop="$emit('open-modal', true)">выберите картинку из готовых</button> -->
+      <div class="image-preview">
+        <img :src="imageUrl" class="image-preview__img" />
+      </div>
       <p class="mail__input" v-html="content" v-if="!showEditor"></p>
       <vue-editor
         v-model="content"
@@ -44,7 +50,10 @@
         class="wsywig"
         v-if="showEditor"
       ></vue-editor>
-      <color-selector @color="setBackgroundColor" :start-color="backgroundColor"></color-selector>
+      <color-selector
+        @color="setBackgroundColor"
+        :start-color="backgroundColor"
+      ></color-selector>
       <button
         @click="saveContent"
         class="btn-custom btn-primary-custom"
@@ -57,21 +66,31 @@
 </template>
 
 <script>
-import { fileLoader } from "@/mixins/file-loader.js";
+// import { fileLoader } from "@/mixins/file-loader.js";
+import { mapGetters } from "vuex";
 import { block } from "@/mixins/block.js";
 import { color } from "@/mixins/color.js";
 
 export default {
   name: "MailFooter",
-  mixins: [fileLoader, block, color],
-  props: ['text'],
-  data() {
-    return {
-      maxSize: "10MB",
-    }
+  mixins: [block, color],
+  props: ["text"],
+  // data() {
+  //   return {
+  //     maxSize: "10MB",
+  //   }
+  // },
+  computed: {
+    ...mapGetters(["footer_img"]),
+    imageUrl() {
+      return process.env.VUE_APP_API + this.footer_img;
+    },
   },
   created() {
-    this.content = `${this.text}`
+    this.content = `${this.text}`;
+  },
+  mounted() {
+    this.$emit("pattern-image", this.footer_img);
   },
 };
 </script>
