@@ -9,7 +9,7 @@
       no-edit
     ></mail-nav>
     <div class="mail-content">
-      <badge>Шапка IT</badge>
+      <badge>Подпись директора</badge>
       <div class="image-preview">
         <img :src="imageUrl" class="image-preview__img"/>
       </div>
