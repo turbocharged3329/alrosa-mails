@@ -149,6 +149,7 @@ import MailDigestNumbers from "@/components/MailDigestNumbers.vue";
 import MailFooter from "@/components/MailFooter.vue";
 import MailQuote from "@/components/MailQuote.vue";
 import ImageSelector from "@/components/ImageSelector.vue";
+import MailSpacer from "@/components/MailSpacer.vue";
 import axios from "axios";
 import Vue from "vue";
 import { mapGetters, mapActions } from "vuex";
@@ -180,6 +181,7 @@ export default {
     MailQuote,
     SweetModal,
     ImageSelector,
+    MailSpacer
   },
   props: {
     postData: {
@@ -332,6 +334,12 @@ export default {
           component: "MailQuote",
           type: "quote",
           content: null,
+        },
+        {
+          id: 28,
+          title: "Отступ х1",
+          component: "MailSpacer",
+          type: "spacer_x1",
         },
       ],
       //массив блоков в редакторе
