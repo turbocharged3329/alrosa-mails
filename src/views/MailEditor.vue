@@ -36,13 +36,15 @@
                       moveElement($event, { direction: 'down', id: item.id })
                     "
                     @delete="removeElement($event, { id: item.id })"
-                    @save="item.content = $event"
+                    @save-content="saveTextContent($event, item)"
                     @link="item.link = $event"
                     @image="item.file = $event"
                     @pattern-image="item.image = $event"
                     @color="item.background_color = $event"
                     @clear-image="item.image = $event"
                     @open-modal="openImagesSelector($event, item)"
+                    :h1="item.h1"
+                    :title-content="item.title_content"
                     :text="item.content"
                     :html="item.content"
                     :link="item.link"
@@ -134,6 +136,7 @@ import MailH3 from "@/components/MailH3.vue";
 import MailText from "@/components/MailText.vue";
 import MailTextHighlighted from "@/components/MailTextHighlighted.vue";
 import MailName from "@/components/MailName.vue";
+import MailHeaderDigest from "@/components/MailHeaderDigest.vue";
 import MailDivider from "@/components/MailDivider.vue";
 import MailPicture from "@/components/MailPicture.vue";
 import MailPictureWide from "@/components/MailPictureWide.vue";
@@ -159,6 +162,7 @@ export default {
     MailH3,
     MailText,
     MailName,
+    MailHeaderDigest,
     MailDivider,
     MailPicture,
     MailTextHighlighted,
@@ -204,6 +208,13 @@ export default {
           type: "header_from_it_department",
           content: null,
           image: null,
+        },
+        {
+          id: 23,
+          title: "Шапка (дайджест)",
+          component: "MailHeaderDigest",
+          type: "header_for_the_digest",
+          content: null,
         },
         {
           id: 2,
@@ -329,6 +340,8 @@ export default {
         content: "",
         image: "",
         background_color: "#fff",
+        h1: "",
+        title_content: ""
       });
       this.elements.push();
     },
@@ -515,7 +528,7 @@ export default {
             type: elem.type,
           };
 
-          if (["h1", "h2", "h3", "title"].includes(elem.type)) {
+          if (["h1", "h2", "h3", "title", "header_for_the_digest"].includes(elem.type)) {
             if (elem.type == "title") {
               if (elem.file) {
                 data.base64_image = elem.file;
@@ -525,8 +538,13 @@ export default {
                 }
               }
             }
+            if (elem.type == "header_for_the_digest") {
+                console.log(elem);
+                data.h1 = elem.h1.replace(/<\/?[a-z][a-z0-9]*>/gi, "");
+                data.title = elem.title_content.replace(/<\/?[a-z][a-z0-9]*>/gi, "");
+            }
             if (elem.content) {
-              data.text = elem.content.replace(/<\/?[a-z][a-z0-9]*>/gi, "");
+                data.text = elem.content.replace(/<\/?[a-z][a-z0-9]*>/gi, "");
             }
             // else return data;
           } else if (
@@ -596,6 +614,8 @@ export default {
             link: elem.link || "",
             image: elem.image || "",
             background_color: elem.background_color || "",
+            h1: elem.h1 || "",
+            title_content: elem.title_content || ""
           });
         });
       }
@@ -659,6 +679,11 @@ export default {
         this.showMainPlaceholder = false;
       }
     },
+    saveTextContent(content, item) {
+      item.content = content.content;
+      item.h1 = content.h1;
+      item.title_content = content.title_content;
+    }
   },
   async created() {
     this.$parent.$on("save-post", this.savePost);

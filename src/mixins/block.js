@@ -26,7 +26,7 @@ export const block = {
   methods: {
     saveContent() {
       this.showEditor = false;
-      this.$emit("save", this.content)
+      this.$emit("save-content", {content: this.content, h1: this.contentH1, title_content: this.contentTitle})
     },
     editContent() {
       this.$emit("edit");
