@@ -41,7 +41,6 @@ export default {
       return process.env.VUE_APP_API + this.pattern_img
     }
   },
-  methods: {},
   mounted() {
     this.$emit('pattern-image', this.pattern_img)
   }
