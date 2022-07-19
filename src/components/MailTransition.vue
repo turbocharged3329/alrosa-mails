@@ -1,7 +1,6 @@
 <template>
   <div
-    class="mail-spacer mail-block"
-    :style="{ backgroundColor: backgroundColor }"
+    class="mail-transition mail-block"
   >
     <div class="dragger"></div>
     <mail-nav
@@ -13,23 +12,18 @@
     ></mail-nav>
     <div class="mail-content">
       <badge>
-        Отступ х{{ gap }}
+        Переход {{ transitionName }}
       </badge>
-      <color-selector
-        @color="setBackgroundColor"
-        :start-color="backgroundColor"
-      ></color-selector>
     </div>
   </div>
 </template>
 
 <script>
 import { block } from "@/mixins/block.js";
-import { color } from "@/mixins/color.js";
 
 export default {
-  name: "MailSpacer",
-  props: ["gap"],
-  mixins: [block, color],
+  name: "MailTransition",
+  mixins: [block],
+  props: ["transitionName"]
 };
 </script>

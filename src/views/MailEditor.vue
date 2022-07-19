@@ -53,6 +53,7 @@
                     :image-url="item.image"
                     :bg-color="item.background_color"
                     :gap="item.gap"
+                    :transition-name="item.transition_name"
                   ></component>
                 </drag>
               </template>
@@ -151,6 +152,7 @@ import MailFooter from "@/components/MailFooter.vue";
 import MailQuote from "@/components/MailQuote.vue";
 import ImageSelector from "@/components/ImageSelector.vue";
 import MailSpacer from "@/components/MailSpacer.vue";
+import MailTransition from "@/components/MailTransition.vue";
 import axios from "axios";
 import Vue from "vue";
 import { mapGetters, mapActions } from "vuex";
@@ -182,7 +184,8 @@ export default {
     MailQuote,
     SweetModal,
     ImageSelector,
-    MailSpacer
+    MailSpacer,
+    MailTransition
   },
   props: {
     postData: {
@@ -366,6 +369,24 @@ export default {
           component: "MailSpacer",
           type: "spacer_x5",
         },
+        {
+          id: 34,
+          title: "Переход белый-голубой",
+          component: "MailTransition",
+          type: "transition_white_to_blue",
+        },
+        {
+          id: 35,
+          title: "Переход белый-голубой-2",
+          component: "MailTransition",
+          type: "transition_white_to_blue_2",
+        },
+        {
+          id: 36,
+          title: "Переход голубой-белый",
+          component: "MailTransition",
+          type: "transition_blue_to_white",
+        },
       ],
       //массив блоков в редакторе
       elements: [],
@@ -405,6 +426,7 @@ export default {
         h1: "",
         title_content: "",
         gap: event.data.type.includes('spacer') ? event.data.type[event.data.type.length - 1] : "",
+        transition_name: this.detectTransitionType(event.data.type) || "",
       });
       this.elements.push();
     },
@@ -673,7 +695,8 @@ export default {
             title_content: elem.title || "",
             html_left: elem.html_left || "",
             html_right: elem.html_right || "",
-            gap: elem.type.includes('spacer') ? elem.type[elem.type.length - 1] : ""
+            gap: elem.type.includes('spacer') ? elem.type[elem.type.length - 1] : "",
+            transition_name: this.detectTransitionType(elem.type)
           });
         });
       }
@@ -743,6 +766,18 @@ export default {
       item.title_content = content.title_content;
       item.html_left = content.html_left;
       item.html_right = content.html_right;
+    },
+    detectTransitionType(transitionName) {
+      switch (transitionName) {
+        case 'transition_white_to_blue': 
+          return 'белый-голубой';
+        case 'transition_white_to_blue_2':
+          return 'белый-голубой-2'
+        case 'transition_blue_to_white':
+          return 'голубой-белый'
+        default: 
+          return 
+      }
     }
   },
   async created() {
