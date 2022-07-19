@@ -39,6 +39,7 @@
                     @save="item.content = $event"
                     @link="item.link = $event"
                     @image="item.file = $event"
+                    @pattern-image="item.image = $event"
                     @color="item.background_color = $event"
                     @clear-image="item.image = $event"
                     @open-modal="openImagesSelector($event, item)"
@@ -125,6 +126,7 @@
 <script>
 import { Drag, DropList } from "vue-easy-dnd";
 import MailHeader from "@/components/MailHeader.vue";
+import MailHeaderImg from "@/components/MailHeaderImg.vue";
 import MailH1 from "@/components/MailH1.vue";
 import MailH2 from "@/components/MailH2.vue";
 import MailH3 from "@/components/MailH3.vue";
@@ -149,6 +151,7 @@ export default {
     Drag,
     DropList,
     MailHeader,
+    MailHeaderImg,
     MailH1,
     MailH2,
     MailH3,
@@ -183,6 +186,14 @@ export default {
           type: "header",
           content: null,
           file: "",
+        },
+        {
+          id: 21,
+          title: "Шапка(паттерн)",
+          component: "MailHeaderImg",
+          type: "header_with_pattern",
+          content: null,
+          image: null,
         },
         {
           id: 2,
@@ -283,7 +294,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["token", "postName", "currentPost", "currentTemplate"]),
+    ...mapGetters(["token", "postName", "currentPost", "currentTemplate", "pattern_image"]),
   },
 
   methods: {
@@ -291,6 +302,7 @@ export default {
       "setCurrentPost",
       "setCurrentTemplate",
       "setDisabledCopyStatus",
+      "getPatternImage"
     ]),
     showMail() {
       this.$refs.frame.contentWindow.document.open();
@@ -367,7 +379,7 @@ export default {
       const url = `${process.env.VUE_APP_API}/email-templates/${
         this.postData.id && !this.postData.isPremadeLoaded ? this.postData.id : ""
       }`;
-      //если создали новое письмо
+      //если создали новое письмо или если нажали на созранение из шаблона
       if (!this.postData.id || this.postData.isPremadeLoaded) {
         axios({
           method: "POST",
@@ -515,7 +527,7 @@ export default {
             }
             // else return data;
           } else if (
-            ["header", "footer", "image", "wide_image"].includes(elem.type)
+            ["header", "footer", "image", "wide_image", "header_with_pattern"].includes(elem.type)
           ) {
             if (elem.type == "footer") {
               if (elem.content) {
@@ -643,7 +655,7 @@ export default {
     this.$parent.$on("save-templates", this.prepareEmailToTemplateSave);
     this.$parent.$on("save-copy", this.saveCopyAndOpen);
   },
-  mounted() {
+  async mounted() {
     this.$emit("show", true);
     this.setDisabledCopyStatus(!this.postData?.id ? true : false);
     this.addTemplateBlocks();
@@ -651,6 +663,20 @@ export default {
     if (this.postData.template_blocks) {
       this.setCurrentPost(this.postData.template_blocks);
     }
+
+    await this.getPatternImage()
+    //  const headers = {
+    //     Authorization: `Token ${this.token}`,
+    //     "Content-Type": "application/json",
+    //   };
+    //   const url = `${process.env.VUE_APP_API}/header-with-pattern-images/`;
+    //     axios({
+    //       method: "GET",
+    //       url,
+    //       headers,
+    //     }).then((response) => {
+    //       console.log(response.data);
+    //     });
   },
   beforeDestroy() {
     this.$emit("show", false);

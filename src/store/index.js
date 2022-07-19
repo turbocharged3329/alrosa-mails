@@ -8,7 +8,15 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
   plugins: [
     createPersistedState({
-      paths: ["token", "postName", "headerVisibility", "user", "currentPost", "currentTemplate"],
+      paths: [
+        "token",
+        "postName",
+        "headerVisibility",
+        "user",
+        "currentPost",
+        "currentTemplate",
+        "pattern_img",
+      ],
     }),
   ],
   state: () => ({
@@ -21,6 +29,7 @@ const store = new Vuex.Store({
     currentTemplate: null,
     templates: [],
     isDisabledCopy: false,
+    pattern_img: null,
   }),
   mutations: {
     SET_HEADER_VISIBILITY(state, payload) {
@@ -46,6 +55,9 @@ const store = new Vuex.Store({
     },
     SET_TEMPLATES(state, payload) {
       state.templates = payload;
+    },
+    SET_PATTERN_IMAGE(state, payload) {
+      state.pattern_img = payload[0].image;
     },
     SET_COPY_DISABLED_STATUS(state, payload) {
       state.isDisabledCopy = payload;
@@ -90,7 +102,7 @@ const store = new Vuex.Store({
       })
         .then((response) => {
           commit("SET_TOKEN", response.data);
-          dispatch("getUser")
+          dispatch("getUser");
           return response;
         })
         .catch((e) => {
@@ -109,17 +121,28 @@ const store = new Vuex.Store({
         commit("SET_USER_DATA", response.data);
       });
     },
+    getPatternImage({ commit }) {
+      return axios({
+        method: "GET",
+        url: `${process.env.VUE_APP_API}/header-with-pattern-images/`,
+        headers: {
+          Authorization: `Token ${this.state.token}`,
+        },
+      }).then((response) => {
+        commit("SET_PATTERN_IMAGE", response.data);
+      });
+    },
     setPostName({ commit }, payload) {
       commit("SET_POST_NAME", payload);
     },
-    setCurrentPost({commit}, payload) {
-      commit("SET_CURRENT_POST", payload)
+    setCurrentPost({ commit }, payload) {
+      commit("SET_CURRENT_POST", payload);
     },
-    setCurrentTemplate({commit}, payload) {
-      commit("SET_CURRENT_TEMPLATE", payload)
+    setCurrentTemplate({ commit }, payload) {
+      commit("SET_CURRENT_TEMPLATE", payload);
     },
-    setDisabledCopyStatus({commit}, payload) {
-      commit("SET_COPY_DISABLED_STATUS", payload)
+    setDisabledCopyStatus({ commit }, payload) {
+      commit("SET_COPY_DISABLED_STATUS", payload);
     },
     logout({ commit }) {
       commit("SET_TOKEN", "");
@@ -134,7 +157,8 @@ const store = new Vuex.Store({
     currentPost: (state) => state.currentPost,
     currentTemplate: (state) => state.currentTemplate,
     isDisabledCopy: (state) => state.isDisabledCopy,
-    templates: (state) => state.templates
+    templates: (state) => state.templates,
+    pattern_img: (state) => state.pattern_img,
   },
 });
 
