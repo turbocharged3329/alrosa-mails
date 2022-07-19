@@ -1,5 +1,5 @@
 <template>
-  <div class="mail-button mail-block">
+  <div class="mail-numbers mail-block" :style="{backgroundColor: backgroundColor}">
     <div class="dragger"></div>
     <mail-nav
       @delete="$emit('delete')"
@@ -8,23 +8,29 @@
       @down="$emit('down')"
     ></mail-nav>
     <div class="mail-content">
-      <badge>Кнопка</badge>
-      <div class="mail-button__form" v-if="!showEditor">
-        <p class="mail-button__text" v-html="content"></p>
-      </div>
-      <p class="mail-button__text-label" v-if="showEditor">Укажите текст кнопки:</p>
-      <input v-model="content" class="content__input" v-if="showEditor" placeholder="Текст кнопки"/>
-      <p class="mail__input" v-if="!showEditor">
-        Ссылка: <a :href="buttonLink" target="_blank">{{ buttonLink }}</a>
+      <badge>Дайджест цифры</badge>
+      <p class="mail-numbers__text-label" v-if="showEditor">
+        Укажите цифры дайджеста:
       </p>
-      <div class="mail-button__link" v-if="showEditor">
-        <p class="mail-button__link-label">Вставьте ссылку для перехода:</p>
-        <input
-          v-model="buttonLink"
-          class="mail-button__link-input content__input"
-          placeholder="Ссылка"
-        />
-      </div>
+      <p class="mail__input" v-html="content" v-if="!showEditor"></p>
+      <vue-editor
+        v-model="content"
+        :editorToolbar="customToolbar"
+        class="wsywig"
+        v-else
+      ></vue-editor>
+      <p class="mail-numbers__text-label" v-if="showEditor">
+        Укажите ссылку дайджеста:
+      </p>
+      <p class="mail__input" v-if="!showEditor" v-html="digestLink">
+      </p>
+      <vue-editor
+        v-model="digestLink"
+        :editorToolbar="customToolbar"
+        class="wsywig"
+        v-else
+      ></vue-editor>
+      <color-selector @color="setBackgroundColor" :start-color="backgroundColor"></color-selector>
       <button
         @click="saveContent"
         class="btn-custom btn-primary-custom"
@@ -38,33 +44,27 @@
 
 <script>
 import { block } from "@/mixins/block.js";
+import { color } from "@/mixins/color.js";
 
 export default {
-  name: "MailButton",
-  mixins: [block],
-  props: ["text", "link"],
+  name: "MailDigestNumbers",
+  mixins: [block, color],
+  props: ["htmlLeft", "htmlRight"],
   data() {
     return {
       content: "",
-      buttonLink: "",
+      digestLink: "",
     };
   },
-  methods: {
-    saveContent() {
-      this.showEditor = false;
-      this.$emit("save-content", this.content);
-      this.$emit("link", this.buttonLink);
-    },
-  },
   created() {
-    this.content = this.text;
-    this.buttonLink = this.link;
+    this.content = this.htmlLeft;
+    this.digestLink = this.htmlRight;
   },
 };
 </script>
 
 <style lang="scss" scoped>
-.mail-button {
+.mail-numbers {
   &__form {
     border: 2px solid $blue;
     border-radius: 42px;

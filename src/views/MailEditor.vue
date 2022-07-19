@@ -47,6 +47,8 @@
                     :title-content="item.title_content"
                     :text="item.content"
                     :html="item.content"
+                    :html-left="item.html_left"
+                    :html-right="item.html_right"
                     :link="item.link"
                     :image-url="item.image"
                     :bg-color="item.background_color"
@@ -143,6 +145,7 @@ import MailPicture from "@/components/MailPicture.vue";
 import MailPictureWide from "@/components/MailPictureWide.vue";
 import MailSignature from "@/components/MailSignature.vue";
 import MailButton from "@/components/MailButton.vue";
+import MailDigestNumbers from "@/components/MailDigestNumbers.vue";
 import MailFooter from "@/components/MailFooter.vue";
 import MailQuote from "@/components/MailQuote.vue";
 import ImageSelector from "@/components/ImageSelector.vue";
@@ -172,6 +175,7 @@ export default {
     MailPictureWide,
     MailSignature,
     MailButton,
+    MailDigestNumbers,
     MailFooter,
     MailQuote,
     SweetModal,
@@ -216,7 +220,8 @@ export default {
           title: "Шапка(дайджест)",
           component: "MailHeaderDigest",
           type: "header_for_the_digest",
-          content: null,
+          h1: null,
+          title_content: null,
         },
         {
           id: 2,
@@ -298,6 +303,14 @@ export default {
         //   content: null,
         //   link: null,
         // },
+        {
+          id: 27,
+          title: "Дайджест цифры",
+          component: "MailDigestNumbers",
+          type: "digest_numbers",
+          html_left: null,
+          html_right: null,
+        },
         {
           id: 25,
           title: "Подпись директора",
@@ -584,6 +597,9 @@ export default {
             // else return data;
           } else if (elem.type == "divider") {
             data.text = [];
+          } else if (elem.type == "digest_numbers") {
+            data.html_left = elem.html_left;
+            data.html_right = elem.html_right;
           }
 
           if (elem.type) {
@@ -621,7 +637,9 @@ export default {
             image: elem.image || "",
             background_color: elem.background_color || "",
             h1: elem.h1 || "",
-            title_content: elem.title || ""
+            title_content: elem.title || "",
+            html_left: elem.html_left || "",
+            html_right: elem.html_right || "",
           });
         });
       }
@@ -689,6 +707,8 @@ export default {
       item.content = content.content;
       item.h1 = content.h1;
       item.title_content = content.title_content;
+      item.html_left = content.html_left;
+      item.html_right = content.html_right;
     }
   },
   async created() {

@@ -12,17 +12,19 @@
     ></mail-nav>
     <div class="mail-content">
       <badge>Шапка (дайджест)</badge>
+      <p class="mail-numbers__text-label" v-if="showEditor">Укажите большой заголовок дайджеста:</p>
       <input
         v-model="contentH1"
         class="content__input"
         v-if="showEditor"
-        placeholder="Введите большой заголовок дайджеста"
+        placeholder="Большой заголовок дайджеста"
       />
+      <p class="mail-numbers__text-label" v-if="showEditor">Укажите малый заголовок дайджеста:</p>
       <input
         v-model="contentTitle"
         class="content__input"
         v-if="showEditor"
-        placeholder="Введите малый заголовок дайджеста"
+        placeholder="Малый заголовок дайджеста"
       />
       <p class="mail__input" v-html="contentH1" v-if="!showEditor"></p>
       <p class="mail__input" v-html="contentTitle" v-if="!showEditor"></p>

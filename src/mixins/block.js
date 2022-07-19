@@ -26,7 +26,13 @@ export const block = {
   methods: {
     saveContent() {
       this.showEditor = false;
-      this.$emit("save-content", {content: this.content, h1: this.contentH1, title_content: this.contentTitle})
+      this.$emit("save-content", {
+        content: this.content,
+        h1: this.contentH1,
+        title_content: this.contentTitle,
+        html_left: this.content,
+        html_right: this.digestLink
+      });
     },
     editContent() {
       this.$emit("edit");
@@ -37,5 +43,5 @@ export const block = {
     if (!this.content) {
       this.showEditor = true;
     }
-  }
+  },
 };
