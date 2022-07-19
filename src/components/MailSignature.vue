@@ -1,5 +1,5 @@
 <template>
-  <div class="mail-header__it mail-block" :style="{backgroundColor: backgroundColor}">
+  <div class="mail__signature mail-block" :style="{backgroundColor: backgroundColor}">
     <div class="dragger"></div>
     <mail-nav
       @delete="$emit('delete')"
@@ -24,7 +24,7 @@ import { color } from "@/mixins/color.js";
 import MailNav from "@/components/MailNav.vue";
 import Badge from "@/components/Badge.vue";
 export default {
-  name: "MailHeaderIt",
+  name: "MailSignature",
   mixins: [color],
   components: {
     MailNav,
@@ -35,14 +35,14 @@ export default {
   },
   computed: {
     ...mapGetters([
-      "it_img"
+      "signature_img"
     ]),
     imageUrl() {
-      return process.env.VUE_APP_API + this.it_img
+      return process.env.VUE_APP_API + this.signature_img
     }
   },
   mounted() {
-    this.$emit('pattern-image', this.it_img)
+    this.$emit('pattern-image', this.signature_img)
   }
 };
 </script>

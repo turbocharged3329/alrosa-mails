@@ -141,6 +141,7 @@ import MailHeaderDigest from "@/components/MailHeaderDigest.vue";
 import MailDivider from "@/components/MailDivider.vue";
 import MailPicture from "@/components/MailPicture.vue";
 import MailPictureWide from "@/components/MailPictureWide.vue";
+import MailSignature from "@/components/MailSignature.vue";
 import MailButton from "@/components/MailButton.vue";
 import MailFooter from "@/components/MailFooter.vue";
 import MailQuote from "@/components/MailQuote.vue";
@@ -169,6 +170,7 @@ export default {
     MailPicture,
     MailTextHighlighted,
     MailPictureWide,
+    MailSignature,
     MailButton,
     MailFooter,
     MailQuote,
@@ -192,7 +194,6 @@ export default {
           title: "Шапка(паттерн)",
           component: "MailHeaderPattern",
           type: "header_with_pattern",
-          content: null,
           image: null,
         },
         {
@@ -208,7 +209,6 @@ export default {
           title: "Шапка IT",
           component: "MailHeaderIt",
           type: "header_from_it_department",
-          content: null,
           image: null,
         },
         {
@@ -298,6 +298,13 @@ export default {
         //   content: null,
         //   link: null,
         // },
+        {
+          id: 25,
+          title: "Подпись директора",
+          component: "MailSignature",
+          type: "signature",
+          image: null,
+        },
         {
           id: 12,
           title: "Футер/дно",
@@ -554,7 +561,7 @@ export default {
             }
             // else return data;
           } else if (
-            ["header_with_image", "footer", "image", "wide_image", "header_with_pattern", 'header_from_it_department'].includes(elem.type)
+            ["header_with_image", "footer", "image", "wide_image", "header_with_pattern", 'header_from_it_department', "signature"].includes(elem.type)
           ) {
             if (elem.type == "footer") {
               if (elem.content) {
@@ -690,6 +697,7 @@ export default {
     this.$parent.$on("save-copy", this.saveCopyAndOpen);
     await this.getPatternImage('pattern')
     await this.getPatternImage('it')
+    await this.getPatternImage('signature')
   },
   mounted() {
     this.$emit("show", true);
