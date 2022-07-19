@@ -529,17 +529,7 @@ export default {
           };
 
           if (["h1", "h2", "h3", "title", "header_for_the_digest"].includes(elem.type)) {
-            if (elem.type == "title") {
-              if (elem.file) {
-                data.base64_image = elem.file;
-              } else {
-                if (elem.image) {
-                  data.image = elem.image;
-                }
-              }
-            }
             if (elem.type == "header_for_the_digest") {
-                console.log(elem);
                 data.h1 = elem.h1.replace(/<\/?[a-z][a-z0-9]*>/gi, "");
                 data.title = elem.title_content.replace(/<\/?[a-z][a-z0-9]*>/gi, "");
             }
