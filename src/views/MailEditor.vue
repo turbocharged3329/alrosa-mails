@@ -615,7 +615,7 @@ export default {
             image: elem.image || "",
             background_color: elem.background_color || "",
             h1: elem.h1 || "",
-            title_content: elem.title_content || ""
+            title_content: elem.title || ""
           });
         });
       }
