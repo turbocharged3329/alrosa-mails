@@ -134,6 +134,7 @@ import MailH1 from "@/components/MailH1.vue";
 import MailH2 from "@/components/MailH2.vue";
 import MailH3 from "@/components/MailH3.vue";
 import MailText from "@/components/MailText.vue";
+import MailSmallText from "@/components/MailSmallText.vue";
 import MailTextHighlighted from "@/components/MailTextHighlighted.vue";
 import MailName from "@/components/MailName.vue";
 import MailHeaderDigest from "@/components/MailHeaderDigest.vue";
@@ -161,6 +162,7 @@ export default {
     MailH2,
     MailH3,
     MailText,
+    MailSmallText,
     MailName,
     MailHeaderDigest,
     MailDivider,
@@ -211,7 +213,7 @@ export default {
         },
         {
           id: 23,
-          title: "Шапка (дайджест)",
+          title: "Шапка(дайджест)",
           component: "MailHeaderDigest",
           type: "header_for_the_digest",
           content: null,
@@ -242,6 +244,13 @@ export default {
           title: "Обычный текст",
           component: "MailText",
           type: "text",
+          content: null,
+        },
+        {
+          id: 24,
+          title: "Мелкий текст",
+          component: "MailSmallText",
+          type: "small_text",
           content: null,
         },
         {
@@ -538,7 +547,7 @@ export default {
             }
             // else return data;
           } else if (
-            ["text", "highlighted_text", "quote"].includes(elem.type)
+            ["text", "small_text", "highlighted_text", "quote"].includes(elem.type)
           ) {
             if (elem.content) {
               data.html = elem.content;

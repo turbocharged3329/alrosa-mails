@@ -16,13 +16,13 @@
         v-model="contentH1"
         class="content__input"
         v-if="showEditor"
-        placeholder="h1"
+        placeholder="Введите большой заголовок дайджеста"
       />
       <input
         v-model="contentTitle"
         class="content__input"
         v-if="showEditor"
-        placeholder="title"
+        placeholder="Введите малый заголовок дайджеста"
       />
       <p class="mail__input" v-html="contentH1" v-if="!showEditor"></p>
       <p class="mail__input" v-html="contentTitle" v-if="!showEditor"></p>
