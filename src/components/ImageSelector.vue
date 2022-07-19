@@ -16,15 +16,15 @@
           </div>
           <img
             class="image-selector__preview"
-            :src="`${item.src}.png`"
-            :srcset="`${item.src}@2x.png`"
+            :src="`${item.src}`"
+            :srcset="`${item.src}`"
           />
         </div>
       </template>
     </div>
     <button
       :disabled="!selected"
-      :class="{disabled: !selected}"
+      :class="{ disabled: !selected }"
       class="image-selector__save-btn btn-custom btn-primary-custom"
       @click="emitSave"
     >
@@ -34,44 +34,35 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from "vuex";
 export default {
   name: "ImageSelector",
   props: {
     isFooter: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   data() {
     return {
-      image: [
-        {
-          id: 1,
-        },
-        {
-          id: 2,
-        },
-      ],
       selected: null,
       selectedId: null,
     };
   },
   computed: {
+    ...mapGetters(["header_img"]),
     images() {
-    const imagesNames = !this.isFooter 
-    ? ['header 1', 'header 2', 'header 3', 'header 4']
-    : ['footer 2', 'footer 3', 'footer 4'];
-
-    return imagesNames.map((image, index) => {
-      return {
-        id: index + 1,
-        src: `${process.env.VUE_APP_API}/static/img/${image}`,
-        serverPath: `/static/img/${image}.png` 
-      }
-    }) 
-    }
+      return this.header_img.map((image) => {
+        return {
+          id: image.id,
+          src: `${process.env.VUE_APP_API}${image.image}`,
+          serverPath: image.image
+        };
+      });
+    },
   },
   methods: {
+    ...mapActions(["getPatternImage"]),
     //выбор изображения
     selectImage(path, id) {
       this.selectedId = id;
@@ -82,6 +73,9 @@ export default {
     emitSave() {
       this.$emit("apply-selection", this.selected);
     },
+  },
+  async created() {
+    await this.getPatternImage("header");
   },
 };
 </script>

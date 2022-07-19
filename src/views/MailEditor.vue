@@ -776,7 +776,6 @@ export default {
     await this.getPatternImage('it')
     await this.getPatternImage('signature')
     await this.getPatternImage('footer')
-    await this.getPatternImage('header')
   },
   mounted() {
     this.$emit("show", true);

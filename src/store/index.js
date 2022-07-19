@@ -200,6 +200,7 @@ const store = new Vuex.Store({
     it_img: (state) => state.it_img,
     signature_img: (state) => state.signature_img,
     footer_img: (state) => state.footer_img,
+    header_img: (state) => state.header_img,
   },
 });
 
