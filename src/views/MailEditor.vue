@@ -426,7 +426,7 @@ export default {
         h1: "",
         title_content: "",
         gap: event.data.type.includes('spacer') ? event.data.type[event.data.type.length - 1] : "",
-        transition_name: this.detectTransitionType(event.data.type) || "",
+        transition_name: event.data.type.includes('transition') ? event.data.type : "",
       });
       this.elements.push();
     },
@@ -696,7 +696,7 @@ export default {
             html_left: elem.html_left || "",
             html_right: elem.html_right || "",
             gap: elem.type.includes('spacer') ? elem.type[elem.type.length - 1] : "",
-            transition_name: this.detectTransitionType(elem.type)
+            transition_name: elem.type
           });
         });
       }
@@ -767,18 +767,6 @@ export default {
       item.html_left = content.html_left;
       item.html_right = content.html_right;
     },
-    detectTransitionType(transitionName) {
-      switch (transitionName) {
-        case 'transition_white_to_blue': 
-          return 'белый-голубой';
-        case 'transition_white_to_blue_2':
-          return 'белый-голубой-2'
-        case 'transition_blue_to_white':
-          return 'голубой-белый'
-        default: 
-          return 
-      }
-    }
   },
   async created() {
     this.$parent.$on("save-post", this.savePost);
