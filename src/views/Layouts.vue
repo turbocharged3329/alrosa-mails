@@ -74,7 +74,7 @@ export default {
     ...mapGetters(["templates"]),
   },
   methods: {
-    ...mapActions(["setHeaderVisibility", "setPostName", "getTemplates"]),
+    ...mapActions(["setHeaderVisibility", "setPostName", "getTemplates", "setCurrentPost", "setCurrentTemplate"]),
     async createTempaltedMail(data) {
       await this.setPostName(data.name);
       this.$router.push({
@@ -96,6 +96,8 @@ export default {
   },
   mounted() {
     this.setHeaderVisibility(true);
+    this.setCurrentPost()
+    this.setCurrentTemplate()
     this.getTemplates()
     
     if (this.$route.params?.notification) {
