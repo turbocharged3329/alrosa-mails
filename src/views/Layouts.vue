@@ -136,7 +136,8 @@ export default {
     // flex-flow: row wrap;
     // align-items: center;
     // width: 100%;
-    height: 75%;
+    height: 100%;
+    overflow-y: auto;
     &-row {
       height: 66%;
       flex-basis: 100%;

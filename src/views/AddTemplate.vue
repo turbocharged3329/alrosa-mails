@@ -37,7 +37,7 @@
             :deletable="true"
             :meta="true"
             :accept="'image/*,.zip'"
-            :maxSize="'200KB'"
+            :maxSize="'500KB'"
             :maxFiles="1"
             :helpText="'Перетащите файлы сюда или нажмите для загрузки'"
             :errorText="{
@@ -96,7 +96,7 @@ export default {
   data() {
     return {
       templateName: "",
-      maxSize: "200KB",
+      maxSize: "500KB",
     };
   },
   computed: {
