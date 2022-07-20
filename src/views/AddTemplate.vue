@@ -57,8 +57,8 @@
           <button
             class="add-new__btn btn-primary-custom btn-custom"
             @click="saveTemplate"
-            :class="{ disabled: !templateName.length }"
-            :disabled="!templateName.length"
+            :class="{ disabled: !templateName }"
+            :disabled="!templateName"
           >
             <span v-if="postId && isPremadeLoaded">Сохранить</span>
             <span v-else>Создать</span>
@@ -108,7 +108,7 @@ export default {
       const url = `${process.env.VUE_APP_API}/premade-email-templates/${
         this.postId && this.isPremadeLoaded ? this.postId : ""
       }`;
-      await axios({
+      const response = await axios({
         method: `${this.postId && this.isPremadeLoaded ? "PATCH" : "POST"}`,
         url,
         data: {
@@ -127,8 +127,8 @@ export default {
         formData.append("preview_image", this.fileRecords[0].file);
 
         await axios({
-          method: `${this.postId ? "PATCH" : "POST"}`,
-          url,
+          method: "PATCH",
+          url: `${process.env.VUE_APP_API}/premade-email-templates/${response.data.id}`,
           data: formData,
           headers: {
             Authorization: `Token ${this.token}`,
