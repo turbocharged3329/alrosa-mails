@@ -12,7 +12,8 @@
     </div>
     <hr class="context-menu__divider" />
     <div class="context-menu__item" @click="emitSaveToTemplates">
-      <span class="context-menu__item-content">превратить в шаблон</span>
+      <span class="context-menu__item-content" v-if="!this.isPremadeTemplateLoaded">превратить в шаблон</span>
+      <span class="context-menu__item-content" v-else>изменить шаблон</span>
     </div>
     <div class="context-menu__item" @click="emitCopy">
       <span class="context-menu__item-content" :class="{disabled: isDisabledCopy}">дублировать</span>
@@ -30,14 +31,12 @@
 import {mapGetters} from "vuex";
 export default {
   name: "ContextMenu",
-  components: {},
   props: {},
-  emits: ["save-draft"],
   data() {
     return {};
   },
   computed: {
-    ...mapGetters(["isDisabledCopy"])
+    ...mapGetters(["isDisabledCopy", "isPremadeTemplateLoaded"])
   },
   methods: {
     emitSaveToDrafts() {

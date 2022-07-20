@@ -28,6 +28,7 @@ const store = new Vuex.Store({
     currentTemplate: null,
     templates: [],
     isDisabledCopy: false,
+    isPremadeTemplateLoaded: false,
     pattern_img: null,
     it_img: null,
     signature_img: null,
@@ -76,6 +77,9 @@ const store = new Vuex.Store({
     },
     SET_COPY_DISABLED_STATUS(state, payload) {
       state.isDisabledCopy = payload;
+    },
+    SET_PREMADE_LOADED(state, payload) {
+      state.isPremadeTemplateLoaded = payload;
     },
   },
   actions: {
@@ -182,6 +186,9 @@ const store = new Vuex.Store({
     setDisabledCopyStatus({ commit }, payload) {
       commit("SET_COPY_DISABLED_STATUS", payload);
     },
+    setPremadeTemplateLoadedStatus({ commit }, payload) {
+      commit("SET_PREMADE_LOADED", payload);
+    },
     logout({ commit }) {
       commit("SET_TOKEN", "");
     },
@@ -201,6 +208,7 @@ const store = new Vuex.Store({
     signature_img: (state) => state.signature_img,
     footer_img: (state) => state.footer_img,
     header_img: (state) => state.header_img,
+    isPremadeTemplateLoaded: (state) => state.isPremadeTemplateLoaded,
   },
 });
 

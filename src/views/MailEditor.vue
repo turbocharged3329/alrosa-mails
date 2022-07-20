@@ -406,6 +406,7 @@ export default {
       "setCurrentPost",
       "setCurrentTemplate",
       "setDisabledCopyStatus",
+      "setPremadeTemplateLoadedStatus",
       "getPatternImage"
     ]),
     showMail() {
@@ -502,6 +503,7 @@ export default {
           if (response.status == 400) {
             this.alertValidationError();
           } else {
+            this.setPremadeTemplateLoadedStatus(false)
             this.generatedHtml = response.data.generated_html;
 
             if (downloadAfter) {
@@ -539,6 +541,7 @@ export default {
           if (response.status == 400) {
             this.alertValidationError();
           } else {
+            this.setPremadeTemplateLoadedStatus(false)
             this.generatedHtml = response.data.generated_html;
 
             if (downloadAfter) {
@@ -780,6 +783,7 @@ export default {
   mounted() {
     this.$emit("show", true);
     this.setDisabledCopyStatus(!this.postData?.id ? true : false);
+    this.setPremadeTemplateLoadedStatus(this.postData.isPremadeLoaded ? true : false);
     this.addTemplateBlocks();
 
     if (this.postData.template_blocks) {
