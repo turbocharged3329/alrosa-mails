@@ -12,11 +12,19 @@
     </div>
     <hr class="context-menu__divider" />
     <div class="context-menu__item" @click="emitSaveToTemplates">
-      <span class="context-menu__item-content" v-if="!this.isPremadeTemplateLoaded">превратить в шаблон</span>
+      <span
+        class="context-menu__item-content"
+        v-if="!this.isPremadeTemplateLoaded"
+        >превратить в шаблон</span
+      >
       <span class="context-menu__item-content" v-else>изменить шаблон</span>
     </div>
     <div class="context-menu__item" @click="emitCopy">
-      <span class="context-menu__item-content" :class="{disabled: isDisabledCopy}">дублировать</span>
+      <span
+        class="context-menu__item-content"
+        :class="{ disabled: isDisabledCopy }"
+        >дублировать</span
+      >
     </div>
     <hr class="context-menu__divider" />
     <div class="context-menu__item">
@@ -28,7 +36,7 @@
 </template>
 
 <script>
-import {mapGetters} from "vuex";
+import { mapGetters } from "vuex";
 export default {
   name: "ContextMenu",
   props: {},
@@ -36,7 +44,7 @@ export default {
     return {};
   },
   computed: {
-    ...mapGetters(["isDisabledCopy", "isPremadeTemplateLoaded"])
+    ...mapGetters(["isDisabledCopy", "isPremadeTemplateLoaded"]),
   },
   methods: {
     emitSaveToDrafts() {
@@ -53,9 +61,9 @@ export default {
     },
     emitCopy() {
       if (!this.isDisabledCopy) {
-        this.$emit('save-copy');
+        this.$emit("save-copy");
       }
-    }
+    },
   },
 };
 </script>
@@ -94,9 +102,9 @@ export default {
         font-weight: 600;
       }
       &.disabled {
-      opacity: .25;
-      cursor: default;
-    }
+        opacity: 0.25;
+        cursor: default;
+      }
     }
   }
   &__divider {
