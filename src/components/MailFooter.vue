@@ -46,7 +46,7 @@
       <p class="mail__input" v-html="content" v-if="!showEditor"></p>
       <vue-editor
         v-model="content"
-        :editorToolbar="customToolbar"
+        :editorToolbar="footerToolbar"
         class="wsywig"
         v-if="showEditor"
       ></vue-editor>
@@ -75,11 +75,15 @@ export default {
   name: "MailFooter",
   mixins: [block, color],
   props: ["text"],
-  // data() {
-  //   return {
-  //     maxSize: "10MB",
-  //   }
-  // },
+  data() {
+    return {
+      // maxSize: "10MB",
+      footerToolbar: [
+        ["bold", "italic", "underline"],
+        ["link"],
+      ],
+    }
+  },
   computed: {
     ...mapGetters(["footer_img"]),
     imageUrl() {

@@ -637,7 +637,7 @@ export default {
           ) {
             if (elem.type == "footer") {
               if (elem.content) {
-                data.text = elem.content.replace(/<\/?[a-z][a-z0-9]*>/gi, "");
+                data.html = elem.content;
               }
             }
             if (elem.file) {
